@@ -7,91 +7,92 @@
 ;6Joy   = T16000L ;
 
 ;Testing
-{
-	/*
-		$f1::
-		{
-			count++
-			settimer, actions, 333
-		}
-		return
-		
-		actions:
-		{
-			if (count = 1)
-			{
-				send {F1}
-			}
-			else if (count = 2)
-			{
-				send {F2}
-			}
-			else if (count = 3)
-			{
-				send {F3}
-			}
-			count := 0
-		}
-		return	
-	*/
+
+/*
+	$f1::
+	{
+		count++
+		settimer, actions, 333
+	}
+	return
 	
-	/*
-		SetTimer, WatchAxis, 5
-		return
-		
-		WatchAxis:
-		GetKeyState, 6JoyX, 6JoyX  ; Get position of X axis.
-		GetKeyState, 6JoyY, 6JoyY  ; Get position of Y axis.
-		KeyToHoldDownPrev = %KeyToHoldDown%  ; Prev now holds the key that was down before (if any).
-		
-		if 6JoyX > 70
-			KeyToHoldDown = Right
-		else if 6JoyX < 30
-			KeyToHoldDown = Left
-		else if 6JoyY > 70
-			KeyToHoldDown = Down
-		else if 6JoyY < 30
-			KeyToHoldDown = Up
-		else
-			KeyToHoldDown =
-		
-		if KeyToHoldDown = %KeyToHoldDownPrev%  ; The correct key is already down (or no key is needed).
-			return  ; Do nothing.
-		
+	actions:
+	{
+		if (count = 1)
+		{
+			send {F1}
+		}
+		else if (count = 2)
+		{
+			send {F2}
+		}
+		else if (count = 3)
+		{
+			send {F3}
+		}
+		count := 0
+	}
+	return	
+*/
+
+/*
+	SetTimer, WatchAxis, 5
+	return
+	
+	WatchAxis:
+	GetKeyState, 6JoyX, 6JoyX  ; Get position of X axis.
+	GetKeyState, 6JoyY, 6JoyY  ; Get position of Y axis.
+	KeyToHoldDownPrev = %KeyToHoldDown%  ; Prev now holds the key that was down before (if any).
+	
+	if 6JoyX > 70
+		KeyToHoldDown = Right
+	else if 6JoyX < 30
+		KeyToHoldDown = Left
+	else if 6JoyY > 70
+		KeyToHoldDown = Down
+	else if 6JoyY < 30
+		KeyToHoldDown = Up
+	else
+		KeyToHoldDown =
+	
+	if KeyToHoldDown = %KeyToHoldDownPrev%  ; The correct key is already down (or no key is needed).
+		return  ; Do nothing.
+	
 ; Otherwise, release the previous key and press down the new key:
-		SetKeyDelay -1  ; Avoid delays between keystrokes.
-		if KeyToHoldDownPrev   ; There is a previous key to release.
-			Send, {%KeyToHoldDownPrev% up}  ; Release it.
-		if KeyToHoldDown   ; There is a key to press down.
-			Send, {%KeyToHoldDown% down}  ; Press it down.
-		return
-	*/
+	SetKeyDelay -1  ; Avoid delays between keystrokes.
+	if KeyToHoldDownPrev   ; There is a previous key to release.
+		Send, {%KeyToHoldDownPrev% up}  ; Release it.
+	if KeyToHoldDown   ; There is a key to press down.
+		Send, {%KeyToHoldDown% down}  ; Press it down.
+	return
+*/
+
+/*
 	
-	/*
-		
-		6Joy1::
-		If GetKeyState("6Joy2", "P")=1
+	6Joy1::
+	If GetKeyState("6Joy2", "P")=1
+	{
+		send {d Down}
+		keywait 6Joy1
+		send, {d Up}
+	}
+	else 
+		if GetKeyState("6joy3", "p")=1
 		{
-			send {d Down}
+			send {v Down}
 			keywait 6Joy1
-			send, {d Up}
+			send, {v Up}
 		}
-		else 
-			if GetKeyState("6joy3", "p")=1
-			{
-				send {v Down}
-				keywait 6Joy1
-				send, {v Up}
-			}
-		Else 
-		{
-			send {c Down}
-			keywait 6Joy1
-			send, {c Up}
-		}
-		Return
-	*/
-}
+	Else 
+	{
+		send {c Down}
+		keywait 6Joy1
+		send, {c Up}
+	}
+	Return
+*/
+
+;Testing
 
 $g::
 KeyWait g, t0.200
@@ -126,6 +127,11 @@ else
 	SendInput {k up}
 }
 return
+
+
+
+;EscapeFromTarkov
+
 
 ;Mouse wheel remapping and/or Shift.
 {

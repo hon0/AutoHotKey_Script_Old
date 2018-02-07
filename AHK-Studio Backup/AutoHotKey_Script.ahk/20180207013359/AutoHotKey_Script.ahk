@@ -98,9 +98,9 @@ KeyWait g, t0.200
 t:= A_TimeSinceThisHotkey
 If ErrorLevel
 {
-	SendInput {h down}
+	Send {h down}
 	KeyWait g
-	SendInput {h up}
+	Send {h up}
 }
 else
 {

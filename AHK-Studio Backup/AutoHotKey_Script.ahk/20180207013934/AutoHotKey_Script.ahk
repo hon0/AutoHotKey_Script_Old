@@ -96,7 +96,7 @@
 $f8::
 {
 	count++
-	settimer, actions, 200
+	settimer, actions, 333
 }
 return
 

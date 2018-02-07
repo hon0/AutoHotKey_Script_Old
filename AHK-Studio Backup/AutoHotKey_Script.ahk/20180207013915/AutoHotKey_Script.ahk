@@ -93,31 +93,6 @@
 	*/
 }
 
-$f8::
-{
-	count++
-	settimer, actions, 200
-}
-return
-
-actions:
-{
-	if (count = 1)
-	{
-		send {F8}
-	}
-	else if (count = 2)
-	{
-		send {F9}
-	}
-	else if (count = 3)
-	{
-		send {F10}
-	}
-	count := 0
-}
-return	
-
 $g::
 KeyWait g, t0.200
 t:= A_TimeSinceThisHotkey

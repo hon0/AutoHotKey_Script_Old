@@ -9,48 +9,44 @@
 ;Testing
 
 
+$f1::
+{
+	count++
+	settimer, actions, 333
+}
+return
 
-/*
-	Family = 1
-	
-	capslock::F24
-	
-	
-	
-	F24::
+actions:
+{
+	if (count = 1)
 	{
-		count++
-		settimer, actionsF24, 200
+		send {F1}
 	}
-	return
-	
-	actionsF24:
+	else if (count = 2)
 	{
-		if (count = 1)
-		{
-			Family := 2
-		}
-		else if (count = 2)
-		{
-			Family := 3
-		}
-		count := 0
+		send {F2}
 	}
-	
-	KeyWait, CapsLock, T
-	Family = 1
-	return
-	
-	j::
-	if Family = 2
-		send k
-	else
-		if Family = 3
-			send l
-	Else 
-		send j
-	return
-*/
+	else if (count = 3)
+	{
+		send {F3}
+	}
+	count := 0
+}
+return
+
+
+
+capslock::F24
+
+
+F24::
+send a
+return
+
+#If, GetKeyState("CapsLock", "P")
+	b::v
+return
+
 
 {
 	/*
@@ -138,30 +134,32 @@
 	*/
 }
 
-$f8::
 {
-	count++
-	settimer, actionsF8, 200
+	$f8::
+	{
+		count++
+		settimer, actions, 200
+	}
+	return
+	
+	actions:
+	{
+		if (count = 1)
+		{
+			send {F8}
+		}
+		else if (count = 2)
+		{
+			send {F9}
+		}
+		else if (count = 3)
+		{
+			send {F10}
+		}
+		count := 0
+	}
+	return	
 }
-return
-
-actionsF8:
-{
-	if (count = 1)
-	{
-		send {F8}
-	}
-	else if (count = 2)
-	{
-		send {F9}
-	}
-	else if (count = 3)
-	{
-		send {F10}
-	}
-	count := 0
-}
-return	
 
 $g::
 KeyWait g, t0.200

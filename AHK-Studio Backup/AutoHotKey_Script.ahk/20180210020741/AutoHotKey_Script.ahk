@@ -8,49 +8,13 @@
 
 ;Testing
 
+capslock::F24
+
+F24::
+send a
+return
 
 
-/*
-	Family = 1
-	
-	capslock::F24
-	
-	
-	
-	F24::
-	{
-		count++
-		settimer, actionsF24, 200
-	}
-	return
-	
-	actionsF24:
-	{
-		if (count = 1)
-		{
-			Family := 2
-		}
-		else if (count = 2)
-		{
-			Family := 3
-		}
-		count := 0
-	}
-	
-	KeyWait, CapsLock, T
-	Family = 1
-	return
-	
-	j::
-	if Family = 2
-		send k
-	else
-		if Family = 3
-			send l
-	Else 
-		send j
-	return
-*/
 
 {
 	/*

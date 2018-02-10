@@ -10,47 +10,43 @@
 
 
 
-/*
-	Family = 1
-	
-	capslock::F24
-	
-	
-	
-	F24::
+
+
+capslock::F24
+
+Family = 1
+
+F24::
+{
+	count++
+	settimer, actionsF24, 200
+}
+return
+
+actionsF24:
+{
+	if (count = 1)
 	{
-		count++
-		settimer, actionsF24, 200
+		Family = 2
 	}
-	return
-	
-	actionsF24:
+	else if (count = 2)
 	{
-		if (count = 1)
-		{
-			Family := 2
-		}
-		else if (count = 2)
-		{
-			Family := 3
-		}
-		count := 0
+		Family = 3
 	}
-	
-	KeyWait, CapsLock, T
+	count := 0
+}
+
+KeyWait, CapsLock
 	Family = 1
-	return
-	
-	j::
-	if Family = 2
-		send k
-	else
-		if Family = 3
-			send l
-	Else 
-		send j
-	return
-*/
+return
+
+j::
+if GetKeyState("F22", P)
+	send k
+else
+	if GetKeyState("F23",P)
+		send l
+return
 
 {
 	/*

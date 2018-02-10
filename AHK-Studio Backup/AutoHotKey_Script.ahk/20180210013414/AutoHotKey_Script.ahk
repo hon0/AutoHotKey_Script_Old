@@ -8,49 +8,31 @@
 
 ;Testing
 
+capslock::F24
+
+F24::
+send a
+return
 
 
-/*
-	Family = 1
-	
-	capslock::F24
-	
-	
-	
-	F24::
+#k::
+KeyWait k, t0.3
+t:= A_TimeSinceThisHotkey
+If ErrorLevel 
+{
+	MsgBox More than 300 ms
+}
+else
+{
+	if t > 100 
 	{
-		count++
-		settimer, actionsF24, 200
+		MsgBox The time is between 100 and 300 ms (%t% ms)
 	}
-	return
-	
-	actionsF24:
-	{
-		if (count = 1)
-		{
-			Family := 2
-		}
-		else if (count = 2)
-		{
-			Family := 3
-		}
-		count := 0
-	}
-	
-	KeyWait, CapsLock, T
-	Family = 1
-	return
-	
-	j::
-	if Family = 2
-		send k
 	else
-		if Family = 3
-			send l
-	Else 
-		send j
-	return
-*/
+		MsgBox Less than 100 ms
+}
+return
+
 
 {
 	/*
@@ -141,11 +123,11 @@
 $f8::
 {
 	count++
-	settimer, actionsF8, 200
+	settimer, actions, 200
 }
 return
 
-actionsF8:
+actions:
 {
 	if (count = 1)
 	{

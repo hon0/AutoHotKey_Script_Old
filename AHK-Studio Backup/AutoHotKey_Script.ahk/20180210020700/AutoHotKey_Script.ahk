@@ -9,48 +9,36 @@
 ;Testing
 
 
+d::
+   KeyWait, d
+   KeyWait, d, D T 0.1
+   If (!ErrorLevel)
+    {
+      send 3
+    }
 
-/*
-	Family = 1
-	
-	capslock::F24
-	
-	
-	
-	F24::
-	{
-		count++
-		settimer, actionsF24, 200
-	}
-	return
-	
-	actionsF24:
-	{
-		if (count = 1)
-		{
-			Family := 2
-		}
-		else if (count = 2)
-		{
-			Family := 3
-		}
-		count := 0
-	}
-	
-	KeyWait, CapsLock, T
-	Family = 1
-	return
-	
-	j::
-	if Family = 2
-		send k
-	else
-		if Family = 3
-			send l
-	Else 
-		send j
-	return
-*/
+else 
+If A_TimeSinceThisHotkey > 100
+	send 2
+return
+
+
+
+capslock::F24
+
+
+
+
+
+
+F24::
+send a
+return
+
+#If, GetKeyState("CapsLock", "P")
+b::v
+return
+
 
 {
 	/*
@@ -141,11 +129,11 @@
 $f8::
 {
 	count++
-	settimer, actionsF8, 200
+	settimer, actions, 200
 }
 return
 
-actionsF8:
+actions:
 {
 	if (count = 1)
 	{

@@ -8,37 +8,65 @@
 
 ;Testing
 
-$a::
-KeyWait, a, T0.1
 
-if (ErrorLevel)
-{
-		Send {b down}
-		keywait a
-		Send {b up}
-	}
-	else {
-		KeyWait, a, D T0.1
-		
-		if (ErrorLevel)
-		{
-			Send {a down}
-			keywait a
-			Send {a up}
-		}
-		
-		else
-		{
-			Send {c down}
-			keywait a
-			Send {c up}
-		}
-		
-	}
+
+$z::                                               
+
+    KeyWait, z, T0.5   
+
+    If ErrorLevel {                                     
+        Send longpress                                 
+        KeyWait, z
+} Else  
+	KeyWait, z, D T0.2	
+if ErrorLevel 
+	Send single
+Else
+	Send double                                                                     
+Return
+
+
+/*
+	Family = 1
 	
-	KeyWait, a
+	capslock::F24
+	
+	
+	
+	F24::
+	{
+		count++
+		settimer, actionsF24, 200
+	}
 	return
 	
+	actionsF24:
+	{
+		if (count = 1)
+		{
+			Family := 2
+		}
+		else if (count = 2)
+		{
+			Family := 3
+		}
+		count := 0
+	}
+	
+	KeyWait, CapsLock, T
+	Family = 1
+	return
+	
+	j::
+	if Family = 2
+		send k
+	else
+		if Family = 3
+			send l
+	Else 
+		send j
+	return
+*/
 
 {
 	/*

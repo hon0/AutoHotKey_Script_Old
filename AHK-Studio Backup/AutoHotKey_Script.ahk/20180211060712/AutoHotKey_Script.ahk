@@ -10,8 +10,8 @@ SetScrollLockState, AlwaysOff
 { ;Monitoring Windows
 	
 	KeyHistory
-	WinGetActiveTitle, Title
-	WinWait, %Title%
+	
+	WinWait, C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk - AutoHotkey v1.1.28.00
 	SetKeyDelay 0, 32
 	Send {Lwin down}{Right}{Right}{Right}{Right}{Lwin up}{LControl down}{k}{LControl Up}
 	
@@ -26,7 +26,7 @@ SetScrollLockState, AlwaysOff
 	
 	#IfWinActive Event Tester
 	$F5::
-	WinActivate %Title%
+	WinActivate C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk - AutoHotkey v1.1.28.00
 	SetKeyDelay 500, 32
 	Send {F5}
 	return

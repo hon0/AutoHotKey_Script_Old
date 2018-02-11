@@ -30,6 +30,14 @@ SetScrollLockState, AlwaysOff
 	SetKeyDelay 500, 32
 	Send {F5}
 	return
+	
+	#IfWinActive %Title%
+	$F5::
+	WinActivate %Title%
+	SetKeyDelay 500, 32
+	Send {F5}
+	return
+	
 }
 
 { ;Before running a Game

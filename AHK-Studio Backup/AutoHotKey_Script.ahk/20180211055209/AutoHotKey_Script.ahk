@@ -1,6 +1,6 @@
 ﻿#SingleInstance force
 #Persistent  ; Keep this script running until the user explicitly exits it.
-
+KeyHistory
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 ;#InstallKeybdHook
@@ -8,10 +8,7 @@ SetScrollLockState, AlwaysOff
 
 
 { ;Monitoring Windows
-	
-	KeyHistory
-	WinGetActiveTitle, Title
-	WinWait, %Title%
+	WinWait, C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk - AutoHotkey v1.1.27.07
 	SetKeyDelay 0, 32
 	Send {Lwin down}{Right}{Right}{Right}{Right}{Lwin up}{LControl down}{k}{LControl Up}
 	
@@ -26,24 +23,9 @@ SetScrollLockState, AlwaysOff
 	
 	#IfWinActive Event Tester
 	$F5::
-	WinActivate %Title%
+	WinActivate C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk - AutoHotkey v1.1.27.07
 	SetKeyDelay 500, 32
 	Send {F5}
-	return
-}
-
-{ ;Before running a Game
-	#IfWinNotExist MSI Afterburner
-	#t::
-	Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
-	WinWait MSI Afterburner
-	
-	#IfWinNotExist Set Timer Resolution
-	Run, D:\-  Téléchargements sur D\TimerResolution.exe
-	WinWait Set Timer Resolution
-	WinMinimize Set Timer Resolution
-	WinActivate MSI Afterburner
-	WinMaximize MSI Afterburner
 	return
 }
 
@@ -54,7 +36,20 @@ SetScrollLockState, AlwaysOff
 
 { ;Testing
 	
-
+	{ ;Before running a Game
+		#IfWinNotExist MSI Afterburner
+			#t::
+		Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
+		WinWait MSI Afterburner
+		
+		#IfWinNotExist Set Timer Resolution
+			Run, D:\-  Téléchargements sur D\TimerResolution.exe
+		WinWait Set Timer Resolution
+		WinMinimize Set Timer Resolution
+		WinActivate MSI Afterburner
+		WinMaximize MSI Afterburner
+		return
+	}
 	
 ;Testing
 }
@@ -321,7 +316,13 @@ SetScrollLockState, AlwaysOff
 	}
 */
 
-;Layer initialisation?
+
+;Digit remapping.
+	;#IfWinActive EscapeFromTarkov
+
+
+;*[AutoHotKey_Script]
+
 Layer := 1
 
 
@@ -354,29 +355,29 @@ Return
 #if Layer=1
 {	
 	
-	{ ;All Layer 1 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
+	{
+		/*
+			$SC002:: ;1, 7, 13, 19
+			KeyWait SC002, t0.200
+			t:= A_TimeSinceThisHotkey
+			If ErrorLevel
+			{
+				Send {F1 down}
+				KeyWait SC002
+				SendInput {F1 up}
+			}
+			else
+			{
+				SendInput {SC002 down}
+				sleep 32
+				KeyWait SC002
+				SendInput {SC002 up}
+			}
+			return
+		*/
 		
-		$SC002:: ;[1, F1], [7, F7], [F13, F19]
-		KeyWait SC002, t0.200&
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
-		{
-			Send {F1 down}
-			KeyWait SC002
-			SendInput {F1 up}
-		}
-		else
-		{
-			SendInput {SC002 down}
-			sleep 32
-			KeyWait SC002
-			SendInput {SC002 up}
-		}
-		return
 		
-		
-		
-		$SC003:: ;[1, F1], [7, F7], [F13, F19]
+		$SC003:: ;2, 8, 14, 20
 		KeyWait SC003, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -394,7 +395,7 @@ Return
 		}
 		return
 		
-		$SC004:: ;[1, F1], [7, F7], [F13, F19]
+		$SC004:: ;3
 		KeyWait SC004, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -412,7 +413,7 @@ Return
 		}
 		return
 		
-		$SC005:: ;[1, F1], [7, F7], [F13, F19]
+		$SC005:: ;4
 		KeyWait SC005, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -430,7 +431,7 @@ Return
 		}
 		return
 		
-		$SC006:: ;[1, F1], [7, F7], [F13, F19]
+		$SC006:: ;5
 		KeyWait SC006, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -448,7 +449,7 @@ Return
 		}
 		return
 		
-		$SC007:: ;[1, F1], [7, F7], [F13, F19]
+		$SC007:: ;6
 		KeyWait SC007, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -520,8 +521,7 @@ Return
 { ;All Layer 2
 	
 	{ ;All Layer 2 Digit remapping
-		
-		$SC002:: ;[1, F1], [7, F7], [F13, F19]
+		$SC002:: ;1, 7
 		KeyWait SC002, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -540,7 +540,7 @@ Return
 		return
 		
 		
-		$SC003:: ;[1, F1], [7, F7], [F13, F19]
+		$SC003:: ;2, 8
 		KeyWait SC003, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -558,7 +558,7 @@ Return
 		}
 		return
 		
-		$SC004:: ;[1, F1], [7, F7], [F13, F19]
+		$SC004:: ;3, 9
 		KeyWait SC004, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -576,7 +576,7 @@ Return
 		}
 		return
 		
-		$SC005:: ;[1, F1], [7, F7], [F13, F19]
+		$SC005:: ;4, 10
 		KeyWait SC005, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -594,7 +594,7 @@ Return
 		}
 		return
 		
-		$SC006:: ;[1, F1], [7, F7], [F13, F19]
+		$SC006:: ;5, 11
 		KeyWait SC006, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -612,7 +612,7 @@ Return
 		}
 		return
 		
-		$SC007:: ;[1, F1], [7, F7], [F13, F19]
+		$SC007:: ;6, 12
 		KeyWait SC007, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -701,7 +701,7 @@ Return
 { ;All Layer 3
 	
 	{ ;All Layer 3 Digit remapping
-		$SC002:: ;[1, F1], [7, F7], [F13, F19]
+		$SC002::
 		KeyWait SC002, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -720,7 +720,7 @@ Return
 		return
 		
 		
-		$SC003:: ;[1, F1], [7, F7], [F13, F19]
+		$SC003::
 		KeyWait SC003, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -738,7 +738,7 @@ Return
 		}
 		return
 		
-		$SC004:: ;[1, F1], [7, F7], [F13, F19]
+		$SC004::
 		KeyWait SC004, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -756,7 +756,7 @@ Return
 		}
 		return
 		
-		$SC005:: ;[1, F1], [7, F7], [F13, F19]
+		$SC005::
 		KeyWait SC005, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -774,7 +774,7 @@ Return
 		}
 		return
 		
-		$SC006:: ;[1, F1], [7, F7], [F13, F19]
+		$SC006::
 		KeyWait SC006, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
@@ -792,7 +792,7 @@ Return
 		}
 		return
 		
-		$SC007:: ;[1, F1], [7, F7], [F13, F19]
+		$SC007::
 		KeyWait SC007, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel

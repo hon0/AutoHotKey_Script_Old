@@ -34,8 +34,18 @@ Return
 
 ;Layer test
 #if Layer=2
-v::o
-Return
+tab::!l
+w::b
+x::n
+c::,
+v::;
+f::g
+r::t
+
+
 #if layer =3
-$v::p
-Return
+tab::AppsKey
+w::Numpad0
+x::Numpad1
+c::Numpad2
+v::Numpad3

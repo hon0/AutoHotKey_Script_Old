@@ -33,7 +33,7 @@ SetScrollLockState, AlwaysOff
 	#IfWinActive
 }
 
-{ ;Before running a Game. Run and/or close Program.
+{ ;Before running a Game. Run and close Program.
 	#IfWinNotExist MSI Afterburner
 	#t::
 	Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
@@ -277,16 +277,18 @@ Layer := 1
 
 { ;Layer modifier
 	CapsLock::
-		Layer := 2
+	Layer := 2
 	if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 200)
 		Layer := 3
 	KeyWait, CapsLock
-		Layer := 1
+	Layer := 1
 	Return
 }
 
 
-{ #if Layer = 1
+#if Layer = 1
+	
+{ ; All Layer 1
 	
 	{ ; Mouse Wheel Layer 1
 		~WheelUp:: 
@@ -465,12 +467,12 @@ Layer := 1
 		Return
 	;#IfWinActive
 	}
-	
-	#If	
 }
 
-{ #if Layer = 2
-		
+#if Layer = 2
+	
+{ ; All Layer 2
+	
 	{ ; Mouse Wheel Layer 2
 		~WheelUp:: 
 		SetkeyDelay, 0, 32
@@ -682,10 +684,11 @@ Layer := 1
 		return
 	}
 	
-	#If
 }
 
-{ #if Layer = 3
+#if Layer = 3
+	
+{ ; All Layer 3
 	
 	{ ; Mouse Wheel Layer 3
 		SetkeyDelay, 0, 32
@@ -909,5 +912,4 @@ Layer := 1
 		return
 	}
 	
-	#If
 }

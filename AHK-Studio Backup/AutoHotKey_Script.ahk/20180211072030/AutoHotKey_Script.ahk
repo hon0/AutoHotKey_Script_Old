@@ -24,36 +24,26 @@ SetScrollLockState, AlwaysOff
 	Send {Lwin down}{Right}{Right}{Lwin up}{esc}
 	return
 	
-	#If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
-	$F5::
+	#IfWinActive Event Tester
+		$F5::
 	WinActivate %Title%
-	SetKeyDelay 2000, 32
+	SetKeyDelay 500, 32
 	Send {F5}
 	return
-	#IfWinActive
 }
 
-{ ;Before running a Game. Run and/or close Program.
+{ ;Before running a Game
 	#IfWinNotExist MSI Afterburner
-	#t::
+		#t::
 	Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
 	WinWait MSI Afterburner
 	
 	#IfWinNotExist Set Timer Resolution
-	Run, D:\-  Téléchargements sur D\TimerResolution.exe
+		Run, D:\-  Téléchargements sur D\TimerResolution.exe
 	WinWait Set Timer Resolution
 	WinMinimize Set Timer Resolution
 	WinActivate MSI Afterburner
-	Return
-	
-	#IfWinExist MSI Afterburner
-	#t::
-	WinActivate MSI Afterburner
-	WinWait MSI Afterburner
-	
-	#IfWinExist Set Timer Resolution
-	#t::
-	WinActivate Set Timer Resolution
+	WinMaximize MSI Afterburner
 	return
 }
 
@@ -64,198 +54,198 @@ SetScrollLockState, AlwaysOff
 
 { ;Testing
 	
-	/*
-		$a::
-		KeyWait, a, T0.1
+	
+	
+;Testing
+}
+
+/*
+	$a::
+	KeyWait, a, T0.1
+	
+	if (ErrorLevel)
+	{
+		Send {b down}
+		keywait a
+		Send {b up}
+	}
+	else {
+		KeyWait, a, D T0.1
 		
 		if (ErrorLevel)
 		{
-			Send {b down}
+			Send {a down}
 			keywait a
-			Send {b up}
-		}
-		else {
-			KeyWait, a, D T0.1
-			
-			if (ErrorLevel)
-			{
-				Send {a down}
-				keywait a
-				Send {a up}
-			}
-			
-			else
-			{
-				Send {c down}
-				keywait a
-				Send {c up}
-			}
-			
+			Send {a up}
 		}
 		
-		KeyWait, a
-		return
-	*/
-	
-	/*
-		
+		else
 		{
-			$f1::
-			{
-				count++
-				settimer, actions, 333
-			}
-			return
-			
-			actions:
-			{
-				if (count = 1)
-				{
-					send {F1}
-				}
-				else if (count = 2)
-				{
-					send {F2}
-				}
-				else if (count = 3)
-				{
-					send {F3}
-				}
-				count := 0
-			}
-			return	
-			
-			
-			SetTimer, WatchAxis, 5
-			return
-			
-			WatchAxis:
-			GetKeyState, 6JoyX, 6JoyX  ; Get position of X axis.
-			GetKeyState, 6JoyY, 6JoyY  ; Get position of Y axis.
-			KeyToHoldDownPrev = %KeyToHoldDown%  ; Prev now holds the key that was down before (if any).
-			
-			if 6JoyX > 70
-				KeyToHoldDown = Right
-			else if 6JoyX < 30
-				KeyToHoldDown = Left
-			else if 6JoyY > 70
-				KeyToHoldDown = Down
-			else if 6JoyY < 30
-				KeyToHoldDown = Up
-			else
-				KeyToHoldDown =
-			
-			if KeyToHoldDown = %KeyToHoldDownPrev%  ; The correct key is already down (or no key is needed).
-				return  ; Do nothing.
-			
-	; Otherwise, release the previous key and press down the new key:
-			SetKeyDelay -1  ; Avoid delays between keystrokes.
-			if KeyToHoldDownPrev   ; There is a previous key to release.
-				Send, {%KeyToHoldDownPrev% up}  ; Release it.
-			if KeyToHoldDown   ; There is a key to press down.
-				Send, {%KeyToHoldDown% down}  ; Press it down.
-			return
-			
-			
-			
-			6Joy1::
-			If GetKeyState("6Joy2", "P")=1
-			{
-				send {d Down}
-				keywait 6Joy1
-				send, {d Up}
-			}
-			else 
-				if GetKeyState("6joy3", "p")=1
-				{
-					send {v Down}
-					keywait 6Joy1
-					send, {v Up}
-				}
-			Else 
-			{
-				send {c Down}
-				keywait 6Joy1
-				send, {c Up}
-			}
-			Return
-			
-			
-			$f8::
-			{
-				count++
-				settimer, actionsF8, 200
-			}
-			return
-			
-			actionsF8:
-			{
-				if (count = 1)
-				{
-					send {F8}
-				}
-				else if (count = 2)
-				{
-					send {F9}
-				}
-				else if (count = 3)
-				{
-					send {F10}
-				}
-				count := 0
-			}
-			return
+			Send {c down}
+			keywait a
+			Send {c up}
 		}
-	*/
-	
-	/* ; Mouse button remapping and/or Shift.
 		
-		{
-		;#IfWinActive EscapeFromTarkov	
-			
-			XButton2::
-			SetKeyDelay 32, 32
-			send ^t
-			Return
-			
-			XButton1::t
-			
-			~Right & LButton::F1
-			Return
-			
-			~Right & RButton::F2
-			Return
-			
-			~Right & XButton1::F3
-			Return
-			
-			~Right & XButton2::F4
-			Return
-			
-			~Right & WheelUp::
-			send, {F5}
-			Sleep, 100
-			Return
-			
-			~Right & WheelDown::
-			send, {F6}
-			Sleep, 100
-			Return
-			
-			~Right & MButton::F7
-			Return
-			
-			~Right & F8::F9
-			Return
-			
-			~Right & F9::F10
-			Return
-		;#IfWinActive
-		}
-	*/	
+	}
 	
+	KeyWait, a
+	return
+*/
+
+{
+	$f1::
+	{
+		count++
+		settimer, actions, 333
+	}
+	return
+	
+	actions:
+	{
+		if (count = 1)
+		{
+			send {F1}
+		}
+		else if (count = 2)
+		{
+			send {F2}
+		}
+		else if (count = 3)
+		{
+			send {F3}
+		}
+		count := 0
+	}
+	return	
+	
+	
+	SetTimer, WatchAxis, 5
+	return
+	
+	WatchAxis:
+	GetKeyState, 6JoyX, 6JoyX  ; Get position of X axis.
+	GetKeyState, 6JoyY, 6JoyY  ; Get position of Y axis.
+	KeyToHoldDownPrev = %KeyToHoldDown%  ; Prev now holds the key that was down before (if any).
+	
+	if 6JoyX > 70
+		KeyToHoldDown = Right
+	else if 6JoyX < 30
+		KeyToHoldDown = Left
+	else if 6JoyY > 70
+		KeyToHoldDown = Down
+	else if 6JoyY < 30
+		KeyToHoldDown = Up
+	else
+		KeyToHoldDown =
+	
+	if KeyToHoldDown = %KeyToHoldDownPrev%  ; The correct key is already down (or no key is needed).
+		return  ; Do nothing.
+	
+; Otherwise, release the previous key and press down the new key:
+	SetKeyDelay -1  ; Avoid delays between keystrokes.
+	if KeyToHoldDownPrev   ; There is a previous key to release.
+		Send, {%KeyToHoldDownPrev% up}  ; Release it.
+	if KeyToHoldDown   ; There is a key to press down.
+		Send, {%KeyToHoldDown% down}  ; Press it down.
+	return
+	
+	
+	
+	6Joy1::
+	If GetKeyState("6Joy2", "P")=1
+	{
+		send {d Down}
+		keywait 6Joy1
+		send, {d Up}
+	}
+	else 
+		if GetKeyState("6joy3", "p")=1
+		{
+			send {v Down}
+			keywait 6Joy1
+			send, {v Up}
+		}
+	Else 
+	{
+		send {c Down}
+		keywait 6Joy1
+		send, {c Up}
+	}
+	Return
+	
+	
+	$f8::
+	{
+		count++
+		settimer, actionsF8, 200
+	}
+	return
+	
+	actionsF8:
+	{
+		if (count = 1)
+		{
+			send {F8}
+		}
+		else if (count = 2)
+		{
+			send {F9}
+		}
+		else if (count = 3)
+		{
+			send {F10}
+		}
+		count := 0
+	}
+	return
 }
 
+
+/* ; Mouse button remapping and/or Shift.
+	
+	{
+		;#IfWinActive EscapeFromTarkov	
+		
+		XButton2::
+		SetKeyDelay 32, 32
+		send ^t
+		Return
+		
+		XButton1::t
+		
+		~Right & LButton::F1
+		Return
+		
+		~Right & RButton::F2
+		Return
+		
+		~Right & XButton1::F3
+		Return
+		
+		~Right & XButton2::F4
+		Return
+		
+		~Right & WheelUp::
+		send, {F5}
+		Sleep, 100
+		Return
+		
+		~Right & WheelDown::
+		send, {F6}
+		Sleep, 100
+		Return
+		
+		~Right & MButton::F7
+		Return
+		
+		~Right & F8::F9
+		Return
+		
+		~Right & F9::F10
+		Return
+		;#IfWinActive
+	}
+*/
 
 ;Layer initialisation?
 Layer := 1
@@ -277,16 +267,18 @@ Layer := 1
 
 { ;Layer modifier
 	CapsLock::
-		Layer := 2
+	Layer := 2
 	if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 200)
 		Layer := 3
 	KeyWait, CapsLock
-		Layer := 1
+	Layer := 1
 	Return
 }
 
 
-{ #if Layer = 1
+#if Layer = 1
+	
+{ ; All Layer 1
 	
 	{ ; Mouse Wheel Layer 1
 		~WheelUp:: 
@@ -309,7 +301,7 @@ Layer := 1
 		Return
 	}	
 	
-	{ ; All Layer 1 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
+	{ ;All Layer 1 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
 		
 		$SC002:: ;[1, F1], [7, F7], [F13, F19]
 		KeyWait SC002, t0.200&
@@ -465,12 +457,12 @@ Layer := 1
 		Return
 	;#IfWinActive
 	}
-	
-	#If	
 }
 
-{ #if Layer = 2
-		
+#if Layer = 2
+	
+{ ; All Layer 2
+	
 	{ ; Mouse Wheel Layer 2
 		~WheelUp:: 
 		SetkeyDelay, 0, 32
@@ -484,7 +476,7 @@ Layer := 1
 		
 	}	
 	
-	{ ;All Layer 2 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
+	{ ;All Layer 2 Digit remapping
 		
 		$SC002:: ;[1, F1], [7, F7], [F13, F19]
 		KeyWait SC002, t0.200
@@ -682,10 +674,11 @@ Layer := 1
 		return
 	}
 	
-	#If
 }
 
-{ #if Layer = 3
+#if Layer = 3
+	
+{ ; All Layer 3
 	
 	{ ; Mouse Wheel Layer 3
 		SetkeyDelay, 0, 32
@@ -710,8 +703,7 @@ Layer := 1
 		Return
 	}
 	
-	{ ;All Layer 3 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
-		
+	{ ;All Layer 3 Digit remapping
 		$SC002:: ;[1, F1], [7, F7], [F13, F19]
 		KeyWait SC002, t0.200
 		t:= A_TimeSinceThisHotkey
@@ -909,5 +901,4 @@ Layer := 1
 		return
 	}
 	
-	#If
 }

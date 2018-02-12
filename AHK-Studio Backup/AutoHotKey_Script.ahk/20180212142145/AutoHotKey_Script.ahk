@@ -30,10 +30,9 @@ SetScrollLockState, AlwaysOff
 	SetKeyDelay 2000, 32
 	Send {F5}
 	return
-	#IfWinActive
 }
 
-{ ;Before running a Game. Run and/or close Program.
+{ ;Before running a Game. Run and close Program.
 	#IfWinNotExist MSI Afterburner
 	#t::
 	Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
@@ -55,6 +54,8 @@ SetScrollLockState, AlwaysOff
 	#t::
 	WinActivate Set Timer Resolution
 	return
+	
+
 }
 
 { ;Joystick ID (UYse JoyID Program)
@@ -65,6 +66,7 @@ SetScrollLockState, AlwaysOff
 { ;Testing
 	
 	/*
+		
 		$a::
 		KeyWait, a, T0.1
 		
@@ -277,16 +279,18 @@ Layer := 1
 
 { ;Layer modifier
 	CapsLock::
-		Layer := 2
+	Layer := 2
 	if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 200)
 		Layer := 3
 	KeyWait, CapsLock
-		Layer := 1
+	Layer := 1
 	Return
 }
 
 
-{ #if Layer = 1
+#if Layer = 1
+	
+{ ; All Layer 1
 	
 	{ ; Mouse Wheel Layer 1
 		~WheelUp:: 
@@ -309,7 +313,7 @@ Layer := 1
 		Return
 	}	
 	
-	{ ; All Layer 1 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
+	{ ;All Layer 1 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
 		
 		$SC002:: ;[1, F1], [7, F7], [F13, F19]
 		KeyWait SC002, t0.200&
@@ -465,12 +469,12 @@ Layer := 1
 		Return
 	;#IfWinActive
 	}
-	
-	#If	
 }
 
-{ #if Layer = 2
-		
+#if Layer = 2
+	
+{ ; All Layer 2
+	
 	{ ; Mouse Wheel Layer 2
 		~WheelUp:: 
 		SetkeyDelay, 0, 32
@@ -484,7 +488,7 @@ Layer := 1
 		
 	}	
 	
-	{ ;All Layer 2 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
+	{ ;All Layer 2 Digit remapping
 		
 		$SC002:: ;[1, F1], [7, F7], [F13, F19]
 		KeyWait SC002, t0.200
@@ -682,10 +686,11 @@ Layer := 1
 		return
 	}
 	
-	#If
 }
 
-{ #if Layer = 3
+#if Layer = 3
+	
+{ ; All Layer 3
 	
 	{ ; Mouse Wheel Layer 3
 		SetkeyDelay, 0, 32
@@ -710,8 +715,7 @@ Layer := 1
 		Return
 	}
 	
-	{ ;All Layer 3 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
-		
+	{ ;All Layer 3 Digit remapping
 		$SC002:: ;[1, F1], [7, F7], [F13, F19]
 		KeyWait SC002, t0.200
 		t:= A_TimeSinceThisHotkey
@@ -909,5 +913,4 @@ Layer := 1
 		return
 	}
 	
-	#If
 }

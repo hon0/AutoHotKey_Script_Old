@@ -273,7 +273,7 @@ Layer := 1
 */
 
 
-{ ; Layer modifier
+{ ;Layer modifier
 	CapsLock:: ;Key disabled by "SetCapsLockState, AlwaysOff".
 	Layer := 2
 	if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 200)

@@ -1,38 +1,29 @@
 ﻿#SingleInstance force
 #Persistent  ; Keep this script running until the user explicitly exits it.
-#Warn  ; Enable warnings to assist with detecting common errors.
 
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 ;#InstallKeybdHook
 ;#InstallMouseHook
-Layer := 1
+
 
 { ;Monitoring Windows
-	
-	BlockInput, On
 	
 	KeyHistory
 	WinGetActiveTitle, Title
 	WinWait, %Title%
 	SetKeyDelay 0, 32
 	Send {Lwin down}{Right}{Right}{Right}{Right}{Lwin up}{LControl down}{k}{LControl Up}
-	;sleep 32
 	
-	#IfWinExist Event Tester
+	IfWinExist Event Tester
 		WinClose Event Tester
 	
 	Run, C:\Program Files (x86)\Thrustmaster\TARGET\Tools\EventTester.exe
 	WinWait, Event Tester
 	SetKeyDelay 0, 32
-	Send {Lwin down}{Right}{Right}{Lwin up}{esc}{esc}{esc}{esc}
-	Sleep 32
-	MouseClick, left, 36, 40
-	MouseClick, left, 104, 62
-	BlockInput, Off	
+	Send {Lwin down}{Right}{Right}{Lwin up}{esc}
 	return
-	#IfWinExist
-		
+	
 	#If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
 		$F5::
 	WinActivate %Title%
@@ -44,16 +35,26 @@ Layer := 1
 
 { ;Before running a Game. Run and/or close Program.
 	#IfWinNotExist MSI Afterburner
-	#t::
+		#t::
 	Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
 	WinWait MSI Afterburner
 	
 	#IfWinNotExist Set Timer Resolution
-	Run, D:\-  Téléchargements sur D\TimerResolution.exe
+		Run, D:\-  Téléchargements sur D\TimerResolution.exe
 	WinWait Set Timer Resolution
 	WinMinimize Set Timer Resolution
+	WinActivate MSI Afterburner
+	Return
+	
+	#IfWinExist MSI Afterburner
+		#t::
+	WinActivate MSI Afterburner
+	WinWait MSI Afterburner
+	
+	#IfWinExist Set Timer Resolution
+		#t::
+	WinActivate Set Timer Resolution
 	return
-	#IfWinNotExist
 }
 
 { ;Joystick ID (Use JoyID Program)
@@ -63,7 +64,7 @@ Layer := 1
 
 { ;Testing
 	
-;#q::	Run % "explorer.exe /select, """ FullFileName """"
+	#q::	Run % "explorer.exe /select, """ FullFileName """"
 	
 	
 	/*
@@ -259,6 +260,10 @@ Layer := 1
 }
 
 
+;Layer initialisation?
+Layer := 1
+
+
 /* ;Layer checker
 	
 	z::
@@ -273,8 +278,9 @@ Layer := 1
 */
 
 
-{ ; Layer modifier
+{ ;Layer modifier
 	CapsLock:: ;Key disabled by "SetCapsLockState, AlwaysOff".
+	
 	Layer := 2
 	if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 200)
 		Layer := 3
@@ -285,51 +291,6 @@ Layer := 1
 
 
 { #if Layer = 1
-
-{ ;Global remapping
-	
-	;#IfWinActive EscapeFromTarkov	
-	
-	XButton2::
-	SetKeyDelay 32, 32
-	send ^t
-	Return
-	
-	XButton1::t
-	
-	~Right & LButton::F1
-	Return
-	
-	~Right & RButton::F2
-	Return
-	
-	~Right & XButton1::F3
-	Return
-	
-	~Right & XButton2::F4
-	Return
-	
-	~Right & WheelUp::
-	send, {F5}
-	Sleep, 100
-	Return
-	
-	~Right & WheelDown::
-	send, {F6}
-	Sleep, 100
-	Return
-	
-	~Right & MButton::F7
-	Return
-	
-	~Right & F8::F9
-	Return
-	
-	~Right & F9::F10
-	Return
-	;#IfWinActive
-	
-}
 
 { ; Mouse Wheel Layer 1
 	~WheelUp:: 
@@ -465,13 +426,54 @@ Layer := 1
 	return
 }
 
-#If ; End of "If Layer = 1".
+{ ; Layer 1 Mouse button remapping and/or Shift.
 	
+	;#IfWinActive EscapeFromTarkov	
+	
+	XButton2::
+	SetKeyDelay 32, 32
+	send ^t
+	Return
+	
+	XButton1::t
+	
+	~Right & LButton::F1
+	Return
+	
+	~Right & RButton::F2
+	Return
+	
+	~Right & XButton1::F3
+	Return
+	
+	~Right & XButton2::F4
+	Return
+	
+	~Right & WheelUp::
+	send, {F5}
+	Sleep, 100
+	Return
+	
+	~Right & WheelDown::
+	send, {F6}
+	Sleep, 100
+	Return
+	
+	~Right & MButton::F7
+	Return
+	
+	~Right & F8::F9
+	Return
+	
+	~Right & F9::F10
+	Return
+	;#IfWinActive
 }
 
+#If	
+	}
+
 { #if Layer = 2 
-
-
 
 { ; Mouse Wheel Layer 2
 	~WheelUp:: 
@@ -684,9 +686,8 @@ v::Del
 	return
 }
 
-#If ; End of "If Layer = 2".
-	
-}
+#If
+	}
 
 { #if Layer = 3
 
@@ -912,33 +913,50 @@ f::h
 	return
 }
 
-#If ; End of "If Layer = 3".
-	
-}
+#If
+	}
 
 
 { ;HotStrings
 	
 ::ahk::AutoHotKey
 ::viei@::vieillefont.antoine@gmail.com
-	
+
 }
 
-#g::
-MouseGetPos, xpos, ypos 
-MsgBox, The cursor is at X%xpos% Y%ypos%. 
-return
-
-#s::
-MouseClick, left, 36, 40
-MouseClick, left, 104, 62
-return
-
-#x::
-MouseMove, 50, -50 , 10, R ;moves the mouse in a box
-MouseMove, -100, 0 , 10, R ;around it's starting position
-MouseMove, 0, 100 , 10, R
-MouseMove, 100, 0 , 10, R
-MouseMove, 0, -100 , 10, R
-MouseMove, -50, 50 , 10, R
-return
+#s:: 
+GetMenuItemBySBar(SBar_text, TopSubText="")
+{ WinGetActiveTitle, Active_title
+if Active_title = Program Manager  ; switches to folder view if on desktop
+{ sSelect := ShellDesktop()
+ShellNavigate(A_Desktop)
+WinWait, Desktop, FolderView
+IfWinNotActive, Desktop, FolderView, WinActivate, Desktop, FolderView
+	WinWaitActive, Desktop, FolderView
+SelectItem(sSelect)
+Sleep, 100
+}
+WinGet, WindowUniqueID, ID, A
+Send, {APPSKEY}
+loop, 70  ; number high enough to cover all menu items
+{ SendInput {DOWN}
+StatusBarGetText, StatusBarText, 1, ahk_id %WindowUniqueID%
+if (StatusBarText = SBar_text)
+{ SendInput {ENTER}
+break
+}
+else if StatusBarText =
+{ SendInput {RIGHT}
+StatusBarGetText, StatusBarText, 1, ahk_id %WindowUniqueID%
+if (StatusBarText != TopSubText)
+	SendInput {LEFT}
+}
+if (A_INDEX = 70)
+	MsgBox Didn't find "%SBar_text%" status bar text `nor no window with status bar available
+}
+if Active_title = Program Manager  ; cleanup; closes desktop folder if opened earlier
+{ WinClose, Desktop, , 2
+IfWinExist, Desktop
+	WinClose, Desktop, , 2
+}
+}

@@ -47,13 +47,28 @@ Layer := 1
 	#t::
 	Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
 	WinWait MSI Afterburner
+	return
 	
 	#IfWinNotExist Set Timer Resolution
+	#t::
 	Run, D:\-  Téléchargements sur D\TimerResolution.exe
 	WinWait Set Timer Resolution
 	WinMinimize Set Timer Resolution
+	WinActivate MSI Afterburner
 	return
 	#IfWinNotExist
+		
+	#IfWinExist MSI Afterburner
+	#t::
+	WinActivate MSI Afterburner
+	WinWait MSI Afterburner
+	#IfWinExist
+	
+	#IfWinExist Set Timer Resolution
+	#t::
+	WinActivate Set Timer Resolution
+	return
+	#IfWinExist
 }
 
 { ;Joystick ID (Use JoyID Program)
@@ -273,7 +288,7 @@ Layer := 1
 */
 
 
-{ ; Layer modifier
+{ ;Layer modifier
 	CapsLock:: ;Key disabled by "SetCapsLockState, AlwaysOff".
 	Layer := 2
 	if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 200)

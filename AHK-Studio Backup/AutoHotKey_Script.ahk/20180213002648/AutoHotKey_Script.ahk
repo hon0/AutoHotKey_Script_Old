@@ -6,7 +6,6 @@ SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 ;#InstallKeybdHook
 ;#InstallMouseHook
-Layer := 1
 
 { ;Monitoring Windows
 	
@@ -19,20 +18,19 @@ Layer := 1
 	Send {Lwin down}{Right}{Right}{Right}{Right}{Lwin up}{LControl down}{k}{LControl Up}
 	;sleep 32
 	
-	#IfWinExist Event Tester
+	IfWinExist Event Tester
 		WinClose Event Tester
 	
 	Run, C:\Program Files (x86)\Thrustmaster\TARGET\Tools\EventTester.exe
 	WinWait, Event Tester
 	SetKeyDelay 0, 32
-	Send {Lwin down}{Right}{Right}{Lwin up}{esc}{esc}{esc}{esc}
-	Sleep 32
+	Send {Lwin down}{Right}{Right}{Lwin up}{esc}
+	Sleep 100
 	MouseClick, left, 36, 40
 	MouseClick, left, 104, 62
 	BlockInput, Off	
 	return
-	#IfWinExist
-		
+	
 	#If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
 		$F5::
 	WinActivate %Title%
@@ -44,16 +42,26 @@ Layer := 1
 
 { ;Before running a Game. Run and/or close Program.
 	#IfWinNotExist MSI Afterburner
-	#t::
+		#t::
 	Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
 	WinWait MSI Afterburner
 	
 	#IfWinNotExist Set Timer Resolution
-	Run, D:\-  Téléchargements sur D\TimerResolution.exe
+		Run, D:\-  Téléchargements sur D\TimerResolution.exe
 	WinWait Set Timer Resolution
 	WinMinimize Set Timer Resolution
+	WinActivate MSI Afterburner
+	Return
+	
+	#IfWinExist MSI Afterburner
+		#t::
+	WinActivate MSI Afterburner
+	WinWait MSI Afterburner
+	
+	#IfWinExist Set Timer Resolution
+		#t::
+	WinActivate Set Timer Resolution
 	return
-	#IfWinNotExist
 }
 
 { ;Joystick ID (Use JoyID Program)
@@ -272,8 +280,11 @@ Layer := 1
 	return
 */
 
+Layer := 1
 
-{ ; Layer modifier
+
+
+{ ;Layer modifier
 	CapsLock:: ;Key disabled by "SetCapsLockState, AlwaysOff".
 	Layer := 2
 	if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 200)
@@ -281,6 +292,7 @@ Layer := 1
 	KeyWait, CapsLock
 	Layer := 1
 	Return
+	#if
 }
 
 
@@ -470,8 +482,8 @@ Layer := 1
 }
 
 { #if Layer = 2 
-
-
+	
+	
 
 { ; Mouse Wheel Layer 2
 	~WheelUp:: 
@@ -685,7 +697,7 @@ v::Del
 }
 
 #If ; End of "If Layer = 2".
-	
+
 }
 
 { #if Layer = 3
@@ -913,7 +925,7 @@ f::h
 }
 
 #If ; End of "If Layer = 3".
-	
+
 }
 
 

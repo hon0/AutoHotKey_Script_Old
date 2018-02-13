@@ -1,12 +1,12 @@
 ﻿#SingleInstance force
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
-Layer := 1
+
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 ;#InstallKeybdHook
 ;#InstallMouseHook
-
+Layer := 1
 
 { ;Monitoring Windows
 	
@@ -36,13 +36,11 @@ SetScrollLockState, AlwaysOff
 	#IfWinExist
 		
 	#If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
-	{
 		$F5::
-		WinActivate %Title%
-		SetKeyDelay 2000, 32
-		Send {F5}
-		return
-	}
+	WinActivate %Title%
+	SetKeyDelay 2000, 32
+	Send {F5}
+	return
 	#IfWinActive
 }
 
@@ -475,29 +473,9 @@ SetScrollLockState, AlwaysOff
 
 { #if Layer = 2 
 
-{ ; Global remapping
-	
-	;#IfWinActive EscapeFromTarkov
-	
-	LButton::F1
-	RButton::F2
-	XButton1::F3
-	XButton2::F4
-	
-	tab::!l
-	w::b
-	x::n
-	c::,
-	v::Del
-	
-	F8::F9
-	F9::F10
-	
-	;#IfWinActive
-}
+
 
 { ; Mouse Wheel Layer 2
-	
 	~WheelUp:: 
 	SetkeyDelay, 0, 32
 	send {PgUp}
@@ -622,6 +600,54 @@ SetScrollLockState, AlwaysOff
 	return
 }
 
+{ ; Layer 2 Mouse button remapping and/or Shift.
+	
+	;#IfWinActive EscapeFromTarkov	
+	
+	LButton::F1
+	Return
+	
+	RButton::F2
+	Return
+	
+	XButton1::F3
+	Return
+	
+	XButton2::F4
+	Return
+	
+	/*
+		WheelUp::
+		send, {F5}
+		Sleep, 100
+		Return
+		
+		WheelDown::
+		send, {F6}
+		Sleep, 100
+		Return
+		
+		
+		MButton::F7
+		Return
+	*/
+	
+	F8::F9
+	Return
+	
+	F9::F10
+	Return
+	;#IfWinActive
+}
+
+tab::!l
+w::b
+x::n
+c::,
+v::Del
+	;f::g
+	;r::t
+
 { ;Layer 2 "f" remapping
 	$f::
 	KeyWait f, t0.200
@@ -665,29 +691,6 @@ SetScrollLockState, AlwaysOff
 }
 
 { #if Layer = 3
-
-{ ; Global remapping
-	
-	;#IfWinActive EscapeFromTarkov	
-	
-	LButton::F1	
-	RButton::F2
-	XButton1::F3
-	XButton2::F4
-	
-	tab::AppsKey
-	w::Numpad0
-	x::Numpad1
-	c::Numpad2
-	v::Numpad3
-	;r::y
-	;f::h
-	
-	F8::F9
-	F9::F10
-	
-	;#IfWinActive
-}
 
 { ; Mouse Wheel Layer 3
 	SetkeyDelay, 0, 32
@@ -824,7 +827,54 @@ SetScrollLockState, AlwaysOff
 	return
 }
 
+{ ; Layer 3 Mouse button remapping and/or Shift.
+	
+	;#IfWinActive EscapeFromTarkov	
+	
+	LButton::F1
+	Return
+	
+	RButton::F2
+	Return
+	
+	XButton1::F3
+	Return
+	
+	XButton2::F4
+	Return
+	
+	/*
+		WheelUp::
+		WheelUp::
+		send, {F5}
+		Sleep, 100
+		Return
+		
+		WheelDown::
+		send, {F6}
+		Sleep, 100
+		Return
+		
+		
+		MButton::F7
+		Return
+	*/
+	
+	F8::F9
+	Return
+	
+	F9::F10
+	Return
+	;#IfWinActive
+}
 
+tab::AppsKey
+w::Numpad0
+x::Numpad1
+c::Numpad2
+v::Numpad3
+	;r::y
+f::h
 
 { ;Layer 3 "f" remapping
 	$f::
@@ -865,7 +915,7 @@ SetScrollLockState, AlwaysOff
 }
 
 #If ; End of "If Layer = 3".
-
+	
 }
 
 

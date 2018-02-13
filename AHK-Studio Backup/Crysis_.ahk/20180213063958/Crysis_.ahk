@@ -290,47 +290,26 @@ SetScrollLockState, AlwaysOff
 
 { #if Layer = 1
 
-{ ;Global remapping
+{ ; Global remapping
 	
 	;#IfWinActive EscapeFromTarkov	
 	
 	XButton2::
-	SetKeyDelay 32, 32
-	send ^t
-	Return
+	KeyWait XButton2, t0.200
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
+	{
+		SendInput {Numpad7 down}
+		KeyWait XButton2
+		SendInput {Numpad7 up}
+	}
+	else
+	{
+		SendInput {Numpad5}{Numpad5}
+		
+	}
+	return
 	
-	XButton1::t
-	
-	~Right & LButton::F1
-	Return
-	
-	~Right & RButton::F2
-	Return
-	
-	~Right & XButton1::F3
-	Return
-	
-	~Right & XButton2::F4
-	Return
-	
-	~Right & WheelUp::
-	send, {F5}
-	Sleep, 100
-	Return
-	
-	~Right & WheelDown::
-	send, {F6}
-	Sleep, 100
-	Return
-	
-	~Right & MButton::F7
-	Return
-	
-	~Right & F8::F9
-	Return
-	
-	~Right & F9::F10
-	Return
 	;#IfWinActive
 	
 }
@@ -443,10 +422,12 @@ SetScrollLockState, AlwaysOff
 	}
 	else
 	{
-		SendInput {SC006 down}
-		sleep 32
-		KeyWait SC006
-		SendInput {SC006 up}
+		;SendInput {SC006 down}
+		;sleep 32
+		;KeyWait SC006
+		;SendInput {SC006 up}
+		send {Numpad5}
+		
 	}
 	return
 	
@@ -461,16 +442,17 @@ SetScrollLockState, AlwaysOff
 	}
 	else
 	{
-		SendInput {SC007 down}
-		sleep 32
-		KeyWait SC007
-		SendInput {SC007 up}
+		;SendInput {SC007 down}
+		;sleep 32
+		;KeyWait SC007
+		;SendInput {SC007 up}
+		send {Numpad5}{Numpad5}{Numpad5}{Numpad5}
 	}
 	return
 }
 
 #If ; End of "If Layer = 1".
-	
+
 }
 
 { #if Layer = 2 

@@ -294,43 +294,15 @@ SetScrollLockState, AlwaysOff
 	
 	;#IfWinActive EscapeFromTarkov	
 	
-	XButton2::
-	SetKeyDelay 32, 32
-	send ^t
-	Return
+	/*
+		XButton2::
+		SetKeyDelay 32, 32
+		send ^t
+		Return
+		
+		XButton1::t
+	*/
 	
-	XButton1::t
-	
-	~Right & LButton::F1
-	Return
-	
-	~Right & RButton::F2
-	Return
-	
-	~Right & XButton1::F3
-	Return
-	
-	~Right & XButton2::F4
-	Return
-	
-	~Right & WheelUp::
-	send, {F5}
-	Sleep, 100
-	Return
-	
-	~Right & WheelDown::
-	send, {F6}
-	Sleep, 100
-	Return
-	
-	~Right & MButton::F7
-	Return
-	
-	~Right & F8::F9
-	Return
-	
-	~Right & F9::F10
-	Return
 	;#IfWinActive
 	
 }
@@ -443,10 +415,12 @@ SetScrollLockState, AlwaysOff
 	}
 	else
 	{
-		SendInput {SC006 down}
-		sleep 32
-		KeyWait SC006
-		SendInput {SC006 up}
+		;SendInput {SC006 down}
+		;sleep 32
+		;KeyWait SC006
+		;SendInput {SC006 up}
+		send {Numpad5}
+
 	}
 	return
 	
@@ -470,7 +444,7 @@ SetScrollLockState, AlwaysOff
 }
 
 #If ; End of "If Layer = 1".
-	
+
 }
 
 { #if Layer = 2 

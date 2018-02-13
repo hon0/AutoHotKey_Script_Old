@@ -294,12 +294,14 @@ SetScrollLockState, AlwaysOff
 	
 	;#IfWinActive EscapeFromTarkov	
 	
-	XButton2::
-	SetKeyDelay 32, 32
-	send ^t
-	Return
-	
-	XButton1::t
+	/*
+		XButton2::
+		SetKeyDelay 32, 32
+		send ^t
+		Return
+		
+		XButton1::t
+	*/
 	
 	~Right & LButton::F1
 	Return

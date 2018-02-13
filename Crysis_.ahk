@@ -56,6 +56,8 @@ SetScrollLockState, AlwaysOff
 		Run, D:\-  Téléchargements sur D\TimerResolution.exe
 	WinWait Set Timer Resolution
 	WinMinimize Set Timer Resolution
+	MsgBox Rat Pro S profile Crysis.
+	MsgBox Razer Orbweaver Profile Crysis.
 	return
 	#IfWinNotExist
 }

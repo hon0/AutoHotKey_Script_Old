@@ -49,217 +49,22 @@ SetScrollLockState, AlwaysOff
 { ;Before running a Game. Run and/or close Program.
 	#IfWinNotExist MSI Afterburner
 		#t::
-		Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
-		WinWait MSI Afterburner
+	Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
+	WinWait MSI Afterburner
 	
 	#IfWinNotExist Set Timer Resolution
 		Run, D:\-  Téléchargements sur D\TimerResolution.exe
-		WinWait Set Timer Resolution
-		WinMinimize Set Timer Resolution
-		return
+	WinWait Set Timer Resolution
+	WinMinimize Set Timer Resolution
+	MsgBox Rat Pro S profile Crysis.
+	return
 	#IfWinNotExist
 }
 
-{ ;Joystick ID (Use JoyID Program)
-	;6Joy = T16000L (See JoyID)
-	;5Joy = Vjoy
-}
-
 { ;Testing
-	
-;#q::	Run % "explorer.exe /select, """ FullFileName """"
-	
-	
-	/*
-		$a::
-		KeyWait, a, T0.1
-		
-		if (ErrorLevel)
-		{
-			Send {b down}
-			keywait a
-			Send {b up}
-		}
-		else {
-			KeyWait, a, D T0.1
-			
-			if (ErrorLevel)
-			{
-				Send {a down}
-				keywait a
-				Send {a up}
-			}
-			
-			else
-			{
-				Send {c down}
-				keywait a
-				Send {c up}
-			}
-			
-		}
-		
-		KeyWait, a
-		return
-	*/
-	
-	/*
-		
-		{
-			$f1::
-			{
-				count++
-				settimer, actions, 333
-			}
-			return
-			
-			actions:
-			{
-				if (count = 1)
-				{
-					send {F1}
-				}
-				else if (count = 2)
-				{
-					send {F2}
-				}
-				else if (count = 3)
-				{
-					send {F3}
-				}
-				count := 0
-			}
-			return	
-			
-			
-			SetTimer, WatchAxis, 5
-			return
-			
-			WatchAxis:
-			GetKeyState, 6JoyX, 6JoyX  ; Get position of X axis.
-			GetKeyState, 6JoyY, 6JoyY  ; Get position of Y axis.
-			KeyToHoldDownPrev = %KeyToHoldDown%  ; Prev now holds the key that was down before (if any).
-			
-			if 6JoyX > 70
-				KeyToHoldDown = Right
-			else if 6JoyX < 30
-				KeyToHoldDown = Left
-			else if 6JoyY > 70
-				KeyToHoldDown = Down
-			else if 6JoyY < 30
-				KeyToHoldDown = Up
-			else
-				KeyToHoldDown =
-			
-			if KeyToHoldDown = %KeyToHoldDownPrev%  ; The correct key is already down (or no key is needed).
-				return  ; Do nothing.
-			
-	; Otherwise, release the previous key and press down the new key:
-			SetKeyDelay -1  ; Avoid delays between keystrokes.
-			if KeyToHoldDownPrev   ; There is a previous key to release.
-				Send, {%KeyToHoldDownPrev% up}  ; Release it.
-			if KeyToHoldDown   ; There is a key to press down.
-				Send, {%KeyToHoldDown% down}  ; Press it down.
-			return
-			
-			
-			
-			6Joy1::
-			If GetKeyState("6Joy2", "P")=1
-			{
-				send {d Down}
-				keywait 6Joy1
-				send, {d Up}
-			}
-			else 
-				if GetKeyState("6joy3", "p")=1
-				{
-					send {v Down}
-					keywait 6Joy1
-					send, {v Up}
-				}
-			Else 
-			{
-				send {c Down}
-				keywait 6Joy1
-				send, {c Up}
-			}
-			Return
-			
-			
-			$f8::
-			{
-				count++
-				settimer, actionsF8, 200
-			}
-			return
-			
-			actionsF8:
-			{
-				if (count = 1)
-				{
-					send {F8}
-				}
-				else if (count = 2)
-				{
-					send {F9}
-				}
-				else if (count = 3)
-				{
-					send {F10}
-				}
-				count := 0
-			}
-			return
-		}
-	*/
-	
-	/* ; Mouse button remapping and/or Shift.
-		
-		{
-		;#IfWinActive EscapeFromTarkov	
-			
-			XButton2::
-			SetKeyDelay 32, 32
-			send ^t
-			Return
-			
-			XButton1::t
-			
-			~Right & LButton::F1
-			Return
-			
-			~Right & RButton::F2
-			Return
-			
-			~Right & XButton1::F3
-			Return
-			
-			~Right & XButton2::F4
-			Return
-			
-			~Right & WheelUp::
-			send, {F5}
-			Sleep, 100
-			Return
-			
-			~Right & WheelDown::
-			send, {F6}
-			Sleep, 100
-			Return
-			
-			~Right & MButton::F7
-			Return
-			
-			~Right & F8::F9
-			Return
-			
-			~Right & F9::F10
-			Return
-		;#IfWinActive
-		}
-	*/	
-	
+
+
+
 }
 
 
@@ -290,47 +95,41 @@ SetScrollLockState, AlwaysOff
 
 { #if Layer = 1
 
-{ ;Global remapping
+{ ; Global remapping
 	
 	;#IfWinActive EscapeFromTarkov	
 	
+	Numpad5::
+	{
+		BlockInput, On
+		SendInput {Numpad2 Down}
+		;SendInput {Numpad5}{Numpad5}
+		MouseMove, 400, -150 , 2, R
+		SendInput {Numpad2 Up}
+		BlockInput, Off
+		return
+	}
+	
 	XButton2::
-	SetKeyDelay 32, 32
-	send ^t
-	Return
+	KeyWait XButton2, t0.100
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
+	{
+		SendInput {Numpad7 down}
+		KeyWait XButton2
+		SendInput {Numpad7 up}
+	}
+	else
+	{
+		BlockInput, On
+		SendInput {Numpad2 Down}
+		;SendInput {Numpad5}{Numpad5}
+		MouseMove, 0, -400 , 2, R
+		SendInput {Numpad2 Up}
+		BlockInput, Off		
+	}
+	return
 	
-	XButton1::t
-	
-	~Right & LButton::F1
-	Return
-	
-	~Right & RButton::F2
-	Return
-	
-	~Right & XButton1::F3
-	Return
-	
-	~Right & XButton2::F4
-	Return
-	
-	~Right & WheelUp::
-	send, {F5}
-	Sleep, 100
-	Return
-	
-	~Right & WheelDown::
-	send, {F6}
-	Sleep, 100
-	Return
-	
-	~Right & MButton::F7
-	Return
-	
-	~Right & F8::F9
-	Return
-	
-	~Right & F9::F10
-	Return
 	;#IfWinActive
 	
 }
@@ -443,10 +242,13 @@ SetScrollLockState, AlwaysOff
 	}
 	else
 	{
-		SendInput {SC006 down}
-		sleep 32
-		KeyWait SC006
-		SendInput {SC006 up}
+		BlockInput, On
+		SendInput {Numpad2 Down}
+		;SendInput {Numpad5}{Numpad5}
+		MouseMove, -400, -150 , 2, R
+		SendInput {Numpad2 Up}
+		BlockInput, Off
+		
 	}
 	return
 	
@@ -461,10 +263,12 @@ SetScrollLockState, AlwaysOff
 	}
 	else
 	{
-		SendInput {SC007 down}
-		sleep 32
-		KeyWait SC007
-		SendInput {SC007 up}
+		BlockInput, On
+		SendInput {Numpad2 Down}
+		;SendInput {Numpad5}{Numpad5}
+		MouseMove, 400, 150 , 2, R
+		SendInput {Numpad2 Up}
+		BlockInput, Off
 	}
 	return
 }
@@ -865,7 +669,7 @@ SetScrollLockState, AlwaysOff
 }
 
 #If ; End of "If Layer = 3".
-
+	
 }
 
 

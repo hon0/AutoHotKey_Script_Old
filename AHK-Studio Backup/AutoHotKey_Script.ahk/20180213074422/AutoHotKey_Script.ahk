@@ -49,14 +49,14 @@ SetScrollLockState, AlwaysOff
 { ;Before running a Game. Run and/or close Program.
 	#IfWinNotExist MSI Afterburner
 		#t::
-		Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
-		WinWait MSI Afterburner
+	Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
+	WinWait MSI Afterburner
 	
 	#IfWinNotExist Set Timer Resolution
 		Run, D:\-  Téléchargements sur D\TimerResolution.exe
-		WinWait Set Timer Resolution
-		WinMinimize Set Timer Resolution
-		return
+	WinWait Set Timer Resolution
+	WinMinimize Set Timer Resolution
+	return
 	#IfWinNotExist
 }
 

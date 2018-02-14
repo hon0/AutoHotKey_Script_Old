@@ -53,8 +53,8 @@ SetScrollLockState, AlwaysOff
 		{
 			Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
 			WinWait MSI Afterburner
-			MsgBox Rat Pro S Default profile.
-			MsgBox Razer Orbweaver Profile AHK_The_Settlers_7.
+			MsgBox Rat Pro S profile Crysis.
+			MsgBox Razer Orbweaver Profile AHK_Crysis.
 		}
 		Else If !WinExist("Set Timer Resolution")
 		{

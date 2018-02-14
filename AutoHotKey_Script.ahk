@@ -47,18 +47,31 @@ SetScrollLockState, AlwaysOff
 }
 
 { ;Before running a Game. Run and/or close Program.
-	#IfWinNotExist MSI Afterburner
-		#t::
-		Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
-		WinWait MSI Afterburner
 	
-	#IfWinNotExist Set Timer Resolution
-		Run, D:\-  Téléchargements sur D\TimerResolution.exe
-		WinWait Set Timer Resolution
-		WinMinimize Set Timer Resolution
+	#t::
+	{
+		If !WinExist("MSI Afterburner")
+		{
+			Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
+			WinWait MSI Afterburner
+			MsgBox Check Mouse and keyboard profile!
+		}
+		Else If !WinExist("Set Timer Resolution")
+		{
+			Run, D:\-  Téléchargements sur D\TimerResolution.exe
+			WinWait Set Timer Resolution
+			WinMinimize Set Timer Resolution
+			WinWait MSI Afterburner
+		}
+		Else if WinExist("MSI Afterburner") || WinExist("Set Timer Resolution")
+		{
+			WinActivate, MSI Afterburner
+			WinActivate, Set Timer Resolution
+		}
 		return
-	#IfWinNotExist
-}
+	}	
+	
+} ;Before running a Game. Run and/or close Program.
 
 { ;Joystick ID (Use JoyID Program)
 	;6Joy = T16000L (See JoyID)

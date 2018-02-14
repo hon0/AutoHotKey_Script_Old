@@ -51,29 +51,52 @@ SetScrollLockState, AlwaysOff
 	
 	#t::
 	{
-		If !WinExist("MSI Afterburner")
-		{
-			Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
-			WinWait MSI Afterburner
-			MsgBox Rat Pro S profile Crysis.
-			MsgBox Razer Orbweaver Profile AHK_Crysis.
+		If ProcessExist("MSIAfterburner.exe"){
+			WinActivate MSI Afterburner
+			else
+				Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
 		}
-		Else If !WinExist("Set Timer Resolution")
-		{
-			Run, D:\-  Téléchargements sur D\TimerResolution.exe
-			WinWait Set Timer Resolution
-			WinMinimize Set Timer Resolution
-			WinWait MSI Afterburner
-		}
-		Else if WinExist("MSI Afterburner") || WinExist("Set Timer Resolution")
-		{
-			WinActivate, MSI Afterburner
-			WinActivate, Set Timer Resolution
+		Else if ProcessExist("TimerResolution.exe"){
+			WinActivate Set Timer Resolution
+			Else
+				run, D:\-  Téléchargements sur D\TimerResolution.exe
 		}
 		return
-	}	
-	
-} ;Before running a Game. Run and/or close Program.
+		
+		ProcessExist(Name){
+			Process,Exist,%Name%
+			return Errorlevel
+		}
+		
+		
+		
+		/*
+			#t::
+			{
+				If !WinExist("MSI Afterburner")
+				{
+					Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
+					WinWait MSI Afterburner
+					MsgBox Rat Pro S profile Crysis.
+					MsgBox Razer Orbweaver Profile AHK_Crysis.
+				}
+				Else If !WinExist("Set Timer Resolution")
+				{
+					Run, D:\-  Téléchargements sur D\TimerResolution.exe
+					WinWait Set Timer Resolution
+					WinMinimize Set Timer Resolution
+					WinWait MSI Afterburner
+				}
+				Else if WinExist("MSI Afterburner") || WinExist("Set Timer Resolution")
+				{
+					WinActivate, MSI Afterburner
+					WinActivate, Set Timer Resolution
+				}
+				return
+			}	
+		*/
+		
+	} ;Before running a Game. Run and/or close Program.
 	
 	
 	

@@ -17,6 +17,7 @@ SetScrollLockState, AlwaysOff
 	WinWait, %Title%
 	SetKeyDelay 0, 32
 	Send {Lwin down}{Right}{Right}{Right}{Right}{Lwin up}{LControl down}{k}{LControl Up}
+	;sleep 32
 	
 	#IfWinExist Event Tester
 	{

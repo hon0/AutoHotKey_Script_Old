@@ -181,83 +181,79 @@ SetScrollLockState, AlwaysOff
 	
 	
 	
-	{ ; Numpad1
-		Numpad1::
-		PixelGetColor, color, 1889, 95
-		if color = 0x20396F 
-		{
-			MouseGetPos, xpos, ypos 
-			BlockInput, On
-			MouseClick, left, 1732, 171
-			MouseMove, xpos, ypos 
-			BlockInput, Off
-			return
-		}
-		Else
-		{
-			MouseGetPos, xpos, ypos 
-			BlockInput, On
-			SetKeyDelay 32, 32
-			Send {NumpadEnter}
+	
+	Numpad1::
+	PixelGetColor, color, 1889, 95
+	if color = 0x20396F 
+	{
+		MouseGetPos, xpos, ypos 
+		BlockInput, On
+		MouseClick, left, 1732, 171
+		MouseMove, xpos, ypos 
+		BlockInput, Off
+		return
+	}
+	Else
+	{
+		MouseGetPos, xpos, ypos 
+		BlockInput, On
+		SetKeyDelay 32, 32
+		Send {NumpadEnter}
 		;InMenu := 1
-			MouseClick, left, 1732, 171
-			MouseMove, xpos, ypos 
-			BlockInput, Off
-		}
-		Return
+		MouseClick, left, 1732, 171
+		MouseMove, xpos, ypos 
+		BlockInput, Off
+	}
+	Return
+	
+	Numpad2::
+	PixelGetColor, color, 1889, 95
+	if color = 0x20396F 
+	{
+		MouseGetPos, xpos, ypos 
+		BlockInput, On
+		MouseClick, left, 1732, 279
+		MouseMove, xpos, ypos 
+		BlockInput, Off
+	}
+	Else
+	{
+		MouseGetPos, xpos, ypos 
+		BlockInput, On
+		SetKeyDelay 32, 32
+		Send {NumpadEnter}
+		MouseClick, left, 1732, 279
+		MouseMove, xpos, ypos 
+		BlockInput, Off
+	}
+	Return
+	
+	Numpad3::
+	PixelGetColor, color, 1889, 95
+	if color = 0x20396F 
+	{
+		MouseGetPos, xpos, ypos 
+		BlockInput, On
+		MouseClick, left, 1732, 135
+		MouseMove, xpos, ypos 
+		BlockInput, Off
+		return
+	}
+	else
+	{
+		MouseGetPos, xpos, ypos 
+		BlockInput, On
+		SetKeyDelay 32, 32
+		Send {NumpadEnter}
+		MouseClick, left, 1732, 135
+		MouseMove, xpos, ypos 
+		BlockInput, Off
 	}
 	
-	{ ; Numpad 2
-		Numpad2::
-		PixelGetColor, color, 1889, 95
-		if color = 0x20396F 
-		{
-			MouseGetPos, xpos, ypos 
-			BlockInput, On
-			MouseClick, left, 1732, 279
-			MouseMove, xpos, ypos 
-			BlockInput, Off
-		}
-		Else
-		{
-			MouseGetPos, xpos, ypos 
-			BlockInput, On
-			SetKeyDelay 32, 32
-			Send {NumpadEnter}
-			MouseClick, left, 1732, 279
-			MouseMove, xpos, ypos 
-			BlockInput, Off
-		}
-		Return
-		
-	}
-	
-	{ ; Numpad 3
-		Numpad3::
-		PixelGetColor, color, 1889, 95
-		if color = 0x20396F 
-		{
-			MouseGetPos, xpos, ypos 
-			BlockInput, On
-			MouseClick, left, 1732, 135
-			MouseMove, xpos, ypos 
-			BlockInput, Off
-			return
-		}
-		else
-		{
-			MouseGetPos, xpos, ypos 
-			BlockInput, On
-			SetKeyDelay 32, 32
-			Send {NumpadEnter}
-			MouseClick, left, 1732, 135
-			MouseMove, xpos, ypos 
-			BlockInput, Off
-		}
-		Return
-	}
-	
-} ; End of Global remapping
+}
+
+
+
 
 { ; Mouse Wheel Layer 1
 	~WheelUp:: 
@@ -489,8 +485,8 @@ SetScrollLockState, AlwaysOff
 			MouseClick, left, 1732, 208
 			MouseMove, xpos, ypos 
 			BlockInput, Off
+			return
 		}
-		Return
 	}
 	
 	{ ; c remapping Layer 2
@@ -515,141 +511,140 @@ SetScrollLockState, AlwaysOff
 			MouseClick, left, 1732, 242
 			MouseMove, xpos, ypos 
 			BlockInput, Off
+			return
 		}
+	}
+	
+	
+	{ ; Mouse Wheel Layer 2
+		~WheelUp:: 
+		InMenu := 0
+		SetkeyDelay, 0, 32
+		send {PgUp}
 		Return
+		
+		~WheelDown:: 
+		InMenu := 0
+		SetkeyDelay, 0, 32
+		send {PgDn}
+		Return
+		
+	}	
+	
+	{ ;All Layer 2 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
+		
+		$SC002:: ;[1, F1], [7, F7], [F13, F19]
+		KeyWait SC002, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {F7 down}
+			KeyWait SC002
+			SendInput {F7 up}
+		}
+		else
+		{
+			SendInput {SC008 down}
+			sleep 32
+			KeyWait SC002
+			SendInput {SC008 up}
+		}
+		return
+		
+		
+		$SC003:: ;[2, F2], [8, F8], [F14, F20]
+		KeyWait SC003, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {F8 down}
+			KeyWait SC003
+			SendInput {F8 up}
+		}
+		else
+		{
+			SendInput {SC009 down}
+			sleep 32
+			KeyWait SC003
+			SendInput {SC009 up}
+		}
+		return
+		
+		$SC004:: ;[3, F3], [9, F9], [F15, F21]
+		KeyWait SC004, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {F9 down}
+			KeyWait SC004
+			SendInput {F9 up}
+		}
+		else
+		{
+			SendInput {SC00A down}
+			sleep 32
+			KeyWait SC004
+			SendInput {SC00A up}
+		}
+		return
+		
+		$SC005:: ;[4, F4], [10, F10], [F16, F22]
+		KeyWait SC005, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {F10 down}
+			KeyWait SC005
+			SendInput {F10 up}
+		}
+		else
+		{
+			SendInput {SC00B down}
+			sleep 32
+			KeyWait SC005
+			SendInput {SC00B up}
+		}
+		return
+		
+		$SC006:: ;[5, F5], [11, F11], [F17, F23]
+		KeyWait SC006, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {F11 down}
+			KeyWait SC006
+			SendInput {F11 up}
+		}
+		else
+		{
+			SendInput {SC00C down}
+			sleep 32
+			KeyWait SC006
+			SendInput {SC00C up}
+		}
+		return
+		
+		$SC007:: ;[6, F6], [12, F12], [F18, F24]
+		KeyWait SC007, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {F12 down}
+			KeyWait SC007
+			SendInput {F12 up}
+		}
+		else
+		{
+			SendInput {SC00D down}
+			sleep 32
+			KeyWait SC007
+			SendInput {SC00D up}
+		}
+		return
 	}
 	
-} ; End of Global remapping Layer 2
-
-{ ; Mouse Wheel Layer 2
-	~WheelUp:: 
-	InMenu := 0
-	SetkeyDelay, 0, 32
-	send {PgUp}
-	Return
-	
-	~WheelDown:: 
-	InMenu := 0
-	SetkeyDelay, 0, 32
-	send {PgDn}
-	Return
-	
-}	
-
-{ ;All Layer 2 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
-	
-	$SC002:: ;[1, F1], [7, F7], [F13, F19]
-	KeyWait SC002, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {F7 down}
-		KeyWait SC002
-		SendInput {F7 up}
-	}
-	else
-	{
-		SendInput {SC008 down}
-		sleep 32
-		KeyWait SC002
-		SendInput {SC008 up}
-	}
-	return
-	
-	
-	$SC003:: ;[2, F2], [8, F8], [F14, F20]
-	KeyWait SC003, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {F8 down}
-		KeyWait SC003
-		SendInput {F8 up}
-	}
-	else
-	{
-		SendInput {SC009 down}
-		sleep 32
-		KeyWait SC003
-		SendInput {SC009 up}
-	}
-	return
-	
-	$SC004:: ;[3, F3], [9, F9], [F15, F21]
-	KeyWait SC004, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {F9 down}
-		KeyWait SC004
-		SendInput {F9 up}
-	}
-	else
-	{
-		SendInput {SC00A down}
-		sleep 32
-		KeyWait SC004
-		SendInput {SC00A up}
-	}
-	return
-	
-	$SC005:: ;[4, F4], [10, F10], [F16, F22]
-	KeyWait SC005, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {F10 down}
-		KeyWait SC005
-		SendInput {F10 up}
-	}
-	else
-	{
-		SendInput {SC00B down}
-		sleep 32
-		KeyWait SC005
-		SendInput {SC00B up}
-	}
-	return
-	
-	$SC006:: ;[5, F5], [11, F11], [F17, F23]
-	KeyWait SC006, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {F11 down}
-		KeyWait SC006
-		SendInput {F11 up}
-	}
-	else
-	{
-		SendInput {SC00C down}
-		sleep 32
-		KeyWait SC006
-		SendInput {SC00C up}
-	}
-	return
-	
-	$SC007:: ;[6, F6], [12, F12], [F18, F24]
-	KeyWait SC007, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {F12 down}
-		KeyWait SC007
-		SendInput {F12 up}
-	}
-	else
-	{
-		SendInput {SC00D down}
-		sleep 32
-		KeyWait SC007
-		SendInput {SC00D up}
-	}
-	return
-}
-
-#If ; End of If Layer 2
-	
+	#If ; End of If Layer 2
+		
 }
 
 { #if Layer = 3

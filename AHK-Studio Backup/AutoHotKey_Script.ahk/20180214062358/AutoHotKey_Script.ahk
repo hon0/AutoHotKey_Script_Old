@@ -17,6 +17,7 @@ SetScrollLockState, AlwaysOff
 	WinWait, %Title%
 	SetKeyDelay 0, 32
 	Send {Lwin down}{Right}{Right}{Right}{Right}{Lwin up}{LControl down}{k}{LControl Up}
+	;sleep 32
 	
 	#IfWinExist Event Tester
 	{
@@ -80,7 +81,6 @@ SetScrollLockState, AlwaysOff
 { ;Testing
 	
 ;#q::	Run % "explorer.exe /select, """ FullFileName """"
-	
 	
 	
 	/*
@@ -884,7 +884,7 @@ SetScrollLockState, AlwaysOff
 
 { ;HotStrings
 	
-:*:ahk::AutoHotKey
+::ahk::AutoHotKey
 ::viei@::vieillefont.antoine@gmail.com
 	
 }

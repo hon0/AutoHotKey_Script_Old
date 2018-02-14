@@ -77,40 +77,11 @@ SetScrollLockState, AlwaysOff
 
 { ;Testing	
 	
-	/* ; Pixel color as as condition
-		{ ; Pixel color as as condition
-			!#z::
-			MouseGetPos, xpos, ypos 	
-			PixelGetColor, color, xpos, xpos
-			MsgBox The color at X%xpos% Y%ypos% is %color%.
-			return
-			
-			{ ; Numpad1
-				Numpad1::
-				PixelGetColor, color, 1889, 95
-				if color = 0x20396F 
-				{
-					MouseGetPos, xpos, ypos 
-					BlockInput, On
-					MouseClick, left, 1732, 171
-					MouseMove, xpos, ypos 
-					BlockInput, Off
-					return
-				}
-				Else
-				{
-					MouseGetPos, xpos, ypos 
-					BlockInput, On
-					SetKeyDelay 32, 32
-					Send {NumpadEnter}
-					MouseClick, left, 1732, 171
-					MouseMove, xpos, ypos 
-					BlockInput, Off
-				}
-				Return
-			}
-		}
-	*/
+	!#z::
+	MouseGetPos, xpos, ypos 	
+	PixelGetColor, color, xpos, xpos
+	MsgBox The color at X%xpos% Y%ypos% is %color%.
+	return
 	
 }
 
@@ -129,14 +100,14 @@ SetScrollLockState, AlwaysOff
 { ; Global remapping
 	
 	; All 3 layer remapping
-	
+
 }
 
 
 { #if Layer = 1
 
 { ; Global remapping
-	
+		
 	XButton2::
 	SetKeyDelay 32, 32
 	send, ^(

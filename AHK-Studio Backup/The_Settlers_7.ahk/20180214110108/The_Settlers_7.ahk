@@ -77,7 +77,7 @@ SetScrollLockState, AlwaysOff
 
 { ;Testing	
 	
-	/* ; Pixel color as as condition
+	/*
 		{ ; Pixel color as as condition
 			!#z::
 			MouseGetPos, xpos, ypos 	

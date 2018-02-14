@@ -79,8 +79,40 @@ SetScrollLockState, AlwaysOff
 
 { ;Testing
 	
-;#q::	Run % "explorer.exe /select, """ FullFileName """"
-	
+	/*
+		{ ; Pixel color as as condition
+			!#z::
+			MouseGetPos, xpos, ypos 	
+			PixelGetColor, color, xpos, xpos
+			MsgBox The color at X%xpos% Y%ypos% is %color%.
+			return
+			
+			{ ; Numpad1
+				Numpad1::
+				PixelGetColor, color, 1889, 95
+				if color = 0x20396F 
+				{
+					MouseGetPos, xpos, ypos 
+					BlockInput, On
+					MouseClick, left, 1732, 171
+					MouseMove, xpos, ypos 
+					BlockInput, Off
+					return
+				}
+				Else
+				{
+					MouseGetPos, xpos, ypos 
+					BlockInput, On
+					SetKeyDelay 32, 32
+					Send {NumpadEnter}
+					MouseClick, left, 1732, 171
+					MouseMove, xpos, ypos 
+					BlockInput, Off
+				}
+				Return
+			}
+		}
+	*/
 	
 	
 	/*
@@ -224,52 +256,6 @@ SetScrollLockState, AlwaysOff
 				count := 0
 			}
 			return
-		}
-	*/
-	
-	/* ; Mouse button remapping and/or Shift.
-		
-		{
-		;#IfWinActive EscapeFromTarkov	
-			
-			XButton2::
-			SetKeyDelay 32, 32
-			send ^t
-			Return
-			
-			XButton1::t
-			
-			~Right & LButton::F1
-			Return
-			
-			~Right & RButton::F2
-			Return
-			
-			~Right & XButton1::F3
-			Return
-			
-			~Right & XButton2::F4
-			Return
-			
-			~Right & WheelUp::
-			send, {F5}
-			Sleep, 100
-			Return
-			
-			~Right & WheelDown::
-			send, {F6}
-			Sleep, 100
-			Return
-			
-			~Right & MButton::F7
-			Return
-			
-			~Right & F8::F9
-			Return
-			
-			~Right & F9::F10
-			Return
-		;#IfWinActive
 		}
 	*/	
 	

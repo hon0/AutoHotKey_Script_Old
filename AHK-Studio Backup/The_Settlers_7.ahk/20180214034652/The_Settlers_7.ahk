@@ -35,10 +35,10 @@ SetScrollLockState, AlwaysOff
 		
 	If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
 	{
-		$F5::
+		~F5::
 		{
 			WinActivate %Title%
-			SetKeyDelay 32, 32
+			SetKeyDelay 2000, 32
 			Send {F5}
 			return
 		}

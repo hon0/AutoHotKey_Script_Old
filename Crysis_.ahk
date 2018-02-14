@@ -2,6 +2,7 @@
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
 Layer := 1
+InGame := 0
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 ;#InstallKeybdHook
@@ -46,27 +47,44 @@ SetScrollLockState, AlwaysOff
 	#IfWinActive
 }
 
-{ ;Before running a Game. Run and/or close Program.
-	#IfWinNotExist MSI Afterburner
-		#t::
-	Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
-	WinWait MSI Afterburner
+ ;Before running a Game. Run and/or close Program.
+{ 
 	
-	#IfWinNotExist Set Timer Resolution
-		Run, D:\-  Téléchargements sur D\TimerResolution.exe
-	WinWait Set Timer Resolution
-	WinMinimize Set Timer Resolution
+	/*
+		#if !WinExist("MSI Afterburner")
+			#t::				Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
+		WinWait MSI Afterburner
+		
+		#if !WinExist("Set Timer Resolution") 
+			#t::				Run, D:\-  Téléchargements sur D\TimerResolution.exe
+		WinWait Set Timer Resolution
+		WinMinimize Set Timer Resolution
+		#if
+	*/
+	#t::	
 	MsgBox Rat Pro S profile Crysis.
-	MsgBox Razer Orbweaver Profile Crysis.
+	MsgBox Razer Orbweaver Profile AHK_Crysis.
 	return
-	#IfWinNotExist
+	
 }
 
-{ ;Testing
 
-
-
-}
+/* ;Testing
+	{	
+		#If InGame = 0
+			#g::
+		InGame :=1
+		return
+		#If InGame = 1
+			#g::
+		InGame :=0
+		return
+		#If
+			
+		^#g::MsgBox %InGame%
+		return
+	}
+*/
 
 
 /* ;Layer checker
@@ -93,12 +111,9 @@ SetScrollLockState, AlwaysOff
 	Return
 }
 
-
 { #if Layer = 1
 
 { ; Global remapping
-	
-	;#IfWinActive EscapeFromTarkov	
 	
 	Numpad5::
 	{
@@ -111,8 +126,23 @@ SetScrollLockState, AlwaysOff
 		return
 	}
 	
+	XButton1::
+	KeyWait XButton1, t0.200
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
+	{
+		SendInput {Backspace down}
+		KeyWait XButton1
+		SendInput {Backspace up}
+	}
+	else
+	{
+		SendInput i	
+	}
+	return
+	
 	XButton2::
-	KeyWait XButton2, t0.100
+	KeyWait XButton2, t0.200
 	t:= A_TimeSinceThisHotkey
 	If ErrorLevel
 	{
@@ -130,8 +160,6 @@ SetScrollLockState, AlwaysOff
 		BlockInput, Off		
 	}
 	return
-	
-	;#IfWinActive
 	
 }
 

@@ -38,7 +38,7 @@ SetScrollLockState, AlwaysOff
 		$F5::
 		{
 			WinActivate %Title%
-			SetKeyDelay 32, 32
+			SetKeyDelay 2000, 32
 			Send {F5}
 			return
 		}

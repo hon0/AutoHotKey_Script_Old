@@ -21,7 +21,7 @@ SetScrollLockState, AlwaysOff
 	;sleep 32
 	
 	#IfWinExist Event Tester
-		WinClose Event Tester
+	WinClose Event Tester
 	
 	Run, C:\Program Files (x86)\Thrustmaster\TARGET\Tools\EventTester.exe
 	WinWait, Event Tester
@@ -32,43 +32,30 @@ SetScrollLockState, AlwaysOff
 	BlockInput, Off	
 	return
 	#IfWinExist
-		
-	If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
-	{
-		$F5::
-		{
-			WinActivate %Title%
-			SetKeyDelay 32, 32
-			Send {F5}
-			return
-		}
-	}
+	
+	#If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
+	$F5::
+	WinActivate %Title%
+	SetKeyDelay 2000, 32
+	Send {F5}
+	return
+	#IfWinActive
 }
 
 { ;Before running a Game. Run and/or close Program.
-	
+	#IfWinNotExist MSI Afterburner
 	#t::
-	{
-		If !WinExist("MSI Afterburner")
-		{
-			Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
-			WinWait MSI Afterburner
-		}
-		Else If !WinExist("Set Timer Resolution")
-		{
-			Run, D:\-  Téléchargements sur D\TimerResolution.exe
-			WinWait Set Timer Resolution
-			WinMinimize Set Timer Resolution
-			WinWait MSI Afterburner
-		}
-		Else if WinExist("MSI Afterburner") || WinExist("Set Timer Resolution")
-		{
-			WinActivate, MSI Afterburner
-			WinActivate, Set Timer Resolution
-		}
-		return
-	}
-} ;Before running a Game. Run and/or close Program.
+	Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
+	WinWait MSI Afterburner
+	
+	#IfWinNotExist Set Timer Resolution
+	Run, D:\-  Téléchargements sur D\TimerResolution.exe
+	WinWait Set Timer Resolution
+	WinMinimize Set Timer Resolution
+	WinActivate MSI Afterburner
+	Return
+	#IfWinNotExist
+}
 
 
 

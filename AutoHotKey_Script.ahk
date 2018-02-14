@@ -894,3 +894,5 @@ MouseMove, 100, 0 , 10, R
 MouseMove, 0, -100 , 10, R
 MouseMove, -50, 50 , 10, R
 return
+
+^!s::Suspend

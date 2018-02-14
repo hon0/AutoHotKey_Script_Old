@@ -33,16 +33,13 @@ SetScrollLockState, AlwaysOff
 	return
 	#IfWinExist
 		
-	If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
-	{
+	#If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
 		$F5::
-		{
-			WinActivate %Title%
-			SetKeyDelay 32, 32
-			Send {F5}
-			return
-		}
-	}
+	WinActivate %Title%
+	SetKeyDelay 2000, 32
+	Send {F5}
+	return
+	#IfWinActive
 }
 
 { ;Before running a Game. Run and/or close Program.

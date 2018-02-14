@@ -4,6 +4,7 @@
 Layer := 1
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
+Process, Priority, , A
 ;#InstallKeybdHook
 ;#InstallMouseHook
 

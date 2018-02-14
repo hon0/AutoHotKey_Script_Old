@@ -2,6 +2,7 @@
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
 Layer := 1
+Process, Priority, , A
 
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff

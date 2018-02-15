@@ -8,6 +8,8 @@ Process, Priority, , A
 ;#InstallKeybdHook
 ;#InstallMouseHook
 
+#F1::ExitApp
+
 
 { ;Monitoring Windows
 	
@@ -46,8 +48,6 @@ Process, Priority, , A
 }
 
 { ;Before running a Game. Run and/or close Program.
-	
-	#F1::ExitApp
 	
 	#t::
 	{

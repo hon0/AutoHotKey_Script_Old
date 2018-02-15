@@ -1,7 +1,13 @@
 ﻿#SingleInstance force
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
-Layer := 1
+
+Layer := 1 ; To initialise my 3 layer keymap.
+
+; Crounch and Prone to deal with toggle.
+Crounch := 0
+Prone := 0
+
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
@@ -18,6 +24,7 @@ Process, Priority, , A
 	WinWait, %Title%
 	SetKeyDelay 0, 32
 	Send {Lwin down}{Right}{Right}{Right}{Right}{Lwin up}{LControl down}{k}{LControl Up}
+	;sleep 32
 	
 	#IfWinExist Event Tester
 	{
@@ -34,7 +41,7 @@ Process, Priority, , A
 		return
 	}
 	#IfWinExist
-	
+		
 	#If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
 	{
 		$F5::
@@ -44,41 +51,9 @@ Process, Priority, , A
 		return
 	}
 	#IfWinActive
-	
-	{ ; Try Icon If Pause and/or Suspend
-
-		OnMessage(0x111,"WM_COMMAND")
-		return
-		
-		WM_Command(wP) {
-			
-			static Suspend:=65305, Pause:=65306
-			
-			If (wP = Suspend)
-				If !A_IsSuspended
-					Menu, Tray, Icon, Shell32.dll, 132, 1
-			Else If A_IsPaused
-				Menu, Tray, Icon, Shell32.dll, 110, 1
-			Else
-				Menu, Tray, Icon, %A_AhkPath%
-			
-			
-			Else If (wP = Pause)
-				If !A_IsPaused
-					Menu, Tray, Icon, Shell32.dll, 110, 1
-			Else If A_IsSuspended
-				Menu, Tray, Icon, Shell32.dll, 132, 1
-			Else
-				Menu, Tray, Icon, %A_AhkPath%
-		}	
-	}
-	
 }
 
 { ;Before running a Game. Run and/or close Program.
-	
-	#F1::Suspend, Toggle
-	#F4::ExitApp
 	
 	#t::
 	{
@@ -86,7 +61,8 @@ Process, Priority, , A
 		{
 			Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
 			WinWait MSI Afterburner
-			MsgBox Check Mouse and keyboard profile!
+			MsgBox Rat Pro S profile Crysis.
+			MsgBox Razer Orbweaver Profile AHK_Crysis.
 		}
 		Else If !WinExist("Set Timer Resolution")
 		{
@@ -105,204 +81,32 @@ Process, Priority, , A
 	
 } ;Before running a Game. Run and/or close Program.
 
-{ ;Joystick ID (Use JoyID Program)
-	;6Joy = T16000L (See JoyID)
-	;5Joy = Vjoy
-}
+;Testing
 
-{ ;Testing
-	
-	/* ; If prior key ""
-		{ ; If prior key ""
-			m::
-			Send o
-			if (A_PriorKey = "space")
-				SendInput {p}
-			return
-		}
-		
-	*/
-	
-	/* ; Pixel color as as condition
-		{ ; Pixel color as as condition
-			!#z::
-			MouseGetPos, xpos, ypos 	
-			PixelGetColor, color, xpos, xpos
-			MsgBox The color at X%xpos% Y%ypos% is %color%.
-			return
-			
-			{ ; Numpad1
-				Numpad1::
-				PixelGetColor, color, 1889, 95
-				if color = 0x20396F 
-				{
-					MouseGetPos, xpos, ypos 
-					BlockInput, On
-					MouseClick, left, 1732, 171
-					MouseMove, xpos, ypos 
-					BlockInput, Off
-					return
-				}
-				Else
-				{
-					MouseGetPos, xpos, ypos 
-					BlockInput, On
-					SetKeyDelay 32, 32
-					Send {NumpadEnter}
-					MouseClick, left, 1732, 171
-					MouseMove, xpos, ypos 
-					BlockInput, Off
-				}
-				Return
-			}
-		}
-	*/
-	
-	/* ; On press != on double press != on long press.
-		$a::
-		KeyWait, a, T0.1
-		
-		if (ErrorLevel)
-		{
-			Send {b down}
-			keywait a
-			Send {b up}
-		}
-		else {
-			KeyWait, a, D T0.1
-			
-			if (ErrorLevel)
-			{
-				Send {a down}
-				keywait a
-				Send {a up}
-			}
-			
-			else
-			{
-				Send {c down}
-				keywait a
-				Send {c up}
-			}
-			
-		}
-		
-		KeyWait, a
+/*
+	m::
+	Send o
+	if (A_PriorKey = "space")
+		SendInput {p}
+	return
+*/
+
+/* ;Testing
+	{	
+		#If InGame = 0
+			#g::
+		InGame :=1
 		return
-	*/
-	
-	/*
-		
-		{
-			$f1::
-			{
-				count++
-				settimer, actions, 333
-			}
-			return
+		#If InGame = 1
+			#g::
+		InGame :=0
+		return
+		#If
 			
-			actions:
-			{
-				if (count = 1)
-				{
-					send {F1}
-				}
-				else if (count = 2)
-				{
-					send {F2}
-				}
-				else if (count = 3)
-				{
-					send {F3}
-				}
-				count := 0
-			}
-			return	
-			
-			
-			SetTimer, WatchAxis, 5
-			return
-			
-			WatchAxis:
-			GetKeyState, 6JoyX, 6JoyX  ; Get position of X axis.
-			GetKeyState, 6JoyY, 6JoyY  ; Get position of Y axis.
-			KeyToHoldDownPrev = %KeyToHoldDown%  ; Prev now holds the key that was down before (if any).
-			
-			if 6JoyX > 70
-				KeyToHoldDown = Right
-			else if 6JoyX < 30
-				KeyToHoldDown = Left
-			else if 6JoyY > 70
-				KeyToHoldDown = Down
-			else if 6JoyY < 30
-				KeyToHoldDown = Up
-			else
-				KeyToHoldDown =
-			
-			if KeyToHoldDown = %KeyToHoldDownPrev%  ; The correct key is already down (or no key is needed).
-				return  ; Do nothing.
-			
-	; Otherwise, release the previous key and press down the new key:
-			SetKeyDelay -1  ; Avoid delays between keystrokes.
-			if KeyToHoldDownPrev   ; There is a previous key to release.
-				Send, {%KeyToHoldDownPrev% up}  ; Release it.
-			if KeyToHoldDown   ; There is a key to press down.
-				Send, {%KeyToHoldDown% down}  ; Press it down.
-			return
-			
-			
-			
-			6Joy1::
-			If GetKeyState("6Joy2", "P")=1
-			{
-				send {d Down}
-				keywait 6Joy1
-				send, {d Up}
-			}
-			else 
-				if GetKeyState("6joy3", "p")=1
-				{
-					send {v Down}
-					keywait 6Joy1
-					send, {v Up}
-				}
-			Else 
-			{
-				send {c Down}
-				keywait 6Joy1
-				send, {c Up}
-			}
-			Return
-			
-			
-			$f8::
-			{
-				count++
-				settimer, actionsF8, 200
-			}
-			return
-			
-			actionsF8:
-			{
-				if (count = 1)
-				{
-					send {F8}
-				}
-				else if (count = 2)
-				{
-					send {F9}
-				}
-				else if (count = 3)
-				{
-					send {F10}
-				}
-				count := 0
-			}
-			return
-		}
-	*/	
-	
-}
+		^#g::MsgBox %InGame%
+		return
+	}
+*/
 
 
 /* ;Layer checker
@@ -329,73 +133,182 @@ Process, Priority, , A
 	Return
 }
 
-
 { #if Layer = 1
 
-{ ;Global remapping
+{ ; Global remapping
 	
-	;#IfWinActive EscapeFromTarkov	
+	z::z
+	s::s
+	q::q
+	d::d
 	
-	XButton2::
-	SetKeyDelay 32, 32
-	send ^t
-	Return
+	{ ; w ;*[Crysis_]
+		w::
+		If Prone = 1
+		{
+			SendInput w
+			Prone := 0
+		}
+		else if Crounch = 1
+		{
+			sendinput {space}{w}
+			Crounch := 0
+			Prone := 1
+		}
+		Else if Prone = 0
+		{
+			SendInput w
+			Prone := 1
+		}	
+		return
+	}
 	
-	XButton1::t
+	{ ; Space
+		~Space::
+		Prone := 0
+		If  (Prone = 1)
+			Crounch := 1
+		Else If Crounch = 1
+			Crounch := 0
+		return
+	}
 	
-	~Right & LButton::F1
-	Return
+	{ ; Down
+		$Down::
+		If Prone = 1
+		{
+			sendinput {w}{Down}
+			Prone := 0
+			Crounch := 1
+		}
+		Else
+		{
+			send {down}
+			Crounch := 1
+		}
+		return
+	}
 	
-	~Right & RButton::F2
-	Return
+	{ ; v
+		$v::
+		KeyWait v, t0.100
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {Numpad7 down}
+			KeyWait v
+			SendInput {Numpad7 Up}
+		}
+		else
+		{
+			SendInput {v down}
+			sleep 32
+			SendInput {v Up}	
+		}
+		return
+	}
 	
-	~Right & XButton1::F3
-	Return
+	/*
+		esc::
+		KeyWait esc, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {esc down}
+			KeyWait esc
+			SendInput {esc up}
+		}
+		else
+		{
+			SendInput {i down}
+			sleep 32
+			SendInput {i Up}
+		}
+		return
+	*/
 	
-	~Right & XButton2::F4
-	Return
+	{ ; Nuopad 5
+		Numpad5::
+		{
+			BlockInput, On
+			SendInput {Numpad2 Down}
+		;SendInput {Numpad5}{Numpad5}
+			MouseMove, 400, -150 , 2, R
+			SendInput {Numpad2 Up}
+			BlockInput, Off
+			return
+		}
+	}
 	
-	~Right & WheelUp::
-	send, {F5}
-	Sleep, 100
-	Return
+	{ ; XButton1
+		~XButton1::
+		KeyWait XButton1, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {Backspace down}
+			KeyWait XButton1
+			SendInput {Backspace up}
+		}
+		else
+		{
+			SendInput i	
+		}
+		return
+	}
 	
-	~Right & WheelDown::
-	send, {F6}
-	Sleep, 100
-	Return
-	
-	~Right & MButton::F7
-	Return
-	
-	~Right & F8::F9
-	Return
-	
-	~Right & F9::F10
-	Return
-	;#IfWinActive
+	{ ; Xbutton2
+		~XButton2::
+		/*
+			KeyWait XButton2, t0.200
+			t:= A_TimeSinceThisHotkey
+			If ErrorLevel
+			{
+				SendInput {Numpad7 down}
+				KeyWait XButton2
+				SendInput {Numpad7 up}
+			}
+			else
+		*/
+		{
+			BlockInput, On
+			SendInput {Numpad2 Down}
+		;SendInput {Numpad5}{Numpad5}
+			MouseMove, 0, -400 , 2, R
+			SendInput {Numpad2 Up}
+			BlockInput, Off
+			sendinput {XButton2}
+		}
+		return
+	}
 	
 }
 
 { ; Mouse Wheel Layer 1
-	~WheelUp:: 
-	SetkeyDelay, 0, 32
-	If GetKeyState("MButton") 
-		send {Home}
+	
+	{ ; WheelUp
+		~WheelUp:: 
+		SetkeyDelay, 0, 32
+		If GetKeyState("MButton") 
+			send {Home}
 		;Else
 		;	If (GetKeyState("6Joy1")==1)
 		;		send g
-	Return
+		Return
+	}
 	
-	~WheelDown:: 
-	SetkeyDelay, 0, 32
-	If GetKeyState("MButton") 
-		send {End}
-	
+	{ ; WheelDown
+		~WheelDown:: 
+		SetkeyDelay, 0, 32
+		If GetKeyState("MButton") 
+			send {End}
+		
 		;Else 
 		;	If GetKeyState("Space") 
 		;		send {End}
-	Return
+		Return
+	}
+	
 }	
 
 { ; All Layer 1 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
@@ -405,7 +318,7 @@ Process, Priority, , A
 	t:= A_TimeSinceThisHotkey
 	If ErrorLevel
 	{
-		Send {F1 down}
+		SendInput {F1 down}
 		KeyWait SC002
 		SendInput {F1 up}
 	}
@@ -474,41 +387,72 @@ Process, Priority, , A
 	}
 	return
 	
-	$SC006:: ;[5, F5], [11, F11], [F17, F23]
-	KeyWait SC006, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
+	$SC006::
 	{
-		SendInput {F5 down}
-		KeyWait SC006
-		SendInput {F5 up}
+		BlockInput, On
+		SendInput {Numpad2 Down}
+			;SendInput {Numpad5}{Numpad5}
+		MouseMove, -400, -150 , 2, R
+		SendInput {Numpad2 Up}
+		BlockInput, Off
 	}
-	else
+	return
+	/*
+			$SC006:: ;[5, F5], [11, F11], [F17, F23]
+		KeyWait SC006, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {F5 down}
+			KeyWait SC006
+			SendInput {F5 up}
+		}
+		else
+		{
+			BlockInput, On
+			SendInput {Numpad2 Down}
+			;SendInput {Numpad5}{Numpad5}
+			MouseMove, -400, -150 , 2, R
+			SendInput {Numpad2 Up}
+			BlockInput, Off
+			
+		}
+		return
+	*/
+	
+	$SC007::
 	{
-		SendInput {SC006 down}
-		sleep 32
-		KeyWait SC006
-		SendInput {SC006 up}
+		BlockInput, On
+		SendInput {Numpad2 Down}
+			;SendInput {Numpad5}{Numpad5}
+		MouseMove, 400, 150 , 2, R
+		SendInput {Numpad2 Up}
+		BlockInput, Off
 	}
 	return
 	
-	$SC007:: ;[6, F6], [12, F12], [F18, F24]
-	KeyWait SC007, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {F6 down}
-		KeyWait SC007
-		SendInput {F6 up}
-	}
-	else
-	{
-		SendInput {SC007 down}
-		sleep 32
-		KeyWait SC007
-		SendInput {SC007 up}
-	}
-	return
+	
+	/*
+		$SC007:: ;[6, F6], [12, F12], [F18, F24]
+		KeyWait SC007, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {F6 down}
+			KeyWait SC007
+			SendInput {F6 up}
+		}
+		else
+		{
+			BlockInput, On
+			SendInput {Numpad2 Down}
+			;SendInput {Numpad5}{Numpad5}
+			MouseMove, 400, 150 , 2, R
+			SendInput {Numpad2 Up}
+			BlockInput, Off
+		}
+		return
+	*/
 }
 
 #If ; End of "If Layer = 1".
@@ -528,7 +472,7 @@ Process, Priority, , A
 	
 	tab::!l
 	w::b
-	x::n
+	x::i
 	c::,
 	v::Del
 	
@@ -913,7 +857,7 @@ Process, Priority, , A
 
 { ;HotStrings
 	
-:*:ahk::AutoHotKey
+::ahk::AutoHotKey
 ::viei@::vieillefont.antoine@gmail.com
 	
 }
@@ -936,5 +880,3 @@ MouseMove, 100, 0 , 10, R
 MouseMove, 0, -100 , 10, R
 MouseMove, -50, 50 , 10, R
 return
-
-^!s::Suspend

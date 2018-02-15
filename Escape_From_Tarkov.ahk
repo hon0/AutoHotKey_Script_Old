@@ -49,6 +49,9 @@ Process, Priority, , A
 
 { ;Before running a Game. Run and/or close Program.
 	
+	#F1::Suspend, Toggle
+	#F4::ExitApp
+	
 	#t::
 	{
 		If !WinExist("MSI Afterburner")

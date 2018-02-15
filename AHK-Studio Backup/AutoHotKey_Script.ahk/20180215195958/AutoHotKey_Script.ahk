@@ -34,7 +34,7 @@ Process, Priority, , A
 		return
 	}
 	#IfWinExist
-	
+		
 	#If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
 	{
 		$F5::
@@ -44,41 +44,9 @@ Process, Priority, , A
 		return
 	}
 	#IfWinActive
-	
-	{ ; Try Icon If Pause and/or Suspend
-
-		OnMessage(0x111,"WM_COMMAND")
-		return
-		
-		WM_Command(wP) {
-			
-			static Suspend:=65305, Pause:=65306
-			
-			If (wP = Suspend)
-				If !A_IsSuspended
-					Menu, Tray, Icon, Shell32.dll, 132, 1
-			Else If A_IsPaused
-				Menu, Tray, Icon, Shell32.dll, 110, 1
-			Else
-				Menu, Tray, Icon, %A_AhkPath%
-			
-			
-			Else If (wP = Pause)
-				If !A_IsPaused
-					Menu, Tray, Icon, Shell32.dll, 110, 1
-			Else If A_IsSuspended
-				Menu, Tray, Icon, Shell32.dll, 132, 1
-			Else
-				Menu, Tray, Icon, %A_AhkPath%
-		}	
-	}
-	
 }
 
 { ;Before running a Game. Run and/or close Program.
-	
-	#F1::Suspend, Toggle
-	#F4::ExitApp
 	
 	#t::
 	{

@@ -3,7 +3,6 @@
 #Warn  ; Enable warnings to assist with detecting common errors.
 
 Layer := 1 ; To initialise my 3 layer keymap.
-
 ; Crounch and Prone to deal with toggle.
 Crounch := 0
 Prone := 0
@@ -146,7 +145,7 @@ Process, Priority, , A
 		w::
 		If Prone = 1
 		{
-			SendInput w
+			w::
 			Prone := 0
 		}
 		else if Crounch = 1

@@ -3,7 +3,6 @@
 #Warn  ; Enable warnings to assist with detecting common errors.
 
 Layer := 1 ; To initialise my 3 layer keymap.
-
 ; Crounch and Prone to deal with toggle.
 Crounch := 0
 Prone := 0
@@ -142,8 +141,12 @@ Process, Priority, , A
 	q::q
 	d::d
 	
-	{ ; w ;*[Crysis_]
+	{ ; w
 		w::
+		if ((A_PriorKey = "space") && A_TimeSinceThisHotkey<500)
+		{
+			send h
+		}
 		If Prone = 1
 		{
 			SendInput w
@@ -165,11 +168,10 @@ Process, Priority, , A
 	
 	{ ; Space
 		~Space::
-		Prone := 0
-		If  (Prone = 1)
-			Crounch := 1
-		Else If Crounch = 1
+		{
+			Prone := 0
 			Crounch := 0
+		}
 		return
 	}
 	

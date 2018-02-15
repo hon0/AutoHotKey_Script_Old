@@ -170,6 +170,10 @@ Process, Priority, , A
 			Crounch := 1
 		Else If Crounch = 1
 			Crounch := 0
+		Else If (Crounch = 0) && (Prone = 0)
+			Suspend,On
+		Sleep 500
+			Suspend,Off
 		return
 	}
 	

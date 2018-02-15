@@ -498,6 +498,7 @@ Process, Priority, , A
 			BlockInput, On
 			SetKeyDelay 32, 32
 			Send {NumpadEnter}
+			InMenu := 1
 			MouseClick, left, 1732, 208
 			MouseMove, xpos, ypos 
 			BlockInput, Off
@@ -523,6 +524,7 @@ Process, Priority, , A
 			BlockInput, On
 			SetKeyDelay 32, 32
 			Send {NumpadEnter}
+			InMenu := 1
 			MouseClick, left, 1732, 242
 			MouseMove, xpos, ypos 
 			BlockInput, Off
@@ -534,11 +536,13 @@ Process, Priority, , A
 
 { ; Mouse Wheel Layer 2
 	~WheelUp:: 
+	InMenu := 0
 	SetkeyDelay, 0, 32
 	send {PgUp}
 	Return
 	
 	~WheelDown:: 
+	InMenu := 0
 	SetkeyDelay, 0, 32
 	send {PgDn}
 	Return

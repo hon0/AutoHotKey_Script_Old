@@ -534,11 +534,13 @@ Process, Priority, , A
 
 { ; Mouse Wheel Layer 2
 	~WheelUp:: 
+	InMenu := 0
 	SetkeyDelay, 0, 32
 	send {PgUp}
 	Return
 	
 	~WheelDown:: 
+	InMenu := 0
 	SetkeyDelay, 0, 32
 	send {PgDn}
 	Return

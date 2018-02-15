@@ -79,20 +79,18 @@ Process, Priority, , A
 
 { ;Testing	
 	
-	 ; Pixel color as as condition
-	/*
+	/* ; Pixel color as as condition
 		{ ; Pixel color as as condition
-			!#z::	
-			PixelGetColor, color, 1889, 95
-			MsgBox The color at X1889 Y95 is %color%.
-			Clipboard = %color%
+			!#z::
+			MouseGetPos, xpos, ypos 	
+			PixelGetColor, color, xpos, xpos
+			MsgBox The color at X%xpos% Y%ypos% is %color%.
 			return
 			
 			{ ; Numpad1
-				Numpad9::
+				Numpad1::
 				PixelGetColor, color, 1889, 95
-				if color = 0x243A70
-					
+				if color = 0x20396F 
 				{
 					MouseGetPos, xpos, ypos 
 					BlockInput, On
@@ -115,7 +113,6 @@ Process, Priority, , A
 			}
 		}
 	*/
-	
 	
 }
 
@@ -197,7 +194,7 @@ Process, Priority, , A
 	{ ; Numpad1
 		Numpad1::
 		PixelGetColor, color, 1889, 95
-		if color = 0x243A70 ;0x20396F
+		if color = 0xFFFFFFF 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -223,7 +220,7 @@ Process, Priority, , A
 	{ ; Numpad 2
 		Numpad2::
 		PixelGetColor, color, 1889, 95
-		if color = 0x243A70 ;0x20396F 
+		if color = 0xFFFFFFF 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -248,7 +245,7 @@ Process, Priority, , A
 	{ ; Numpad 3
 		Numpad3::
 		PixelGetColor, color, 1889, 95
-		if color = 0x243A70 ;0x20396F 
+		if color = 0xFFFFFFF 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -483,7 +480,7 @@ Process, Priority, , A
 	{ ; X remapping Layer 2
 		x:: 
 		PixelGetColor, color, 1889, 95
-		if color = 0x243A70 ;0x20396F 
+		if color = 0xFFFFFFF 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -498,6 +495,7 @@ Process, Priority, , A
 			BlockInput, On
 			SetKeyDelay 32, 32
 			Send {NumpadEnter}
+			InMenu := 1
 			MouseClick, left, 1732, 208
 			MouseMove, xpos, ypos 
 			BlockInput, Off
@@ -508,7 +506,7 @@ Process, Priority, , A
 	{ ; c remapping Layer 2
 		c::
 		PixelGetColor, color, 1889, 95
-		if color = 0x243A70 ;0x20396F 
+		if color = 0xFFFFFFF 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -523,6 +521,7 @@ Process, Priority, , A
 			BlockInput, On
 			SetKeyDelay 32, 32
 			Send {NumpadEnter}
+			InMenu := 1
 			MouseClick, left, 1732, 242
 			MouseMove, xpos, ypos 
 			BlockInput, Off
@@ -534,11 +533,13 @@ Process, Priority, , A
 
 { ; Mouse Wheel Layer 2
 	~WheelUp:: 
+	InMenu := 0
 	SetkeyDelay, 0, 32
 	send {PgUp}
 	Return
 	
 	~WheelDown:: 
+	InMenu := 0
 	SetkeyDelay, 0, 32
 	send {PgDn}
 	Return

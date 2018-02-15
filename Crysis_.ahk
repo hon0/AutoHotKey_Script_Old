@@ -123,6 +123,42 @@ Process, Priority, , A
 
 { ; Global remapping
 	
+	$v::
+	KeyWait v, t0.100
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
+	{
+		SendInput {Numpad7 down}
+		KeyWait v
+		SendInput {Numpad7 Up}
+	}
+	else
+	{
+		SendInput {v down}
+		sleep 32
+		SendInput {v Up}	
+	}
+	return
+	
+	/*
+		esc::
+		KeyWait esc, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {esc down}
+			KeyWait esc
+			SendInput {esc up}
+		}
+		else
+		{
+			SendInput {i down}
+			sleep 32
+			SendInput {i Up}
+		}
+		return
+	*/
+	
 	Numpad5::
 	{
 		BlockInput, On
@@ -150,15 +186,17 @@ Process, Priority, , A
 	return
 	
 	XButton2::
-	KeyWait XButton2, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {Numpad7 down}
-		KeyWait XButton2
-		SendInput {Numpad7 up}
-	}
-	else
+	/*
+		KeyWait XButton2, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {Numpad7 down}
+			KeyWait XButton2
+			SendInput {Numpad7 up}
+		}
+		else
+	*/
 	{
 		BlockInput, On
 		SendInput {Numpad2 Down}
@@ -353,7 +391,7 @@ Process, Priority, , A
 	
 	tab::!l
 	w::b
-	x::n
+	x::i
 	c::,
 	v::Del
 	

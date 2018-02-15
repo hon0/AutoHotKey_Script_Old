@@ -1,12 +1,9 @@
 ﻿#SingleInstance force
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
-
-Layer := 1 ; To initialise my 3 layer keymap.
-; Crounch and Prone to deal with toggle.
+Layer := 1
 Crounch := 0
 Prone := 0
-
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
@@ -80,13 +77,7 @@ Process, Priority, , A
 	
 } ;Before running a Game. Run and/or close Program.
 
-;Testing
 
-m::
-Send o
-if (A_PriorKey = "space")
-	SendInput {p}
-return
 
 /* ;Testing
 	{	
@@ -133,80 +124,74 @@ return
 { #if Layer = 1
 
 { ; Global remapping
-	
+	#d::ToolTip %Crounch%
 	z::z
 	s::s
 	q::q
 	d::d
 	
-	{ ; w
-		w::
-		if (A_PriorKey = "space")
-		{
-			sleep 500
-		}
-		Else	If Prone = 1
-		{
-			SendInput w
-			Prone := 0
-		}
-		else if Crounch = 1
-		{
-			sendinput {space}{w}
-			Crounch := 0
-			Prone := 1
-		}
-		Else if Prone = 0
-		{
-			SendInput w
-			Prone := 1
-		}	
-		return
+	$w::
+	If Prone = 1
+	{
+		SendInput w
+		Prone := 0
 	}
+	else if Crounch = 1
+	{
+		sendinput {space}{w}
+		Crounch := 0
+		Prone := 1
+	}
+	Else if Prone = 0
+	{
+		SendInput w
+		Prone := 1
+	}	
+	Else A_PriorHotkey = Space
+	{
+		sleep 3000
+		Tooltip check
+	}
+	return
 	
-	{ ; Space
-		~Space::
-		{
-			Prone := 0
-			Crounch := 0
-		}
-		return
-	}
 	
-	{ ; Down
-		$Down::
-		If Prone = 1
-		{
-			sendinput {w}{Down}
-			Prone := 0
-			Crounch := 1
-		}
-		Else
-		{
-			send {down}
-			Crounch := 1
-		}
-		return
+	~Space::
+	{
+		Prone := 0
+		Crounch := 0
 	}
+	return
 	
-	{ ; v
-		$v::
-		KeyWait v, t0.100
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
-		{
-			SendInput {Numpad7 down}
-			KeyWait v
-			SendInput {Numpad7 Up}
-		}
-		else
-		{
-			SendInput {v down}
-			sleep 32
-			SendInput {v Up}	
-		}
-		return
+	$Down::
+	If Prone = 1
+	{
+		sendinput {w}{Down}
+		Prone := 0
+		Crounch := 1
 	}
+	Else
+	{
+		send {down}
+		Crounch := 1
+	}
+	return
+	
+	$v::
+	KeyWait v, t0.100
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
+	{
+		SendInput {Numpad7 down}
+		KeyWait v
+		SendInput {Numpad7 Up}
+	}
+	else
+	{
+		SendInput {v down}
+		sleep 32
+		SendInput {v Up}	
+	}
+	return
 	
 	/*
 		esc::
@@ -227,88 +212,76 @@ return
 		return
 	*/
 	
-	{ ; Nuopad 5
-		Numpad5::
-		{
-			BlockInput, On
-			SendInput {Numpad2 Down}
+	Numpad5::
+	{
+		BlockInput, On
+		SendInput {Numpad2 Down}
 		;SendInput {Numpad5}{Numpad5}
-			MouseMove, 400, -150 , 2, R
-			SendInput {Numpad2 Up}
-			BlockInput, Off
-			return
-		}
+		MouseMove, 400, -150 , 2, R
+		SendInput {Numpad2 Up}
+		BlockInput, Off
+		return
 	}
 	
-	{ ; XButton1
-		~XButton1::
-		KeyWait XButton1, t0.200
+	~XButton1::
+	KeyWait XButton1, t0.200
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
+	{
+		SendInput {Backspace down}
+		KeyWait XButton1
+		SendInput {Backspace up}
+	}
+	else
+	{
+		SendInput i	
+	}
+	return
+	
+	~XButton2::
+	/*
+		KeyWait XButton2, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
 		{
-			SendInput {Backspace down}
-			KeyWait XButton1
-			SendInput {Backspace up}
+			SendInput {Numpad7 down}
+			KeyWait XButton2
+			SendInput {Numpad7 up}
 		}
 		else
-		{
-			SendInput i	
-		}
-		return
-	}
-	
-	{ ; Xbutton3
-		~XButton2::
-		/*
-			KeyWait XButton2, t0.200
-			t:= A_TimeSinceThisHotkey
-			If ErrorLevel
-			{
-				SendInput {Numpad7 down}
-				KeyWait XButton2
-				SendInput {Numpad7 up}
-			}
-			else
-		*/
-		{
-			BlockInput, On
-			SendInput {Numpad2 Down}
+	*/
+	{
+		BlockInput, On
+		SendInput {Numpad2 Down}
 		;SendInput {Numpad5}{Numpad5}
-			MouseMove, 0, -400 , 2, R
-			SendInput {Numpad2 Up}
-			BlockInput, Off
-			sendinput {XButton2}
-		}
-		return
+		MouseMove, 0, -400 , 2, R
+		SendInput {Numpad2 Up}
+		BlockInput, Off
+		sendinput {XButton2}
 	}
+	return
 	
 }
 
 { ; Mouse Wheel Layer 1
-	
-	{ ; WheelUp
-		~WheelUp:: 
-		SetkeyDelay, 0, 32
-		If GetKeyState("MButton") 
-			send {Home}
+	~WheelUp:: 
+	SetkeyDelay, 0, 32
+	If GetKeyState("MButton") 
+		send {Home}
 		;Else
 		;	If (GetKeyState("6Joy1")==1)
 		;		send g
-		Return
-	}
+	Return
 	
-	{ ; WheelDown
-		~WheelDown:: 
-		SetkeyDelay, 0, 32
-		If GetKeyState("MButton") 
-			send {End}
-		
+	~WheelDown:: 
+	SetkeyDelay, 0, 32
+	If GetKeyState("MButton") 
+		send {End}
+	
 		;Else 
 		;	If GetKeyState("Space") 
 		;		send {End}
-		Return
-	}
-	
+	Return
 }	
 
 { ; All Layer 1 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
@@ -456,7 +429,7 @@ return
 }
 
 #If ; End of "If Layer = 1".
-	
+
 }
 
 { #if Layer = 2 

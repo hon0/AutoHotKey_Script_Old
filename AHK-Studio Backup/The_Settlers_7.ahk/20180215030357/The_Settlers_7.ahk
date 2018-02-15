@@ -1,12 +1,7 @@
 ﻿#SingleInstance force
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
-
-Layer := 1 ; To initialise my 3 layer keymap.
-; Crounch and Prone to deal with toggle.
-Crounch := 0
-Prone := 0
-
+Layer := 1
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
@@ -26,30 +21,28 @@ Process, Priority, , A
 	;sleep 32
 	
 	#IfWinExist Event Tester
-	{
 		WinClose Event Tester
-		
-		Run, C:\Program Files (x86)\Thrustmaster\TARGET\Tools\EventTester.exe
-		WinWait, Event Tester
-		SetKeyDelay 0, 32
-		Send {Lwin down}{Right}{Right}{Lwin up}{esc}{esc}{esc}{esc}
-		Sleep 32
-		MouseClick, left, 36, 40
-		MouseClick, left, 104, 62
-		BlockInput, Off	
-		return
-	}
+	
+	Run, C:\Program Files (x86)\Thrustmaster\TARGET\Tools\EventTester.exe
+	WinWait, Event Tester
+	SetKeyDelay 0, 32
+	Send {Lwin down}{Right}{Right}{Lwin up}{esc}{esc}{esc}{esc}
+	MouseClick, left, 36, 40
+	MouseClick, left, 104, 62
+	BlockInput, Off	
+	return
 	#IfWinExist
 		
-	#If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
+	If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
 	{
 		$F5::
-		WinActivate %Title%
-		SetKeyDelay 2000, 32
-		Send {F5}
-		return
+		{
+			WinActivate %Title%
+			SetKeyDelay 32, 32
+			Send {F5}
+			return
+		}
 	}
-	#IfWinActive
 }
 
 { ;Before running a Game. Run and/or close Program.
@@ -60,8 +53,8 @@ Process, Priority, , A
 		{
 			Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
 			WinWait MSI Afterburner
-			MsgBox Rat Pro S profile Crysis.
-			MsgBox Razer Orbweaver Profile AHK_Crysis.
+			MsgBox Rat Pro S Default profile.
+			MsgBox Razer Orbweaver Profile AHK_The_Settlers_7.
 		}
 		Else If !WinExist("Set Timer Resolution")
 		{
@@ -80,47 +73,49 @@ Process, Priority, , A
 	
 } ;Before running a Game. Run and/or close Program.
 
-;Testing
 
-m::
-Send o
-if (A_PriorKey = "space")
-	SendInput {p}
-return
 
-/* ;Testing
-	{	
-		#If InGame = 0
-			#g::
-		InGame :=1
-		return
-		#If InGame = 1
-			#g::
-		InGame :=0
-		return
-		#If
+{ ;Testing	
+	
+	/* ; Pixel color as as condition
+		{ ; Pixel color as as condition
+			!#z::
+			MouseGetPos, xpos, ypos 	
+			PixelGetColor, color, xpos, xpos
+			MsgBox The color at X%xpos% Y%ypos% is %color%.
+			return
 			
-		^#g::MsgBox %InGame%
-		return
-	}
-*/
-
-
-/* ;Layer checker
+			{ ; Numpad1
+				Numpad1::
+				PixelGetColor, color, 1889, 95
+				if color = 0x20396F 
+				{
+					MouseGetPos, xpos, ypos 
+					BlockInput, On
+					MouseClick, left, 1732, 171
+					MouseMove, xpos, ypos 
+					BlockInput, Off
+					return
+				}
+				Else
+				{
+					MouseGetPos, xpos, ypos 
+					BlockInput, On
+					SetKeyDelay 32, 32
+					Send {NumpadEnter}
+					MouseClick, left, 1732, 171
+					MouseMove, xpos, ypos 
+					BlockInput, Off
+				}
+				Return
+			}
+		}
+	*/
 	
-	z::
-	ToolTip %Layer%
-	SetTimer, RemoveToolTip, 2000
-	return
+}
+
+{ ;Layer modifier
 	
-	RemoveToolTip:
-	SetTimer, RemoveToolTip, Off
-	ToolTip
-	return
-*/
-
-
-{ ; Layer modifier
 	CapsLock:: ;Key disabled by "SetCapsLockState, AlwaysOff".
 	Layer := 2
 	if (A_ThisHotkey = A_PriorHotkey && A_TimeSincePriorHotkey < 200)
@@ -128,187 +123,171 @@ return
 	KeyWait, CapsLock
 	Layer := 1
 	Return
+	
 }
+
+{ ; Global remapping
+	
+	; All 3 layer remapping
+	
+}
+
 
 { #if Layer = 1
 
 { ; Global remapping
 	
-	z::z
-	s::s
-	q::q
-	d::d
+	XButton2::
+	SetKeyDelay 32, 32
+	send, ^(
+	return
 	
-	{ ; w
-		w::
-		if (A_PriorKey = "space")
-		{
-			sleep 500
-		}
-		Else	If Prone = 1
-		{
-			SendInput w
-			Prone := 0
-		}
-		else if Crounch = 1
-		{
-			sendinput {space}{w}
-			Crounch := 0
-			Prone := 1
-		}
-		Else if Prone = 0
-		{
-			SendInput w
-			Prone := 1
-		}	
-		return
-	}
+	XButton1::
+	SetKeyDelay 32, 32
+	send, ^'
+	return
 	
-	{ ; Space
-		~Space::
-		{
-			Prone := 0
-			Crounch := 0
-		}
-		return
-	}
-	
-	{ ; Down
-		$Down::
-		If Prone = 1
-		{
-			sendinput {w}{Down}
-			Prone := 0
-			Crounch := 1
-		}
-		Else
-		{
-			send {down}
-			Crounch := 1
-		}
-		return
-	}
-	
-	{ ; v
-		$v::
-		KeyWait v, t0.100
+	{ ;Layer 1 "z" remapping
+		$z::
+		KeyWait z, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
 		{
-			SendInput {Numpad7 down}
-			KeyWait v
-			SendInput {Numpad7 Up}
+			SendInput {b down}
+			KeyWait z
+			SendInput {b up}
 		}
 		else
 		{
-			SendInput {v down}
+			SendInput {z down}
 			sleep 32
-			SendInput {v Up}	
+			SendInput {z up}
 		}
 		return
 	}
 	
-	/*
-		esc::
-		KeyWait esc, t0.200
+	
+	{ ;Layer 1 "x" remapping
+		$x::
+		KeyWait x, t0.200
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel
 		{
-			SendInput {esc down}
-			KeyWait esc
-			SendInput {esc up}
+			SendInput {n down}
+			KeyWait x
+			SendInput {n up}
 		}
 		else
 		{
-			SendInput {i down}
+			SendInput {x down}
 			sleep 32
-			SendInput {i Up}
+			SendInput {x up}
 		}
 		return
-	*/
+	}
 	
-	{ ; Nuopad 5
-		Numpad5::
+	
+	
+	
+	{ ; Numpad1
+		Numpad1::
+		PixelGetColor, color, 1889, 95
+		if color = 0x20396F 
 		{
+			MouseGetPos, xpos, ypos 
 			BlockInput, On
-			SendInput {Numpad2 Down}
-		;SendInput {Numpad5}{Numpad5}
-			MouseMove, 400, -150 , 2, R
-			SendInput {Numpad2 Up}
+			MouseClick, left, 1732, 171
+			MouseMove, xpos, ypos 
 			BlockInput, Off
 			return
 		}
+		Else
+		{
+			MouseGetPos, xpos, ypos 
+			BlockInput, On
+			SetKeyDelay 32, 32
+			Send {NumpadEnter}
+		;InMenu := 1
+			MouseClick, left, 1732, 171
+			MouseMove, xpos, ypos 
+			BlockInput, Off
+		}
+		Return
 	}
 	
-	{ ; XButton1
-		~XButton1::
-		KeyWait XButton1, t0.200
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
+	{ ; Numpad 2
+		Numpad2::
+		PixelGetColor, color, 1889, 95
+		if color = 0x20396F 
 		{
-			SendInput {Backspace down}
-			KeyWait XButton1
-			SendInput {Backspace up}
+			MouseGetPos, xpos, ypos 
+			BlockInput, On
+			MouseClick, left, 1732, 279
+			MouseMove, xpos, ypos 
+			BlockInput, Off
+		}
+		Else
+		{
+			MouseGetPos, xpos, ypos 
+			BlockInput, On
+			SetKeyDelay 32, 32
+			Send {NumpadEnter}
+			MouseClick, left, 1732, 279
+			MouseMove, xpos, ypos 
+			BlockInput, Off
+		}
+		Return
+		
+	}
+	
+	{ ; Numpad 3
+		Numpad3::
+		PixelGetColor, color, 1889, 95
+		if color = 0x20396F 
+		{
+			MouseGetPos, xpos, ypos 
+			BlockInput, On
+			MouseClick, left, 1732, 135
+			MouseMove, xpos, ypos 
+			BlockInput, Off
+			return
 		}
 		else
 		{
-			SendInput i	
-		}
-		return
-	}
-	
-	{ ; Xbutton3
-		~XButton2::
-		/*
-			KeyWait XButton2, t0.200
-			t:= A_TimeSinceThisHotkey
-			If ErrorLevel
-			{
-				SendInput {Numpad7 down}
-				KeyWait XButton2
-				SendInput {Numpad7 up}
-			}
-			else
-		*/
-		{
+			MouseGetPos, xpos, ypos 
 			BlockInput, On
-			SendInput {Numpad2 Down}
-		;SendInput {Numpad5}{Numpad5}
-			MouseMove, 0, -400 , 2, R
-			SendInput {Numpad2 Up}
+			SetKeyDelay 32, 32
+			Send {NumpadEnter}
+			MouseClick, left, 1732, 135
+			MouseMove, xpos, ypos 
 			BlockInput, Off
-			sendinput {XButton2}
 		}
-		return
+		Return
 	}
 	
-}
+} ; End of Global remapping
 
 { ; Mouse Wheel Layer 1
-	
-	{ ; WheelUp
-		~WheelUp:: 
-		SetkeyDelay, 0, 32
-		If GetKeyState("MButton") 
-			send {Home}
+	~WheelUp:: 
+	InMenu := 0
+	SetkeyDelay, 0, 32
+	If GetKeyState("MButton") 
+		send {Home}
 		;Else
 		;	If (GetKeyState("6Joy1")==1)
 		;		send g
-		Return
-	}
+	Return
 	
-	{ ; WheelDown
-		~WheelDown:: 
-		SetkeyDelay, 0, 32
-		If GetKeyState("MButton") 
-			send {End}
-		
+	~WheelDown:: 
+	InMenu := 0
+	SetkeyDelay, 0, 32
+	If GetKeyState("MButton") 
+		send {End}
+	
 		;Else 
 		;	If GetKeyState("Space") 
 		;		send {End}
-		Return
-	}
-	
+	Return
 }	
 
 { ; All Layer 1 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
@@ -318,7 +297,7 @@ return
 	t:= A_TimeSinceThisHotkey
 	If ErrorLevel
 	{
-		SendInput {F1 down}
+		Send {F1 down}
 		KeyWait SC002
 		SendInput {F1 up}
 	}
@@ -387,75 +366,44 @@ return
 	}
 	return
 	
-	$SC006::
+	$SC006:: ;[5, F5], [11, F11], [F17, F23]
+	KeyWait SC006, t0.200
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
 	{
-		BlockInput, On
-		SendInput {Numpad2 Down}
-			;SendInput {Numpad5}{Numpad5}
-		MouseMove, -400, -150 , 2, R
-		SendInput {Numpad2 Up}
-		BlockInput, Off
+		SendInput {F5 down}
+		KeyWait SC006
+		SendInput {F5 up}
 	}
-	return
-	/*
-			$SC006:: ;[5, F5], [11, F11], [F17, F23]
-		KeyWait SC006, t0.200
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
-		{
-			SendInput {F5 down}
-			KeyWait SC006
-			SendInput {F5 up}
-		}
-		else
-		{
-			BlockInput, On
-			SendInput {Numpad2 Down}
-			;SendInput {Numpad5}{Numpad5}
-			MouseMove, -400, -150 , 2, R
-			SendInput {Numpad2 Up}
-			BlockInput, Off
-			
-		}
-		return
-	*/
-	
-	$SC007::
+	else
 	{
-		BlockInput, On
-		SendInput {Numpad2 Down}
-			;SendInput {Numpad5}{Numpad5}
-		MouseMove, 400, 150 , 2, R
-		SendInput {Numpad2 Up}
-		BlockInput, Off
+		SendInput {SC006 down}
+		sleep 32
+		KeyWait SC006
+		SendInput {SC006 up}
 	}
 	return
 	
-	
-	/*
-		$SC007:: ;[6, F6], [12, F12], [F18, F24]
-		KeyWait SC007, t0.200
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
-		{
-			SendInput {F6 down}
-			KeyWait SC007
-			SendInput {F6 up}
-		}
-		else
-		{
-			BlockInput, On
-			SendInput {Numpad2 Down}
-			;SendInput {Numpad5}{Numpad5}
-			MouseMove, 400, 150 , 2, R
-			SendInput {Numpad2 Up}
-			BlockInput, Off
-		}
-		return
-	*/
+	$SC007:: ;[6, F6], [12, F12], [F18, F24]
+	KeyWait SC007, t0.200
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
+	{
+		SendInput {F6 down}
+		KeyWait SC007
+		SendInput {F6 up}
+	}
+	else
+	{
+		SendInput {SC007 down}
+		sleep 32
+		KeyWait SC007
+		SendInput {SC007 up}
+	}
+	return
 }
 
-#If ; End of "If Layer = 1".
+#If
 	
 }
 
@@ -463,33 +411,133 @@ return
 
 { ; Global remapping
 	
-	;#IfWinActive EscapeFromTarkov
+	XButton2::
+	SetKeyDelay 32, 32
+	send, ^(
+	return
 	
-	LButton::F1
-	RButton::F2
-	XButton1::F3
-	XButton2::F4
+	XButton1::
+	SetKeyDelay 32, 32
+	send, ^'
+	return	
 	
-	tab::!l
-	w::b
-	x::i
-	c::,
-	v::Del
+	LButton::InMenu := 0
 	
-	F8::F9
-	F9::F10
+	RButton::InMenu := 0
 	
-	;#IfWinActive
-}
+	XButton2::F3
+	
+	XButton1::F4
+	
+	;tab::!l
+	;w::b
+	;x::n
+	;c::,
+	;v::Del
+	;f::g
+	;r::t
+	
+	{ ;Layer 2 "f" remapping
+		$f::
+		KeyWait f, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {h down}
+			KeyWait f
+			SendInput {h up}
+		}
+		else
+		{
+			SendInput {g down}
+			sleep 32
+			SendInput {g up}
+		}
+		return
+	}
+	
+	{ ;Layer 2 "r" remapping
+		$r::
+		KeyWait r, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {y down}
+			KeyWait r
+			SendInput {y up}
+		}
+		else
+		{
+			SendInput {t down}
+			sleep 32
+			SendInput {t up}
+		}
+		return
+	}
+	
+	{ ; X remapping Layer 2
+		x:: 
+		PixelGetColor, color, 1889, 95
+		if color = 0x20396F 
+		{
+			MouseGetPos, xpos, ypos 
+			BlockInput, On
+			MouseClick, left, 1732, 208
+			MouseMove, xpos, ypos 
+			BlockInput, Off
+			return
+		}
+		else
+		{
+			MouseGetPos, xpos, ypos 
+			BlockInput, On
+			SetKeyDelay 32, 32
+			Send {NumpadEnter}
+			InMenu := 1
+			MouseClick, left, 1732, 208
+			MouseMove, xpos, ypos 
+			BlockInput, Off
+		}
+		Return
+	}
+	
+	{ ; c remapping Layer 2
+		c::
+		PixelGetColor, color, 1889, 95
+		if color = 0x20396F 
+		{
+			MouseGetPos, xpos, ypos 
+			BlockInput, On
+			MouseClick, left, 1732, 242
+			MouseMove, xpos, ypos 
+			BlockInput, Off
+			return
+		}
+		else
+		{
+			MouseGetPos, xpos, ypos 
+			BlockInput, On
+			SetKeyDelay 32, 32
+			Send {NumpadEnter}
+			InMenu := 1
+			MouseClick, left, 1732, 242
+			MouseMove, xpos, ypos 
+			BlockInput, Off
+		}
+		Return
+	}
+	
+} ; End of Global remapping Layer 2
 
 { ; Mouse Wheel Layer 2
-	
 	~WheelUp:: 
+	InMenu := 0
 	SetkeyDelay, 0, 32
 	send {PgUp}
 	Return
 	
 	~WheelDown:: 
+	InMenu := 0
 	SetkeyDelay, 0, 32
 	send {PgDn}
 	Return
@@ -608,45 +656,7 @@ return
 	return
 }
 
-{ ;Layer 2 "f" remapping
-	$f::
-	KeyWait f, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {h down}
-		KeyWait f
-		SendInput {h up}
-	}
-	else
-	{
-		SendInput {g down}
-		sleep 32
-		SendInput {g up}
-	}
-	return
-}
-
-{ ;Layer 2 "r" remapping
-	$r::
-	KeyWait r, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {y down}
-		KeyWait r
-		SendInput {y up}
-	}
-	else
-	{
-		SendInput {t down}
-		sleep 32
-		SendInput {t up}
-	}
-	return
-}
-
-#If ; End of "If Layer = 2".
+#If ; End of If Layer 2
 	
 }
 
@@ -654,12 +664,17 @@ return
 
 { ; Global remapping
 	
-	;#IfWinActive EscapeFromTarkov	
+	;#IfWinActive Setttlers 7 Window	
 	
-	LButton::F1	
+	LButton::F3
+	
 	RButton::F2
+	
 	XButton1::F3
+	
 	XButton2::F4
+	
+	;#IfWinActive
 	
 	tab::AppsKey
 	w::Numpad0
@@ -669,13 +684,49 @@ return
 	;r::y
 	;f::h
 	
-	F8::F9
-	F9::F10
 	
-	;#IfWinActive
+	{ ;Layer 3 "f" remapping
+		$f::
+		KeyWait f, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {k down}
+			KeyWait f
+			SendInput {k up}
+		}
+		else
+		{
+			SendInput {j down}
+			sleep 32
+			SendInput {j up}
+		}
+		return
+	}
+	
+	{ ;Layer 3 "r" remapping
+		$r::
+		KeyWait r, t0.200
+		t:= A_TimeSinceThisHotkey
+		If ErrorLevel
+		{
+			SendInput {i down}
+			KeyWait r
+			SendInput {i up}
+		}
+		else
+		{
+			SendInput {u down}
+			sleep 32
+			SendInput {u up}
+		}
+		return
+	}
 }
 
 { ; Mouse Wheel Layer 3
+	~WheelUp::
+	InMenu := 0
 	SetkeyDelay, 0, 32
 	If GetKeyState("MButton") 
 		send {PGUP}
@@ -808,75 +859,10 @@ return
 		SendInput {F18 up}
 	}
 	return
-}
-
-
-
-{ ;Layer 3 "f" remapping
-	$f::
-	KeyWait f, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {k down}
-		KeyWait f
-		SendInput {k up}
-	}
-	else
-	{
-		SendInput {j down}
-		sleep 32
-		SendInput {j up}
-	}
-	return
-}
-
-{ ;Layer 3 "r" remapping
-	$r::
-	KeyWait r, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {i down}
-		KeyWait r
-		SendInput {i up}
-	}
-	else
-	{
-		SendInput {u down}
-		sleep 32
-		SendInput {u up}
-	}
-	return
-}
-
-#If ; End of "If Layer = 3".
 	
 }
 
-
-{ ;HotStrings
-	
-::ahk::AutoHotKey
-::viei@::vieillefont.antoine@gmail.com
+#If ; End of If Layer 3
 	
 }
 
-#g::
-MouseGetPos, xpos, ypos 
-MsgBox, The cursor is at X%xpos% Y%ypos%. 
-return
-
-#s::
-MouseClick, left, 36, 40
-MouseClick, left, 104, 62
-return
-
-#x::
-MouseMove, 50, -50 , 10, R ;moves the mouse in a box
-MouseMove, -100, 0 , 10, R ;around it's starting position
-MouseMove, 0, 100 , 10, R
-MouseMove, 100, 0 , 10, R
-MouseMove, 0, -100 , 10, R
-MouseMove, -50, 50 , 10, R
-return

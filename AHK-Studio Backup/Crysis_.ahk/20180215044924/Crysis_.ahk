@@ -259,7 +259,7 @@ Process, Priority, , A
 		return
 	}
 	
-	{ ; Xbutton2
+	{ ; Xbutton3
 		~XButton2::
 		/*
 			KeyWait XButton2, t0.200

@@ -80,18 +80,7 @@ Process, Priority, , A
 
 { ;Testing
 	
-	/* ; If prior key ""
-		{ ; If prior key ""
-			m::
-			Send o
-			if (A_PriorKey = "space")
-				SendInput {p}
-			return
-		}
-		
-	*/
-	
-	/* ; Pixel color as as condition
+	/*
 		{ ; Pixel color as as condition
 			!#z::
 			MouseGetPos, xpos, ypos 	
@@ -126,7 +115,8 @@ Process, Priority, , A
 		}
 	*/
 	
-	/* ; On press != on double press != on long press.
+	
+	/*
 		$a::
 		KeyWait, a, T0.1
 		
@@ -875,7 +865,7 @@ Process, Priority, , A
 }
 
 #If ; End of "If Layer = 3".
-	
+
 }
 
 

@@ -82,11 +82,13 @@ Process, Priority, , A
 
 ;Testing
 
-m::
-Send o
-if (A_PriorKey = "space")
-	SendInput {p}
-return
+/*
+	m::
+	Send o
+	if (A_PriorKey = "space")
+		SendInput {p}
+	return
+*/
 
 /* ;Testing
 	{	

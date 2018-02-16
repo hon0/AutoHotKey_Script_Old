@@ -5,7 +5,6 @@ Layer := 1
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
-SetTitleMatchMode, 2
 ;#InstallKeybdHook
 ;#InstallMouseHook
 
@@ -80,7 +79,23 @@ SetTitleMatchMode, 2
 
 { ; The Settlers manual interAction while in Game.
 	
-
+	SetTitleMatchMode, 2
+	
+	/*
+		~c::
+		ControlSend, ahk_parent, {LControl Down}{LShift Down}{n}{LControl Up}{LShift Up}, The Settlers 7 Paths to a Kingdom Prima Official Guide - PDF-XChange Viewer
+		ControlSend, Edit1, 19, Atteindre la page
+		ControlSend, Edit1, {NumpadEnter}, Atteindre la page
+		return
+	*/
+	
+	/*
+		$x::
+		ControlSend, ahk_parent, {LControl Down}{LShift Down}{n}{LControl Up}{LShift Up}, The Settlers 7 Paths to a Kingdom Prima Official Guide - PDF-XChange Viewer
+		ControlSend, Edit1, 17, Atteindre la page
+		ControlSend, Edit1, {NumpadEnter}, Atteindre la page
+		return
+	*/
 	
 }
 
@@ -197,17 +212,16 @@ SetTitleMatchMode, 2
 			ControlSend, ahk_parent, {LControl Down}{LShift Down}{n}{LControl Up}{LShift Up}, The Settlers 7 Paths to a Kingdom Prima Official Guide - PDF-XChange Viewer
 			ControlSend, Edit1, 17, Atteindre la page
 			ControlSend, Edit1, {NumpadEnter}, Atteindre la page
-			sleep 100
 		}
 		return
 	}
 	
 	{ ; Layer 1 "c" remapping
 		~c::
+		SetKeyDelay, 10, 0
 		ControlSend, ahk_parent, {LControl Down}{LShift Down}{n}{LControl Up}{LShift Up}, The Settlers 7 Paths to a Kingdom Prima Official Guide - PDF-XChange Viewer
 		ControlSend, Edit1, 19, Atteindre la page
 		ControlSend, Edit1, {NumpadEnter}, Atteindre la page
-		sleep 100
 		return
 	}
 	
@@ -429,7 +443,7 @@ SetTitleMatchMode, 2
 }
 
 #If
-
+	
 }
 
 { #if Layer = 2 

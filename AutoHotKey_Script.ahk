@@ -46,7 +46,7 @@ Process, Priority, , A
 	#IfWinActive
 	
 	{ ; Try Icon If Pause and/or Suspend
-
+		
 		OnMessage(0x111,"WM_COMMAND")
 		return
 		
@@ -72,13 +72,13 @@ Process, Priority, , A
 				Menu, Tray, Icon, %A_AhkPath%
 		}	
 	}
-	
 }
 
 { ;Before running a Game. Run and/or close Program.
 	
 	#F1::Suspend, Toggle
-	#F4::ExitApp
+	#F4::ExitApp	
+	^SPACE::  Winset, Alwaysontop, , A ; Toggle Active Windows Always on Top.
 	
 	#t::
 	{

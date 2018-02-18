@@ -939,16 +939,9 @@ return
 
 ^!s::Suspend
 
-#IfWinActive C# Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
-$Mbutton::
+$#Rbutton::
 BlockInput, On
-;SetKeyDelay 32, 32
-Send {RButton}{down}{down}{Enter}{LWin down}{Right}{LWin Up}
+SetKeyDelay 5, 10
+Send {RButton}{down}{down}{Enter}{LWin down}{Right}{LWin Up}{esc}
 BlockInput, Off
-#IfWinExist Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-sleep 32
-send {space}
 return
-#IfWinActive

@@ -34,7 +34,7 @@ Process, Priority, , A
 		return
 	}
 	#IfWinExist
-		
+	
 	#If WinActive("Event Tester") || WinActive("AHK Studio - C:\Users\hon0_Corsair\Documents\GitHub\AutoHotKey_Script\AutoHotKey_Script.ahk")
 	{
 		$F5::
@@ -44,7 +44,7 @@ Process, Priority, , A
 		return
 	}
 	#IfWinActive
-		
+	
 	{ ; Try Icon If Pause and/or Suspend
 		
 		OnMessage(0x111,"WM_COMMAND")
@@ -938,17 +938,3 @@ MouseMove, -50, 50 , 10, R
 return
 
 ^!s::Suspend
-
-#IfWinActive C# Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
-$Mbutton::
-BlockInput, On
-;SetKeyDelay 32, 32
-Send {RButton}{down}{down}{Enter}{LWin down}{Right}{LWin Up}
-BlockInput, Off
-#IfWinExist Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-sleep 32
-send {space}
-return
-#IfWinActive

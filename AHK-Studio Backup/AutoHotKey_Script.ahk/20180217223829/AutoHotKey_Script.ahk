@@ -78,7 +78,7 @@ Process, Priority, , A
 	
 	#F1::Suspend, Toggle
 	#F4::ExitApp	
-	^#!SPACE::  Winset, Alwaysontop, , A ; Toggle Active Windows Always on Top.
+	^SPACE::  Winset, Alwaysontop, , A ; Toggle Active Windows Always on Top.
 	
 	#t::
 	{

@@ -950,20 +950,19 @@ WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 sleep 32
 send {space}
-WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 sleep 32
-MouseClick, left, 1400, 600
+MouseClick, left, 485, 600
 sleep 32
 Send ^a
 sleep 32
 Send ^c
 sleep 32
-MouseClick, left, 2700, 600
+MouseClick, left, 2000, 600
 sleep 32
 Send ^a
 sleep 32
 Send ^v
-Send {MButton Up}{F9}
+Send {MButton Up}
 BlockInput, Off
 return
 #IfWinExist

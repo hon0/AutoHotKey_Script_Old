@@ -963,7 +963,7 @@ sleep 32
 Send ^a
 sleep 32
 Send ^v
-Send {MButton Up}{F9}
+Send {MButton Up}
 BlockInput, Off
 return
 #IfWinExist

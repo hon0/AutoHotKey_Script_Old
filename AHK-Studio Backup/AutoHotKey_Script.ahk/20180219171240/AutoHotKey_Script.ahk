@@ -7,7 +7,6 @@ SetScrollLockState, AlwaysOff
 Process, Priority, , A
 ;#InstallKeybdHook
 ;#InstallMouseHook
-CoordMode, mouse, Screen
 
 
 { ;Monitoring Windows
@@ -29,8 +28,8 @@ CoordMode, mouse, Screen
 		SetKeyDelay 0, 32
 		Send {Lwin down}{Right}{Right}{Lwin up}{esc}{esc}{esc}{esc}
 		Sleep 32
-		MouseClick, left, 1952, 66
-		MouseClick, left, 2016, 91
+		MouseClick, left, 36, 40
+		MouseClick, left, 104, 62
 		BlockInput, Off	
 		return
 	}
@@ -951,19 +950,12 @@ WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 sleep 32
 send {space}
 WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-sleep 32
-MouseClick, left, 1400, 600
-sleep 32
+WinActivate Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+MouseClick, left, 1300, 500, R
 Send ^a
-sleep 32
 Send ^c
-sleep 32
-MouseClick, left, 2700, 600
-sleep 32
-Send ^a
-sleep 32
+WinActivate GDB online Debugger | Compiler - Code, Compile, Run, Debug online C, C++ - Google Chrome
 Send ^v
-Send {MButton Up}{F9}
 BlockInput, Off
 return
 #IfWinExist

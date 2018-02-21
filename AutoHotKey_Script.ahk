@@ -124,40 +124,41 @@ CoordMode, mouse, Screen
 		
 	*/
 	
-	/* ; Pixel color as as condition
-		{ ; Pixel color as as condition
-			!#z::
-			MouseGetPos, xpos, ypos 	
-			PixelGetColor, color, xpos, xpos
-			MsgBox The color at X%xpos% Y%ypos% is %color%.
-			return
-			
-			{ ; Numpad1
-				Numpad1::
-				PixelGetColor, color, 1889, 95
-				if color = 0x20396F 
-				{
-					MouseGetPos, xpos, ypos 
-					BlockInput, On
-					MouseClick, left, 1732, 171
-					MouseMove, xpos, ypos 
-					BlockInput, Off
-					return
-				}
-				Else
-				{
-					MouseGetPos, xpos, ypos 
-					BlockInput, On
-					SetKeyDelay 32, 32
-					Send {NumpadEnter}
-					MouseClick, left, 1732, 171
-					MouseMove, xpos, ypos 
-					BlockInput, Off
-				}
-				Return
+	 ; Pixel color as as condition
+	/*{ ; Pixel color as as condition
+		!#z::
+		MouseGetPos, xpos, ypos 	
+		;PixelGetColor, color, xpos, xpos
+		PixelGetColor, color, 1889, 95
+		;MsgBox The color at X%xpos% Y%ypos% is %color%.
+		MsgBox The color is %color%.
+		return
+		
+		{ ; Numpad1
+			Numpad1::
+			PixelGetColor, color, 1889, 95
+			if color = 0x213A70
+			{
+				MouseGetPos, xpos, ypos 
+				BlockInput, On
+				MouseClick, left, 1732, 171
+				MouseMove, xpos, ypos 
+				BlockInput, Off
+				return
 			}
+			Else
+			{
+				MouseGetPos, xpos, ypos 
+				BlockInput, On
+				SetKeyDelay 32, 32
+				Send {NumpadEnter}
+				MouseClick, left, 1732, 171
+				MouseMove, xpos, ypos 
+				BlockInput, Off
+			}
+			Return
 		}
-	*/
+	}*/
 	
 	/* ; On press != on double press != on long press.
 		$a::
@@ -940,31 +941,39 @@ return
 
 ^!s::Suspend
 
-#IfWinActive C++ Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
-$Mbutton::
+
+#IfWinActive Java Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
+	$Mbutton::
 BlockInput, On
-;SetKeyDelay 32, 32
+	;SetKeyDelay 32, 32
 Send {RButton}{down}{down}{Enter}{LWin down}{Right}{LWin Up}
 #IfWinExist Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+	WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 sleep 32
 send {space}
 WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-sleep 32
-MouseClick, left, 1400, 600
-sleep 32
-Send ^a
-sleep 32
-Send ^c
-sleep 32
-MouseClick, left, 2700, 600
-sleep 32
-Send ^a
-sleep 32
-Send ^v
-Send {MButton Up}{F9}
+Send {MButton Up}
 BlockInput, Off
 return
 #IfWinExist
-#IfWinActive
+	#IfWinActive
+		
+/*sleep 32
+	MouseClick, left, 1400, 600
+	sleep 32
+	Send ^a
+	sleep 32
+	Send ^c
+	sleep 32
+	MouseClick, left, 2700, 600
+	sleep 32
+	Send ^a
+	sleep 32
+	Send ^v
+	Send {MButton Up}{F9}
+	BlockInput, Off
+	return
+	#IfWinExist
+		#IfWinActive
+*/

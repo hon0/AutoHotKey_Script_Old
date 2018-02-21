@@ -63,7 +63,7 @@ SetTitleMatchMode, 2
 		}
 		Else If !WinExist("Set Timer Resolution")
 		{
-			Run, D:\-  T�l�chargements sur D\TimerResolution.exe
+			Run, D:\-  Téléchargements sur D\TimerResolution.exe
 			WinWait Set Timer Resolution
 			WinMinimize Set Timer Resolution
 			WinWait MSI Afterburner
@@ -127,7 +127,7 @@ SetTitleMatchMode, 2
 			{ ; Numpad1
 				Numpad9::
 				PixelGetColor, color, 1889, 95
-				if color = 0x213A70
+				if color = 0x243A70
 					
 				{
 					MouseGetPos, xpos, ypos 
@@ -246,7 +246,7 @@ SetTitleMatchMode, 2
 	{ ; Numpad1
 		Numpad1::
 		PixelGetColor, color, 1889, 95
-		if color = 0x213A70 ;0x20396F
+		if color = 0x243A70 ;0x20396F
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -272,7 +272,7 @@ SetTitleMatchMode, 2
 	{ ; Numpad 2
 		Numpad2::
 		PixelGetColor, color, 1889, 95
-		if color = 0x213A70 ;0x20396F 
+		if color = 0x243A70 ;0x20396F 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -297,7 +297,7 @@ SetTitleMatchMode, 2
 	{ ; Numpad 3
 		Numpad3::
 		PixelGetColor, color, 1889, 95
-		if color = 0x213A70 ;0x20396F 
+		if color = 0x243A70 ;0x20396F 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -532,7 +532,7 @@ SetTitleMatchMode, 2
 	{ ; X remapping Layer 2
 		x:: 
 		PixelGetColor, color, 1889, 95
-		if color = 0x213A70 ;0x20396F 
+		if color = 0x243A70 ;0x20396F 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -557,7 +557,7 @@ SetTitleMatchMode, 2
 	{ ; c remapping Layer 2
 		c::
 		PixelGetColor, color, 1889, 95
-		if color = 0x213A70 ;0x20396F 
+		if color = 0x243A70 ;0x20396F 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On

@@ -63,7 +63,7 @@ SetTitleMatchMode, 2
 		}
 		Else If !WinExist("Set Timer Resolution")
 		{
-			Run, D:\-  T�l�chargements sur D\TimerResolution.exe
+			Run, D:\-  Téléchargements sur D\TimerResolution.exe
 			WinWait Set Timer Resolution
 			WinMinimize Set Timer Resolution
 			WinWait MSI Afterburner
@@ -80,37 +80,8 @@ SetTitleMatchMode, 2
 
 { ; The Settlers manual interAction while in Game.
 	
-	
-	
-}
 
-{ ; Lock mouse to Window. LControl+LAlt+A.
-	^!a::
-	LockMouseToWindow("Settlers 7 Window")
-	Return
 	
-	^!s::
-	LockMouseToWindow()
-	Return
-	
-	
-	LockMouseToWindow(llwindowname="")
-	{
-		VarSetCapacity(llrectA, 16)
-		WinGetPos, llX, llY, llWidth, llHeight, %llwindowname%
-		If (!llWidth AND !llHeight) {
-			DllCall("ClipCursor")
-			Return, False
-		}
-		Loop, 4 { 
-			DllCall("RtlFillMemory", UInt,&llrectA+0+A_Index-1, UInt,1, UChar,llX >> 8*A_Index-8) 
-			DllCall("RtlFillMemory", UInt,&llrectA+4+A_Index-1, UInt,1, UChar,llY >> 8*A_Index-8) 
-			DllCall("RtlFillMemory", UInt,&llrectA+8+A_Index-1, UInt,1, UChar,(llWidth + llX)>> 8*A_Index-8) 
-			DllCall("RtlFillMemory", UInt,&llrectA+12+A_Index-1, UInt,1, UChar,(llHeight + llY) >> 8*A_Index-8) 
-		} 
-		DllCall("ClipCursor", "UInt", &llrectA)
-		Return, True
-	}
 }
 
 { ;Testing	
@@ -127,7 +98,7 @@ SetTitleMatchMode, 2
 			{ ; Numpad1
 				Numpad9::
 				PixelGetColor, color, 1889, 95
-				if color = 0x213A70
+				if color = 0x243A70
 					
 				{
 					MouseGetPos, xpos, ypos 
@@ -246,7 +217,7 @@ SetTitleMatchMode, 2
 	{ ; Numpad1
 		Numpad1::
 		PixelGetColor, color, 1889, 95
-		if color = 0x213A70 ;0x20396F
+		if color = 0x243A70 ;0x20396F
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -272,7 +243,7 @@ SetTitleMatchMode, 2
 	{ ; Numpad 2
 		Numpad2::
 		PixelGetColor, color, 1889, 95
-		if color = 0x213A70 ;0x20396F 
+		if color = 0x243A70 ;0x20396F 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -297,7 +268,7 @@ SetTitleMatchMode, 2
 	{ ; Numpad 3
 		Numpad3::
 		PixelGetColor, color, 1889, 95
-		if color = 0x213A70 ;0x20396F 
+		if color = 0x243A70 ;0x20396F 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -458,7 +429,7 @@ SetTitleMatchMode, 2
 }
 
 #If
-	
+
 }
 
 { #if Layer = 2 
@@ -532,7 +503,7 @@ SetTitleMatchMode, 2
 	{ ; X remapping Layer 2
 		x:: 
 		PixelGetColor, color, 1889, 95
-		if color = 0x213A70 ;0x20396F 
+		if color = 0x243A70 ;0x20396F 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On
@@ -557,7 +528,7 @@ SetTitleMatchMode, 2
 	{ ; c remapping Layer 2
 		c::
 		PixelGetColor, color, 1889, 95
-		if color = 0x213A70 ;0x20396F 
+		if color = 0x243A70 ;0x20396F 
 		{
 			MouseGetPos, xpos, ypos 
 			BlockInput, On

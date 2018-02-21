@@ -124,8 +124,8 @@ CoordMode, mouse, Screen
 		
 	*/
 	
-	/* ; Pixel color as as condition
-	{
+	 ; Pixel color as as condition
+	{ ; Pixel color as as condition
 		!#z::
 		MouseGetPos, xpos, ypos 	
 		;PixelGetColor, color, xpos, xpos
@@ -159,7 +159,7 @@ CoordMode, mouse, Screen
 			Return
 		}
 	}
-	*/
+	
 	
 	/* ; On press != on double press != on long press.
 		$a::

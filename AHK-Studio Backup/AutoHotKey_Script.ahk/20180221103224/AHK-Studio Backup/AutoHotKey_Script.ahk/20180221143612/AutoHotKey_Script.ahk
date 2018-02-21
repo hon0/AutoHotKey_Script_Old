@@ -953,6 +953,7 @@ WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 sleep 32
 send {space}
+BlockInput, Off
 WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 Send {MButton Up}
 BlockInput, Off

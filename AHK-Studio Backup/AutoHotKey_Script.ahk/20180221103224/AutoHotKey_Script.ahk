@@ -9,7 +9,6 @@ Process, Priority, , A
 ;#InstallMouseHook
 CoordMode, mouse, Screen
 
-
 { ;Monitoring Windows
 	
 	BlockInput, On
@@ -337,14 +336,22 @@ CoordMode, mouse, Screen
 
 { ;Global remapping
 	
+	~ScrollLock::LWin
+	~ScrollLock & Del::send {Lwin Down}{Left}{Lwin Up}
+	~ScrollLock & PgDn::send {Lwin Down}{Right}{Lwin Up}
+	~ScrollLock & Home::send {Lwin Down}{Up}{Lwin Up}
+	~ScrollLock & End::send {Lwin Down}{Down}{Lwin Up}
+	
 	;#IfWinActive EscapeFromTarkov	
 	
-	XButton2::
-	SetKeyDelay 32, 32
-	send ^t
-	Return
-	
-	XButton1::t
+	/*
+		XButton2::
+		SetKeyDelay 32, 32
+		send ^t
+		Return
+		
+		XButton1::t
+	*/
 	
 	~Right & LButton::F1
 	Return
@@ -515,7 +522,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 1".
-	
+
 }
 
 { #if Layer = 2 
@@ -917,33 +924,10 @@ CoordMode, mouse, Screen
 { ;HotStrings
 	
 :*:ahk::AutoHotKey
-::viei@::vieillefont.antoine@gmail.com
 	
 }
 
-#g::
-MouseGetPos, xpos, ypos 
-MsgBox, The cursor is at X%xpos% Y%ypos%. 
-return
-
-#s::
-MouseClick, left, 36, 40
-MouseClick, left, 104, 62
-return
-
-#x::
-MouseMove, 50, -50 , 10, R ;moves the mouse in a box
-MouseMove, -100, 0 , 10, R ;around it's starting position
-MouseMove, 0, 100 , 10, R
-MouseMove, 100, 0 , 10, R
-MouseMove, 0, -100 , 10, R
-MouseMove, -50, 50 , 10, R
-return
-
-^!s::Suspend
-
-
-#IfWinActive Java Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
+#IfWinActive Python 3 Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
 $Mbutton::
 BlockInput, On
 	;SetKeyDelay 32, 32

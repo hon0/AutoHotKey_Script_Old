@@ -52,16 +52,6 @@ SetTitleMatchMode, 2
 	#F4::ExitApp
 	^SPACE::  Winset, Alwaysontop, , A ; Toggle Active Windows Always on Top.	
 	
-	
-	^!f::
-	WinGetTitle, currentWindow, A
-	IfWinExist %currentWindow%
-	{
-		WinSet, Style, ^0xC00000 ; toggle title bar
-		WinMove, , , 0, 0, 1920, 1080
-	}
-	return
-	
 	#t::
 	{
 		If !WinExist("MSI Afterburner")

@@ -2,14 +2,13 @@
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
 Layer := 1
+KeyDown = 0
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
 ;#InstallKeybdHook
 ;#InstallMouseHook
 CoordMode, mouse, Screen
-
-MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 
 
 { ;Monitoring Windows
@@ -83,24 +82,15 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	#F4::ExitApp	
 	^#!SPACE::  Winset, Alwaysontop, , A ; Toggle Active Windows Always on Top.
 	
-	^#!f::
+	; Reset game stats.
+	^!r::
 	{
-		FileDelete, C:\Users\hon0_Corsair\Documents\World in Conflict\Game Options.txt
-		run, "C:\Users\hon0_Corsair\Documents\World in Conflict\"
+		FileDelete, C:\Users\hon0_Corsair\AppData\Local\SniperElite4\PC_ProfileSaves\76561197993333907
+		clipboard = C:\Users\hon0_Corsair\AppData\Local\SniperElite4\76561197993333907
+		FileCopy, C:\Users\hon0_Corsair\AppData\Local\SniperElite4\76561197993333907
+		FileMove, C:\Users\hon0_Corsair\AppData\Local\SniperElite4\76561197993333907, C:\Users\hon0_Corsair\AppData\Local\SniperElite4\PC_ProfileSaves\
 		return
 	}
-	/* ; Why delete config file before runing the game.
-		I'm having the same issue, super weird, if I delete the "Game Options.txt" file inside the world in conflict folder in documents, I then of course have to reset the resolution, but the game already starts with the "Very High" preset on the graphics settings, and then I get constant 60 FPS when running the benchmark.
-		
-		But all I need to do is restart the game and bam, FPS goes to♥♥♥♥♥♥.. it would seem that maybe there's a specific setting that only gets applied when you restart it, and that's why we only see the effects of it after said restart.
-		
-		Still, given the OP's specs (and mine, the only difference being that I have a non TI 980) we should be able to run this 2009 game at maxed out settings without breaking a sweat.
-		
-		I mean look at this https://imgur.com/a/JUuQD the game is running at an abysmal 36 FPS, yet the GPU usage is sitting at 31% and the CPU at 8%.. it makes very little sense indeed.
-		
-		I'm wondering, are you running the free uplay version they're handing out? because I am, maybe that has something to do with it.	
-	*/
-	
 	
 	#t::
 	{
@@ -357,14 +347,24 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 
 { ;Global remapping
 	
-	;#IfWinActive EscapeFromTarkov	
+	;#IfWinActive EscapeFromTarkov
 	
-	XButton2::
-	SetKeyDelay 32, 32
-	send ^t
+	left::
+	KeyDown := !KeyDown
+	If KeyDown
+		SendInput {left down}
+	Else
+		SendInput {left up}
 	Return
 	
-	XButton1::t
+	/*
+		XButton2::
+		SetKeyDelay 32, 32
+		send ^t
+		Return
+		
+		XButton1::t
+	*/
 	
 	~Right & LButton::F1
 	Return
@@ -562,6 +562,7 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 }
 
 { ; Mouse Wheel Layer 2
+	
 	~WheelUp:: 
 	SetkeyDelay, 0, 32
 	send {PgUp}
@@ -571,6 +572,7 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	SetkeyDelay, 0, 32
 	send {PgDn}
 	Return
+	
 }	
 
 { ;All Layer 2 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
@@ -753,14 +755,25 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 }
 
 { ; Mouse Wheel Layer 3
-	~WheelUp:: 
 	SetkeyDelay, 0, 32
-	send {Insert}
+	If GetKeyState("MButton") 
+		send {PGUP}
+	else
+		send {Insert}
+		;Else
+		;	If (GetKeyState("6Joy1")==1)
+		;		send g
 	Return
 	
 	~WheelDown:: 
 	SetkeyDelay, 0, 32
-	send {Del}
+	If GetKeyState("MButton") 
+		send {PGDN}
+	Else
+		send {Del}
+		;Else 
+		;	If GetKeyState("Space") 
+		;		send {End}
 	Return
 }
 
@@ -927,3 +940,61 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 ::viei@::vieillefont.antoine@gmail.com
 	
 }
+
+#g::
+MouseGetPos, xpos, ypos 
+MsgBox, The cursor is at X%xpos% Y%ypos%. 
+return
+
+#s::
+MouseClick, left, 36, 40
+MouseClick, left, 104, 62
+return
+
+#x::
+MouseMove, 50, -50 , 10, R ;moves the mouse in a box
+MouseMove, -100, 0 , 10, R ;around it's starting position
+MouseMove, 0, 100 , 10, R
+MouseMove, 100, 0 , 10, R
+MouseMove, 0, -100 , 10, R
+MouseMove, -50, 50 , 10, R
+return
+
+^!s::Suspend
+
+
+#IfWinActive Java Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
+	$Mbutton::
+BlockInput, On
+	;SetKeyDelay 32, 32
+Send {RButton}{down}{down}{Enter}{LWin down}{Right}{LWin Up}
+#IfWinExist Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+	WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+sleep 32
+send {space}
+WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+Send {MButton Up}
+BlockInput, Off
+return
+#IfWinExist
+	#IfWinActive
+		
+/*sleep 32
+	MouseClick, left, 1400, 600
+	sleep 32
+	Send ^a
+	sleep 32
+	Send ^c
+	sleep 32
+	MouseClick, left, 2700, 600
+	sleep 32
+	Send ^a
+	sleep 32
+	Send ^v
+	Send {MButton Up}{F9}
+	BlockInput, Off
+	return
+	#IfWinExist
+		#IfWinActive
+*/

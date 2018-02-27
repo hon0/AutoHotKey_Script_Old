@@ -742,6 +742,7 @@ CoordMode, mouse, Screen
 }
 
 { ; Mouse Wheel Layer 3
+	~WheelUp:: 
 	SetkeyDelay, 0, 32
 	If GetKeyState("MButton") 
 		send {PGUP}
@@ -917,7 +918,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 3".
-	
+
 }
 
 

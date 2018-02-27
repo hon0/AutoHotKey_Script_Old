@@ -83,12 +83,7 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	#F4::ExitApp	
 	^#!SPACE::  Winset, Alwaysontop, , A ; Toggle Active Windows Always on Top.
 	
-	^#!f::
-	{
-		FileDelete, C:\Users\hon0_Corsair\Documents\World in Conflict\Game Options.txt
-		run, "C:\Users\hon0_Corsair\Documents\World in Conflict\"
-		return
-	}
+	^#!f::FileDelete, C:\Users\hon0_Corsair\Documents\World in Conflict\Game Options.txt
 	/* ; Why delete config file before runing the game.
 		I'm having the same issue, super weird, if I delete the "Game Options.txt" file inside the world in conflict folder in documents, I then of course have to reset the resolution, but the game already starts with the "Very High" preset on the graphics settings, and then I get constant 60 FPS when running the benchmark.
 		
@@ -100,49 +95,49 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 		
 		I'm wondering, are you running the free uplay version they're handing out? because I am, maybe that has something to do with it.	
 	*/
-	
-	
-	#t::
-	{
-		If !WinExist("MSI Afterburner")
+		
+		
+		#t::
 		{
-			Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
-			WinWait MSI Afterburner
-			MsgBox Check Mouse and keyboard profile!
-		}
-		Else If !WinExist("Set Timer Resolution")
-		{
-			Run, D:\-  Téléchargements sur D\TimerResolution.exe
-			WinWait Set Timer Resolution
-			WinMinimize Set Timer Resolution
-			WinWait MSI Afterburner
-		}
-		Else if WinExist("MSI Afterburner") || WinExist("Set Timer Resolution")
-		{
-			WinActivate, MSI Afterburner
-			WinActivate, Set Timer Resolution
-		}
-		return
-	}	
-	
-} ;Before running a Game. Run and/or close Program.
-
-{ ;Joystick ID (Use JoyID Program)
+			If !WinExist("MSI Afterburner")
+			{
+				Run, C:\Program Files (x86)\MSI Afterburner\MSIAfterburner.exe
+				WinWait MSI Afterburner
+				MsgBox Check Mouse and keyboard profile!
+			}
+			Else If !WinExist("Set Timer Resolution")
+			{
+				Run, D:\-  Téléchargements sur D\TimerResolution.exe
+				WinWait Set Timer Resolution
+				WinMinimize Set Timer Resolution
+				WinWait MSI Afterburner
+			}
+			Else if WinExist("MSI Afterburner") || WinExist("Set Timer Resolution")
+			{
+				WinActivate, MSI Afterburner
+				WinActivate, Set Timer Resolution
+			}
+			return
+		}	
+		
+		} ;Before running a Game. Run and/or close Program.
+		
+		{ ;Joystick ID (Use JoyID Program)
 	;6Joy = T16000L (See JoyID)
 	;5Joy = Vjoy
-}
-
-{ ;Testing
-	
-	/* ; If prior key ""
-		{ ; If prior key ""
-			m::
-			Send o
-			if (A_PriorKey = "space")
-				SendInput {p}
-			return
 		}
 		
+		{ ;Testing
+			
+			/* ; If prior key ""
+			{ ; If prior key ""
+				m::
+				Send o
+				if (A_PriorKey = "space")
+					SendInput {p}
+				return
+			}
+			
 	*/
 	
 	 ; Pixel color as as condition
@@ -535,7 +530,7 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 }
 
 #If ; End of "If Layer = 1".
-	
+
 }
 
 { #if Layer = 2 
@@ -724,7 +719,7 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 }
 
 #If ; End of "If Layer = 2".
-	
+
 }
 
 { #if Layer = 3
@@ -917,7 +912,7 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 }
 
 #If ; End of "If Layer = 3".
-	
+
 }
 
 

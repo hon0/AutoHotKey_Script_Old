@@ -2,8 +2,6 @@
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
 Layer := 1
-KeyDown = 0 ; For toggle Icon {LAlt}
-
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
@@ -169,17 +167,6 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	*/
 	
 	SC056::l
-	
-	;#IfWinActive World in Conflict
-	Alt::
-	KeyDown := !KeyDown
-	If KeyDown
-		SendInput {Alt down}
-	Else
-		SendInput {Alt up}
-	Return
-	;#IfWinActive
-	
 	
 	²::
 	{
@@ -384,7 +371,7 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 }
 
 #If ; End of "If Layer = 1".
-
+	
 }
 
 { #if Layer = 2 

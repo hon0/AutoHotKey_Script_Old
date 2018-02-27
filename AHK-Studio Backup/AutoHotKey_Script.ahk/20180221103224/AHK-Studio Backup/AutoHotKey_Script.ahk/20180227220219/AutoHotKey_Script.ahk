@@ -2,8 +2,6 @@
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
 Layer := 1
-KeyDown = 0 ; For toggle Icon {LAlt}
-
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
@@ -11,10 +9,7 @@ Process, Priority, , A
 ;#InstallMouseHook
 CoordMode, mouse, Screen
 
-MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
-
-
-{ ; Monitoring Windows
+{ ;Monitoring Windows
 	
 	BlockInput, On
 	
@@ -79,30 +74,11 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	}
 }
 
-{ ; Before running a Game. Run and/or close Program.
+{ ;Before running a Game. Run and/or close Program.
 	
 	#F1::Suspend, Toggle
 	#F4::ExitApp	
 	^#!SPACE::  Winset, Alwaysontop, , A ; Toggle Active Windows Always on Top.
-	
-	^#!f::
-	{
-		FileDelete, C:\Users\hon0_Corsair\Documents\World in Conflict\Game Options.txt
-		run, "C:\Users\hon0_Corsair\Documents\World in Conflict\"
-		return
-	}
-	/* ; Why delete config file before runing the game.
-		I'm having the same issue, super weird, if I delete the "Game Options.txt" file inside the world in conflict folder in documents, I then of course have to reset the resolution, but the game already starts with the "Very High" preset on the graphics settings, and then I get constant 60 FPS when running the benchmark.
-		
-		But all I need to do is restart the game and bam, FPS goes to♥♥♥♥♥♥.. it would seem that maybe there's a specific setting that only gets applied when you restart it, and that's why we only see the effects of it after said restart.
-		
-		Still, given the OP's specs (and mine, the only difference being that I have a non TI 980) we should be able to run this 2009 game at maxed out settings without breaking a sweat.
-		
-		I mean look at this https://imgur.com/a/JUuQD the game is running at an abysmal 36 FPS, yet the GPU usage is sitting at 31% and the CPU at 8%.. it makes very little sense indeed.
-		
-		I'm wondering, are you running the free uplay version they're handing out? because I am, maybe that has something to do with it.	
-	*/
-	
 	
 	#t::
 	{
@@ -127,7 +103,209 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 		return
 	}	
 	
-} ; Before running a Game. Run and/or close Program.
+} ;Before running a Game. Run and/or close Program.
+
+{ ;Joystick ID (Use JoyID Program)
+	;6Joy = T16000L (See JoyID)
+	;5Joy = Vjoy
+}
+
+{ ;Testing
+	
+	/* ; If prior key ""
+		{ ; If prior key ""
+			m::
+			Send o
+			if (A_PriorKey = "space")
+				SendInput {p}
+			return
+		}
+		
+	*/
+	
+	/* ; Pixel color as as condition
+	{
+		!#z::
+		MouseGetPos, xpos, ypos 	
+		;PixelGetColor, color, xpos, xpos
+		PixelGetColor, color, 1889, 95
+		;MsgBox The color at X%xpos% Y%ypos% is %color%.
+		MsgBox The color is %color%.
+		return
+		
+		{ ; Numpad1
+			Numpad1::
+			PixelGetColor, color, 1889, 95
+			if color = 0x213A70
+			{
+				MouseGetPos, xpos, ypos 
+				BlockInput, On
+				MouseClick, left, 1732, 171
+				MouseMove, xpos, ypos 
+				BlockInput, Off
+				return
+			}
+			Else
+			{
+				MouseGetPos, xpos, ypos 
+				BlockInput, On
+				SetKeyDelay 32, 32
+				Send {NumpadEnter}
+				MouseClick, left, 1732, 171
+				MouseMove, xpos, ypos 
+				BlockInput, Off
+			}
+			Return
+		}
+	}
+	*/
+	
+	/* ; On press != on double press != on long press.
+		$a::
+		KeyWait, a, T0.1
+		
+		if (ErrorLevel)
+		{
+			Send {b down}
+			keywait a
+			Send {b up}
+		}
+		else {
+			KeyWait, a, D T0.1
+			
+			if (ErrorLevel)
+			{
+				Send {a down}
+				keywait a
+				Send {a up}
+			}
+			
+			else
+			{
+				Send {c down}
+				keywait a
+				Send {c up}
+			}
+			
+		}
+		
+		KeyWait, a
+		return
+	*/
+	
+	/*
+		
+		{
+			$f1::
+			{
+				count++
+				settimer, actions, 333
+			}
+			return
+			
+			actions:
+			{
+				if (count = 1)
+				{
+					send {F1}
+				}
+				else if (count = 2)
+				{
+					send {F2}
+				}
+				else if (count = 3)
+				{
+					send {F3}
+				}
+				count := 0
+			}
+			return	
+			
+			
+			SetTimer, WatchAxis, 5
+			return
+			
+			WatchAxis:
+			GetKeyState, 6JoyX, 6JoyX  ; Get position of X axis.
+			GetKeyState, 6JoyY, 6JoyY  ; Get position of Y axis.
+			KeyToHoldDownPrev = %KeyToHoldDown%  ; Prev now holds the key that was down before (if any).
+			
+			if 6JoyX > 70
+				KeyToHoldDown = Right
+			else if 6JoyX < 30
+				KeyToHoldDown = Left
+			else if 6JoyY > 70
+				KeyToHoldDown = Down
+			else if 6JoyY < 30
+				KeyToHoldDown = Up
+			else
+				KeyToHoldDown =
+			
+			if KeyToHoldDown = %KeyToHoldDownPrev%  ; The correct key is already down (or no key is needed).
+				return  ; Do nothing.
+			
+	; Otherwise, release the previous key and press down the new key:
+			SetKeyDelay -1  ; Avoid delays between keystrokes.
+			if KeyToHoldDownPrev   ; There is a previous key to release.
+				Send, {%KeyToHoldDownPrev% up}  ; Release it.
+			if KeyToHoldDown   ; There is a key to press down.
+				Send, {%KeyToHoldDown% down}  ; Press it down.
+			return
+			
+			
+			
+			6Joy1::
+			If GetKeyState("6Joy2", "P")=1
+			{
+				send {d Down}
+				keywait 6Joy1
+				send, {d Up}
+			}
+			else 
+				if GetKeyState("6joy3", "p")=1
+				{
+					send {v Down}
+					keywait 6Joy1
+					send, {v Up}
+				}
+			Else 
+			{
+				send {c Down}
+				keywait 6Joy1
+				send, {c Up}
+			}
+			Return
+			
+			
+			$f8::
+			{
+				count++
+				settimer, actionsF8, 200
+			}
+			return
+			
+			actionsF8:
+			{
+				if (count = 1)
+				{
+					send {F8}
+				}
+				else if (count = 2)
+				{
+					send {F9}
+				}
+				else if (count = 3)
+				{
+					send {F10}
+				}
+				count := 0
+			}
+			return
+		}
+	*/	
+	
+}
+
 
 /* ;Layer checker
 	
@@ -141,6 +319,7 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	ToolTip
 	return
 */
+
 
 { ; Layer modifier
 	CapsLock:: ;Key disabled by "SetCapsLockState, AlwaysOff".
@@ -157,6 +336,12 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 
 { ;Global remapping
 	
+	~ScrollLock::LWin
+	~ScrollLock & Del::send {Lwin Down}{Left}{Lwin Up}
+	~ScrollLock & PgDn::send {Lwin Down}{Right}{Lwin Up}
+	~ScrollLock & Home::send {Lwin Down}{Up}{Lwin Up}
+	~ScrollLock & End::send {Lwin Down}{Down}{Lwin Up}
+	
 	;#IfWinActive EscapeFromTarkov	
 	
 	/*
@@ -167,58 +352,6 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 		
 		XButton1::t
 	*/
-	
-	SC056::l
-	
-	;#IfWinActive World in Conflict
-	Alt::
-	KeyDown := !KeyDown
-	If KeyDown
-		SendInput {Alt down}
-	Else
-		SendInput {Alt up}
-	Return
-	;#IfWinActive
-	
-	
-	²::
-	{
-		
-		KeyWait ², t0.100
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
-		{
-			SendInput {Enter down}
-			KeyWait ²
-			SendInput {Enter up}
-		}
-		else
-		{
-			SendInput {Backspace down}
-			sleep 32
-			KeyWait ²
-			SendInput {Backspace up}
-		}
-		return
-	}
-	
-	SC056:: 
-	KeyWait SC056, t0.100
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {m down}
-		KeyWait SC056
-		SendInput {m up}
-	}
-	else
-	{
-		SendInput {l down}
-		sleep 32
-		KeyWait SC056
-		SendInput {l up}
-	}
-	return
 	
 	~Right & LButton::F1
 	Return
@@ -245,6 +378,11 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	~Right & MButton::F7
 	Return
 	
+	~Right & F8::F9
+	Return
+	
+	~Right & F9::F10
+	Return
 	;#IfWinActive
 	
 }
@@ -398,37 +536,38 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	XButton1::F3
 	XButton2::F4
 	
-	tab::esc
-	
 	SC056:: 
 	KeyWait SC056, t0.100
 	t:= A_TimeSinceThisHotkey
 	If ErrorLevel
 	{
-		SendInput {p down}
+		SendInput {m down}
 		KeyWait SC056
-		SendInput {p up}
+		SendInput {m up}
 	}
 	else
 	{
-		SendInput {o down}
+		SendInput {l down}
 		sleep 32
 		KeyWait SC056
-		SendInput {o up}
+		SendInput {l up}
 	}
 	return
 	
+	PGUP::Insert
+	PGDN::Del
+	
+	tab::esc
 	w::b
 	x::n
 	c::,
-	v::;
-	
-	
+	v::Del
 	
 	;#IfWinActive
 }
 
 { ; Mouse Wheel Layer 2
+	
 	~WheelUp:: 
 	SetkeyDelay, 0, 32
 	send {PgUp}
@@ -438,6 +577,7 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	SetkeyDelay, 0, 32
 	send {PgDn}
 	Return
+	
 }	
 
 { ;All Layer 2 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
@@ -591,7 +731,7 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 }
 
 #If ; End of "If Layer = 2".
-	
+
 }
 
 { #if Layer = 3
@@ -613,18 +753,33 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	;r::y
 	;f::h
 	
+	F8::F9
+	F9::F10
+	
 	;#IfWinActive
 }
 
 { ; Mouse Wheel Layer 3
 	~WheelUp:: 
 	SetkeyDelay, 0, 32
-	send {Insert}
+	If GetKeyState("MButton") 
+		send {PGUP}
+	else
+		send {Insert}
+		;Else
+		;	If (GetKeyState("6Joy1")==1)
+		;		send g
 	Return
 	
 	~WheelDown:: 
 	SetkeyDelay, 0, 32
-	send {Del}
+	If GetKeyState("MButton") 
+		send {PGDN}
+	Else
+		send {Del}
+		;Else 
+		;	If GetKeyState("Space") 
+		;		send {End}
 	Return
 }
 
@@ -781,13 +936,50 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 }
 
 #If ; End of "If Layer = 3".
-	
+
 }
 
 
 { ;HotStrings
 	
 :*:ahk::AutoHotKey
-::viei@::vieillefont.antoine@gmail.com
 	
 }
+
+/*
+	#IfWinActive Python 3 Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
+	$Mbutton::
+	BlockInput, On
+		;SetKeyDelay 32, 32
+	Send {RButton}{down}{down}{Enter}{LWin down}{Right}{LWin Up}
+	#IfWinExist Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+	WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+	WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+	sleep 32
+	send {space}
+	WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+	Send {MButton Up}
+	BlockInput, Off
+	return
+	#IfWinExist
+	#IfWinActive
+*/
+
+/*sleep 32
+	MouseClick, left, 1400, 600
+	sleep 32
+	Send ^a
+	sleep 32
+	Send ^c
+	sleep 32
+	MouseClick, left, 2700, 600
+	sleep 32
+	Send ^a
+	sleep 32
+	Send ^v
+	Send {MButton Up}{F9}
+	BlockInput, Off
+	return
+	#IfWinExist
+	#IfWinActive
+*/

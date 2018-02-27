@@ -2,8 +2,6 @@
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
 Layer := 1
-KeyDown = 0 ; For toggle Icon {LAlt}
-
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
@@ -167,58 +165,6 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 		
 		XButton1::t
 	*/
-	
-	SC056::l
-	
-	;#IfWinActive World in Conflict
-	Alt::
-	KeyDown := !KeyDown
-	If KeyDown
-		SendInput {Alt down}
-	Else
-		SendInput {Alt up}
-	Return
-	;#IfWinActive
-	
-	
-	²::
-	{
-		
-		KeyWait ², t0.100
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
-		{
-			SendInput {Enter down}
-			KeyWait ²
-			SendInput {Enter up}
-		}
-		else
-		{
-			SendInput {Backspace down}
-			sleep 32
-			KeyWait ²
-			SendInput {Backspace up}
-		}
-		return
-	}
-	
-	SC056:: 
-	KeyWait SC056, t0.100
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {m down}
-		KeyWait SC056
-		SendInput {m up}
-	}
-	else
-	{
-		SendInput {l down}
-		sleep 32
-		KeyWait SC056
-		SendInput {l up}
-	}
-	return
 	
 	~Right & LButton::F1
 	Return
@@ -384,7 +330,7 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 }
 
 #If ; End of "If Layer = 1".
-
+	
 }
 
 { #if Layer = 2 
@@ -399,32 +345,11 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	XButton2::F4
 	
 	tab::esc
-	
-	SC056:: 
-	KeyWait SC056, t0.100
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {p down}
-		KeyWait SC056
-		SendInput {p up}
-	}
-	else
-	{
-		SendInput {o down}
-		sleep 32
-		KeyWait SC056
-		SendInput {o up}
-	}
-	return
-	
 	w::b
 	x::n
 	c::,
 	v::;
-	
-	
-	
+		
 	;#IfWinActive
 }
 

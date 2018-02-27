@@ -2,17 +2,12 @@
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
 Layer := 1
-KeyDown = 0 ; For toggle Icon {LAlt}
-
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
 ;#InstallKeybdHook
 ;#InstallMouseHook
 CoordMode, mouse, Screen
-
-MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
-
 
 { ; Monitoring Windows
 	
@@ -85,25 +80,6 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	#F4::ExitApp	
 	^#!SPACE::  Winset, Alwaysontop, , A ; Toggle Active Windows Always on Top.
 	
-	^#!f::
-	{
-		FileDelete, C:\Users\hon0_Corsair\Documents\World in Conflict\Game Options.txt
-		run, "C:\Users\hon0_Corsair\Documents\World in Conflict\"
-		return
-	}
-	/* ; Why delete config file before runing the game.
-		I'm having the same issue, super weird, if I delete the "Game Options.txt" file inside the world in conflict folder in documents, I then of course have to reset the resolution, but the game already starts with the "Very High" preset on the graphics settings, and then I get constant 60 FPS when running the benchmark.
-		
-		But all I need to do is restart the game and bam, FPS goes to♥♥♥♥♥♥.. it would seem that maybe there's a specific setting that only gets applied when you restart it, and that's why we only see the effects of it after said restart.
-		
-		Still, given the OP's specs (and mine, the only difference being that I have a non TI 980) we should be able to run this 2009 game at maxed out settings without breaking a sweat.
-		
-		I mean look at this https://imgur.com/a/JUuQD the game is running at an abysmal 36 FPS, yet the GPU usage is sitting at 31% and the CPU at 8%.. it makes very little sense indeed.
-		
-		I'm wondering, are you running the free uplay version they're handing out? because I am, maybe that has something to do with it.	
-	*/
-	
-	
 	#t::
 	{
 		If !WinExist("MSI Afterburner")
@@ -169,17 +145,6 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	*/
 	
 	SC056::l
-	
-	;#IfWinActive World in Conflict
-	Alt::
-	KeyDown := !KeyDown
-	If KeyDown
-		SendInput {Alt down}
-	Else
-		SendInput {Alt up}
-	Return
-	;#IfWinActive
-	
 	
 	²::
 	{
@@ -384,7 +349,7 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 }
 
 #If ; End of "If Layer = 1".
-
+	
 }
 
 { #if Layer = 2 

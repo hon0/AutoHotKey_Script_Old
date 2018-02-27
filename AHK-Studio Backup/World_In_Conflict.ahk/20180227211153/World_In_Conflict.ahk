@@ -171,12 +171,12 @@ MsgBox Press LControl+Lwin+LAlt+f to delete config file, THEN run the game.
 	SC056::l
 	
 	;#IfWinActive World in Conflict
-	Alt::
+	LAlt::
 	KeyDown := !KeyDown
 	If KeyDown
-		SendInput {Alt down}
+		SendInput {LAlt down}
 	Else
-		SendInput {Alt up}
+		SendInput {LAlt up}
 	Return
 	;#IfWinActive
 	

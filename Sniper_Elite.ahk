@@ -346,7 +346,7 @@ CoordMode, mouse, Screen
 
 { ;Global remapping
 	
-	#IfWinActive Sniper4
+	;#IfWinActive Sniper4 or Zombie Army Trilogy
 	left::
 	KeyDown := !KeyDown
 	If KeyDown
@@ -354,7 +354,7 @@ CoordMode, mouse, Screen
 	Else
 		SendInput {left up}
 	Return
-	#IfWinActive
+	;#IfWinActive
 	
 	/*
 		XButton2::
@@ -548,7 +548,7 @@ CoordMode, mouse, Screen
 	XButton1::F3
 	XButton2::F4
 	
-	tab::!l
+	tab::esc
 	w::b
 	x::n
 	c::,

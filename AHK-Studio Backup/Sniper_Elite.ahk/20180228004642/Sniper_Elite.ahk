@@ -2,6 +2,7 @@
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
 Layer := 1
+KeyDown = 0 ; For toggle Walk on {Left}
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
@@ -9,7 +10,8 @@ Process, Priority, , A
 ;#InstallMouseHook
 CoordMode, mouse, Screen
 
-{ ; Monitoring Windows
+
+{ ;Monitoring Windows
 	
 	BlockInput, On
 	
@@ -74,11 +76,20 @@ CoordMode, mouse, Screen
 	}
 }
 
-{ ; Before running a Game. Run and/or close Program.
+{ ;Before running a Game. Run and/or close Program.
 	
 	#F1::Suspend, Toggle
 	#F4::ExitApp	
 	^#!SPACE::  Winset, Alwaysontop, , A ; Toggle Active Windows Always on Top.
+	
+	; Reset game stats.
+	^!r::
+	{
+		FileRemoveDir, C:\Users\hon0_Corsair\AppData\Local\SniperElite4\PC_ProfileSaves\76561197993333907, 1
+		sleep 100
+		FileCopyDir, C:\Users\hon0_Corsair\AppData\Local\SniperElite4\76561197993333907, C:\Users\hon0_Corsair\AppData\Local\SniperElite4\PC_ProfileSaves\76561197993333907 , 1
+		return
+	}
 	
 	#t::
 	{
@@ -103,7 +114,208 @@ CoordMode, mouse, Screen
 		return
 	}	
 	
-} ; Before running a Game. Run and/or close Program.
+} ;Before running a Game. Run and/or close Program.
+
+{ ;Joystick ID (Use JoyID Program)
+	;6Joy = T16000L (See JoyID)
+	;5Joy = Vjoy
+}
+
+{ ;Testing
+	
+	/* ; If prior key ""
+		{ ; If prior key ""
+			m::
+			Send o
+			if (A_PriorKey = "space")
+				SendInput {p}
+			return
+		}
+		
+	*/
+	
+	 ; Pixel color as as condition
+	/*{ ; Pixel color as as condition
+		!#z::
+		MouseGetPos, xpos, ypos 	
+		;PixelGetColor, color, xpos, xpos
+		PixelGetColor, color, 1889, 95
+		;MsgBox The color at X%xpos% Y%ypos% is %color%.
+		MsgBox The color is %color%.
+		return
+		
+		{ ; Numpad1
+			Numpad1::
+			PixelGetColor, color, 1889, 95
+			if color = 0x213A70
+			{
+				MouseGetPos, xpos, ypos 
+				BlockInput, On
+				MouseClick, left, 1732, 171
+				MouseMove, xpos, ypos 
+				BlockInput, Off
+				return
+			}
+			Else
+			{
+				MouseGetPos, xpos, ypos 
+				BlockInput, On
+				SetKeyDelay 32, 32
+				Send {NumpadEnter}
+				MouseClick, left, 1732, 171
+				MouseMove, xpos, ypos 
+				BlockInput, Off
+			}
+			Return
+		}
+	}*/
+		
+		/* ; On press != on double press != on long press.
+		$a::
+		KeyWait, a, T0.1
+		
+		if (ErrorLevel)
+		{
+			Send {b down}
+			keywait a
+			Send {b up}
+		}
+		else {
+			KeyWait, a, D T0.1
+			
+			if (ErrorLevel)
+			{
+				Send {a down}
+				keywait a
+				Send {a up}
+			}
+			
+			else
+			{
+				Send {c down}
+				keywait a
+				Send {c up}
+			}
+			
+		}
+		
+		KeyWait, a
+		return
+	*/
+	
+	/*
+		
+		{
+			$f1::
+			{
+				count++
+				settimer, actions, 333
+			}
+			return
+			
+			actions:
+			{
+				if (count = 1)
+				{
+					send {F1}
+				}
+				else if (count = 2)
+				{
+					send {F2}
+				}
+				else if (count = 3)
+				{
+					send {F3}
+				}
+				count := 0
+			}
+			return	
+			
+			
+			SetTimer, WatchAxis, 5
+			return
+			
+			WatchAxis:
+			GetKeyState, 6JoyX, 6JoyX  ; Get position of X axis.
+			GetKeyState, 6JoyY, 6JoyY  ; Get position of Y axis.
+			KeyToHoldDownPrev = %KeyToHoldDown%  ; Prev now holds the key that was down before (if any).
+			
+			if 6JoyX > 70
+				KeyToHoldDown = Right
+			else if 6JoyX < 30
+				KeyToHoldDown = Left
+			else if 6JoyY > 70
+				KeyToHoldDown = Down
+			else if 6JoyY < 30
+				KeyToHoldDown = Up
+			else
+				KeyToHoldDown =
+			
+			if KeyToHoldDown = %KeyToHoldDownPrev%  ; The correct key is already down (or no key is needed).
+				return  ; Do nothing.
+			
+	; Otherwise, release the previous key and press down the new key:
+			SetKeyDelay -1  ; Avoid delays between keystrokes.
+			if KeyToHoldDownPrev   ; There is a previous key to release.
+				Send, {%KeyToHoldDownPrev% up}  ; Release it.
+			if KeyToHoldDown   ; There is a key to press down.
+				Send, {%KeyToHoldDown% down}  ; Press it down.
+			return
+			
+			
+			
+			6Joy1::
+			If GetKeyState("6Joy2", "P")=1
+			{
+				send {d Down}
+				keywait 6Joy1
+				send, {d Up}
+			}
+			else 
+				if GetKeyState("6joy3", "p")=1
+				{
+					send {v Down}
+					keywait 6Joy1
+					send, {v Up}
+				}
+			Else 
+			{
+				send {c Down}
+				keywait 6Joy1
+				send, {c Up}
+			}
+			Return
+			
+			
+			$f8::
+			{
+				count++
+				settimer, actionsF8, 200
+			}
+			return
+			
+			actionsF8:
+			{
+				if (count = 1)
+				{
+					send {F8}
+				}
+				else if (count = 2)
+				{
+					send {F9}
+				}
+				else if (count = 3)
+				{
+					send {F10}
+				}
+				count := 0
+			}
+			return
+		}
+	*/	
+	
+}
+
 
 /* ;Layer checker
 	
@@ -117,6 +329,7 @@ CoordMode, mouse, Screen
 	ToolTip
 	return
 */
+
 
 { ; Layer modifier
 	CapsLock:: ;Key disabled by "SetCapsLockState, AlwaysOff".
@@ -133,7 +346,15 @@ CoordMode, mouse, Screen
 
 { ;Global remapping
 	
-	;#IfWinActive EscapeFromTarkov	
+	#IfWinActive Sniper4 or Zombie Army Trilogy
+	left::
+	KeyDown := !KeyDown
+	If KeyDown
+		SendInput {left down}
+	Else
+		SendInput {left up}
+	Return
+	#IfWinActive
 	
 	/*
 		XButton2::
@@ -143,45 +364,6 @@ CoordMode, mouse, Screen
 		
 		XButton1::t
 	*/
-		
-	²::
-	{
-		
-		KeyWait ², t0.100
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
-		{
-			SendInput {Enter down}
-			KeyWait ²
-			SendInput {Enter up}
-		}
-		else
-		{
-			SendInput {Backspace down}
-			sleep 32
-			KeyWait ²
-			SendInput {Backspace up}
-		}
-		return
-	}
-	
-	SC056:: 
-	KeyWait SC056, t0.100
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {m down}
-		KeyWait SC056
-		SendInput {m up}
-	}
-	else
-	{
-		SendInput {l down}
-		sleep 32
-		KeyWait SC056
-		SendInput {l up}
-	}
-	return
 	
 	~Right & LButton::F1
 	Return
@@ -208,6 +390,11 @@ CoordMode, mouse, Screen
 	~Right & MButton::F7
 	Return
 	
+	~Right & F8::F9
+	Return
+	
+	~Right & F9::F10
+	Return
 	;#IfWinActive
 	
 }
@@ -347,7 +534,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 1".
-	
+
 }
 
 { #if Layer = 2 
@@ -361,37 +548,20 @@ CoordMode, mouse, Screen
 	XButton1::F3
 	XButton2::F4
 	
-	tab::esc
-	
-	SC056:: 
-	KeyWait SC056, t0.100
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {p down}
-		KeyWait SC056
-		SendInput {p up}
-	}
-	else
-	{
-		SendInput {o down}
-		sleep 32
-		KeyWait SC056
-		SendInput {o up}
-	}
-	return
-	
+	tab::!l
 	w::b
 	x::n
 	c::,
-	v::;
+	v::Del
 	
-	
+	F8::F9
+	F9::F10
 	
 	;#IfWinActive
 }
 
 { ; Mouse Wheel Layer 2
+	
 	~WheelUp:: 
 	SetkeyDelay, 0, 32
 	send {PgUp}
@@ -401,6 +571,7 @@ CoordMode, mouse, Screen
 	SetkeyDelay, 0, 32
 	send {PgDn}
 	Return
+	
 }	
 
 { ;All Layer 2 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
@@ -554,7 +725,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 2".
-	
+
 }
 
 { #if Layer = 3
@@ -576,18 +747,32 @@ CoordMode, mouse, Screen
 	;r::y
 	;f::h
 	
+	F8::F9
+	F9::F10
+	
 	;#IfWinActive
 }
 
 { ; Mouse Wheel Layer 3
-	~WheelUp:: 
 	SetkeyDelay, 0, 32
-	send {Insert}
+	If GetKeyState("MButton") 
+		send {PGUP}
+	else
+		send {Insert}
+		;Else
+		;	If (GetKeyState("6Joy1")==1)
+		;		send g
 	Return
 	
 	~WheelDown:: 
 	SetkeyDelay, 0, 32
-	send {Del}
+	If GetKeyState("MButton") 
+		send {PGDN}
+	Else
+		send {Del}
+		;Else 
+		;	If GetKeyState("Space") 
+		;		send {End}
 	Return
 }
 
@@ -744,7 +929,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 3".
-	
+
 }
 
 
@@ -754,3 +939,61 @@ CoordMode, mouse, Screen
 ::viei@::vieillefont.antoine@gmail.com
 	
 }
+
+#g::
+MouseGetPos, xpos, ypos 
+MsgBox, The cursor is at X%xpos% Y%ypos%. 
+return
+
+#s::
+MouseClick, left, 36, 40
+MouseClick, left, 104, 62
+return
+
+#x::
+MouseMove, 50, -50 , 10, R ;moves the mouse in a box
+MouseMove, -100, 0 , 10, R ;around it's starting position
+MouseMove, 0, 100 , 10, R
+MouseMove, 100, 0 , 10, R
+MouseMove, 0, -100 , 10, R
+MouseMove, -50, 50 , 10, R
+return
+
+^!s::Suspend
+
+
+#IfWinActive Java Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
+$Mbutton::
+BlockInput, On
+	;SetKeyDelay 32, 32
+Send {RButton}{down}{down}{Enter}{LWin down}{Right}{LWin Up}
+#IfWinExist Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+sleep 32
+send {space}
+WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+Send {MButton Up}
+BlockInput, Off
+return
+#IfWinExist
+#IfWinActive
+
+/*sleep 32
+	MouseClick, left, 1400, 600
+	sleep 32
+	Send ^a
+	sleep 32
+	Send ^c
+	sleep 32
+	MouseClick, left, 2700, 600
+	sleep 32
+	Send ^a
+	sleep 32
+	Send ^v
+	Send {MButton Up}{F9}
+	BlockInput, Off
+	return
+	#IfWinExist
+	#IfWinActive
+*/

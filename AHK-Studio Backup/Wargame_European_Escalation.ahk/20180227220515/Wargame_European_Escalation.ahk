@@ -143,7 +143,9 @@ CoordMode, mouse, Screen
 		
 		XButton1::t
 	*/
-		
+	
+	SC056::l
+	
 	²::
 	{
 		

@@ -138,15 +138,13 @@ CoordMode, mouse, Screen
 
 { ;Global remapping
 	
-	#IfWinActive Wargame - DirectX 11
+	;#IfWinActive Wargame - DirectX 11
+	
 	
 	/*
 		~a::
 		if (A_ThisHotkey = A_PriorHotkey and A_TimeSincePriorHotkey < 200)
-		{
-			Send {t}
-			keywait a
-		}
+			Send {Blind}{m}
 		return
 	*/
 	
@@ -154,13 +152,17 @@ CoordMode, mouse, Screen
 	keywait, a, T0.100
 	if (ErrorLevel)
 	{
-		Send {t}
+		SendInput {t}
 		keywait, a
 	}
 	return
 	
+	LShift & a::Send {LShift down}{a}{LShift Up}
+	
+	#IfWinActive Wargame - DirectX 11
 	b::
-	{	
+	{
+		
 		KeyWait b, t0.200
 		SetkeyDelay 0, 32
 		t:= A_TimeSinceThisHotkey
@@ -176,10 +178,74 @@ CoordMode, mouse, Screen
 		}
 		return
 	}
+	#IfWinActive
 	
-	; Tank sequential fire 7-8-9-0
+	/*
+		$a::
+		KeyWait, a, T0.200
+		
+		if (ErrorLevel)
+		{
+			Send {b down}
+			keywait a
+			Send {b up}
+		}
+		else {
+			KeyWait, a, D T0.200
+			
+			if (ErrorLevel)
+			{
+				Send {a down}
+				keywait a
+				Send {a up}
+			}
+			
+			else
+			{
+				Send {c down}
+				keywait a
+				Send {c up}
+			}
+			
+		}
+		
+		KeyWait, a
+		return
+	*/
 	
-	Numpad2:: ;Set group 7-8-9-0
+	Numpad1::
+	KeyWait, Numpad1, T0.1
+	
+	if (ErrorLevel)
+	{
+		Send {b down}
+		keywait Numpad1
+		Send {b up}
+	}
+	else {
+		KeyWait, Numpad1, D T0.1
+		
+		if (ErrorLevel)
+		{
+			Send {a down}
+			keywait Numpad1
+			Send {a up}
+		}
+		
+		else
+		{
+			Send {c down}
+			keywait Numpad1
+			Send {c up}
+		}
+		
+	}
+	
+	KeyWait, Numpad1
+	return
+	
+	
+	Numpad2::
 	{
 		SetTimer, Reset, 3000		
 		x++
@@ -195,71 +261,100 @@ CoordMode, mouse, Screen
 			x := 0
 		}
 		
-		
-		return
-		
-		Reset:
-		x := 0
-		return
 	}
-	
-	Numpad3::
-	{
-		BlockInput, On
-		SetTimer, ResetNP3, 3000
-		y++
-		if y = 1
-		{
-			send {è}
-			MouseMove, 900, 1015, 1
-			sleep 3
-			Click
-			MouseMove, 1020, 1015, 1
-			sleep 3
-			Click
-		}
-		else if y = 2
-		{
-			send {_}
-			MouseMove, 900, 1015, 1
-			sleep 3
-			Click
-			MouseMove, 1020, 1015, 1
-			sleep 3
-			Click
-		}
-		else if y = 3
-		{
-			send {ç}
-			MouseMove, 900, 1015, 1
-			sleep 3
-			Click
-			MouseMove, 1020, 1015, 1
-			sleep 3
-			Click
-		}
-		else if y = 4
-		{
-			send {à}
-			MouseMove, 900, 1015, 1
-			sleep 3
-			Click
-			MouseMove, 1020, 1015, 1
-			sleep 3
-			Click	
-			y := 0
-		}
-	}
-	BlockInput, Off
 	return
 	
-	ResetNP3:
-	y := 0
+	Reset:
+	x := 0
 	return
+	
+	; Tank sequential fire 7-8-9-0
+	
+	/*
+		Numpad1::
+		{
+			BlockInput, On
+			Send {x}
+			MouseClick, left
+			sleep 333
+			MouseGetPos, xpos, ypos
+			Send {è}
+			MouseClick, left, 900, 1015, 1, 15
+			Send {_}
+			sleep, 2000
+			MouseClick, left, 900, 1015, 1, 0
+			Send {ç}
+			sleep, 2000
+			MouseClick, left, 900, 1015, 1, 0
+			Send {à}
+			sleep, 2000
+			MouseClick, left, 900, 1015, 1, 0
+			;Clipboard = %xpos% %ypos%
+			MouseMove, xpos, ypos
+			;Send {LShift Down}{è}{_}{ç}{à}{LShift Up}{r}
+			BlockInput, Off		
+			return
+		}
+	*/
+	
+	/*
+		Numpad3::
+		{
+			BlockInput, On
+			SetTimer, ResetNP3, 3000
+			y++
+			if y = 1
+			{
+				send {è}
+				MouseMove, 900, 1015, 1
+				sleep 3
+				Click
+				MouseMove, 1020, 1015, 1
+				sleep 3
+				Click
+			}
+			else if y = 2
+			{
+				send {_}
+				MouseMove, 900, 1015, 1
+				sleep 3
+				Click
+				MouseMove, 1020, 1015, 1
+				sleep 3
+				Click
+			}
+			else if y = 3
+			{
+				send {ç}
+				MouseMove, 900, 1015, 1
+				sleep 3
+				Click
+				MouseMove, 1020, 1015, 1
+				sleep 3
+				Click
+			}
+			else if y = 4
+			{
+				send {à}
+				MouseMove, 900, 1015, 1
+				sleep 3
+				Click
+				MouseMove, 1020, 1015, 1
+				sleep 3
+				Click	
+				y := 0
+			}
+		}
+		BlockInput, Off
+		return
+		
+		ResetNP3:
+		y := 0
+		return
+	*/
 	
 	
 	XButton2::
-	
 	BlockInput, On	
 	MouseGetPos, xpos, ypos
 	MouseClick, left, 900, 1015, 1, 1
@@ -299,7 +394,7 @@ CoordMode, mouse, Screen
 	}
 	
 	#IfWinActive
-		
+	
 	
 	;Numpad0 Up::SendInput {y Up}
 	
@@ -324,7 +419,25 @@ CoordMode, mouse, Screen
 		return
 	}
 	
-	SC056::m
+	LShift & SC056::Send {LShift down}{m}{LShift up}
+	
+	SC056:: 
+	KeyWait SC056, t0.100
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
+	{
+		SendInput {l down}
+		KeyWait SC056
+		SendInput {l up}
+	}
+	else
+	{
+		SendInput {m down}
+		sleep 32
+		KeyWait SC056
+		SendInput {m up}
+	}
+	return
 	
 	~Right & LButton::F1
 	Return
@@ -491,7 +604,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 1".
-	
+
 }
 
 { #if Layer = 2 

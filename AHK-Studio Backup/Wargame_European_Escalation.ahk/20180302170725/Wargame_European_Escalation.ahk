@@ -4,9 +4,7 @@
 #HotkeyInterval 2000  ; This is  the default value (milliseconds).
 #MaxHotkeysPerInterval 200
 Layer := 1
-Count := 1
 x := 0
-y := 0
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
@@ -138,361 +136,284 @@ CoordMode, mouse, Screen
 
 { ;Global remapping
 	
-	#IfWinActive Wargame - DirectX 11
-	
-	/*
-		~a::
-		if (A_ThisHotkey = A_PriorHotkey and A_TimeSincePriorHotkey < 200)
-		{
-			Send {t}
-			keywait a
-		}
-		return
-	*/
-	
-	~a::
-	keywait, a, T0.100
-	if (ErrorLevel)
-	{
-		Send {t}
-		keywait, a
-	}
-	return
-	
-	b::
-	{	
-		KeyWait b, t0.200
-		SetkeyDelay 0, 32
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
-		{
-			Send {u}
-			keywait, b
-		}
-		else
-		{
-			Send {l}
-			keywait, b
-		}
-		return
-	}
-	
 	; Tank sequential fire 7-8-9-0
-	
-	Numpad2:: ;Set group 7-8-9-0
-	{
-		SetTimer, Reset, 3000		
-		x++
-		if x = 1
-			send {LControl Down}{è}{LControl Up}
-		else if x = 2
-			send {LControl Down}{_}{LControl Up}
-		else if x = 3
-			send {LControl Down}{ç}{LControl Up}
-		else if x = 4
-		{
-			send {LControl Down}{à}{LControl Up}
-			x := 0
-		}
-		
-		
-		return
-		
-		Reset:
-		x := 0
-		return
-	}
 	
 	Numpad3::
 	{
 		BlockInput, On
-		SetTimer, ResetNP3, 3000
-		y++
-		if y = 1
+		SetTimer, Reset, 7000
+		x++
+		if x = 1
 		{
 			send {è}
 			MouseMove, 900, 1015, 1
-			sleep 3
-			Click
-			MouseMove, 1020, 1015, 1
-			sleep 3
-			Click
+			sleep 10
+			Click			
 		}
-		else if y = 2
+		else if x = 2
 		{
 			send {_}
 			MouseMove, 900, 1015, 1
-			sleep 3
-			Click
-			MouseMove, 1020, 1015, 1
-			sleep 3
-			Click
-		}
-		else if y = 3
-		{
-			send {ç}
-			MouseMove, 900, 1015, 1
-			sleep 3
-			Click
-			MouseMove, 1020, 1015, 1
-			sleep 3
-			Click
-		}
-		else if y = 4
-		{
-			send {à}
-			MouseMove, 900, 1015, 1
-			sleep 3
-			Click
-			MouseMove, 1020, 1015, 1
-			sleep 3
-			Click	
-			y := 0
-		}
-	}
-	BlockInput, Off
-	return
-	
-	ResetNP3:
-	y := 0
-	return
-	
-	
-	XButton2::
-	
-	BlockInput, On	
-	MouseGetPos, xpos, ypos
-	MouseClick, left, 900, 1015, 1, 1
-	MouseMove, 1020, 1015, 1
-	sleep 3
-	Click
-	MouseMove, xpos, ypos
-	BlockInput, Off
-	Return
-	
-	XButton1::e
-	
-	NumpadDot::
-	{
-		BlockInput, On
-		MouseGetPos xpos, ypos
-		Click
-		sleep 3
-		MouseMove, 900, 1015, 1
-		sleep 3
-		Click
-		MouseMove, 1020, 1015, 1
-		sleep 3
-		Click
-		MouseMove xpos, ypos
-		BlockInput, Off
-	}
-	return
-	
-	Numpad0::
-	{
-		SetKeyDelay 0, 0
-		Send {y Down}{WheelDown}{WheelDown}
-		KeyWait Numpad0
-		SendInput {y Up}
-		return
-	}
-	
-	#IfWinActive
-		
-	
+			sleep 10
+			Click		}
+			else if x = 3
+			{
+				send {ç}
+				MouseMove, 900, 1015, 1
+				sleep 10			
+				Click		}
+				else if x = 4
+				{
+					send {à}
+					MouseMove, 900, 1015, 1
+					sleep 10		
+					Click
+					x := 0
+				}
+			}
+			BlockInput, Off
+			return
+			
+			Reset:
+			x := 0
+			return
+			
+			#IfWinActive Wargame - DirectX 11	
+			XButton2::
+			BlockInput, On	
+			MouseGetPos, xpos, ypos
+			MouseClick, left, 900, 1015, 1, 1
+			MouseMove, xpos, ypos
+			BlockInput, Off
+			Return
+			#IfWinActive
+			
+			/*
+				XButton2::
+				SetKeyDelay 32, 32
+				send ^t
+				Return
+				
+				XButton1::t
+			*/
+			
+			Numpad0::
+			{
+				SetKeyDelay 0, 0
+				Send {y Down}{WheelDown}{WheelDown}
+				KeyWait Numpad0
+				SendInput {y Up}
+				return
+			}
+			
 	;Numpad0 Up::SendInput {y Up}
-	
-	²::
-	{
-		
-		KeyWait ², t0.100
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
-		{
-			SendInput {Enter down}
-			KeyWait ²
-			SendInput {Enter up}
-		}
-		else
-		{
-			SendInput {Backspace down}
-			sleep 32
-			KeyWait ²
-			SendInput {Backspace up}
-		}
-		return
-	}
-	
-	SC056::m
-	
-	~Right & LButton::F1
-	Return
-	
-	~Right & RButton::F2
-	Return
-	
-	~Right & XButton1::F3
-	Return
-	
-	~Right & XButton2::F4
-	Return
-	
-	~Right & WheelUp::
-	send, {F5}
-	Sleep, 100
-	Return
-	
-	~Right & WheelDown::
-	send, {F6}
-	Sleep, 100
-	Return
-	
-	~Right & MButton::F7
-	Return
-	
+			
+			²::
+			{
+				
+				KeyWait ², t0.100
+				t:= A_TimeSinceThisHotkey
+				If ErrorLevel
+				{
+					SendInput {Enter down}
+					KeyWait ²
+					SendInput {Enter up}
+				}
+				else
+				{
+					SendInput {Backspace down}
+					sleep 32
+					KeyWait ²
+					SendInput {Backspace up}
+				}
+				return
+			}
+			
+			SC056:: 
+			KeyWait SC056, t0.100
+			t:= A_TimeSinceThisHotkey
+			If ErrorLevel
+			{
+				SendInput {m down}
+				KeyWait SC056
+				SendInput {m up}
+			}
+			else
+			{
+				SendInput {l down}
+				sleep 32
+				KeyWait SC056
+				SendInput {l up}
+			}
+			return
+			
+			~Right & LButton::F1
+			Return
+			
+			~Right & RButton::F2
+			Return
+			
+			~Right & XButton1::F3
+			Return
+			
+			~Right & XButton2::F4
+			Return
+			
+			~Right & WheelUp::
+			send, {F5}
+			Sleep, 100
+			Return
+			
+			~Right & WheelDown::
+			send, {F6}
+			Sleep, 100
+			Return
+			
+			~Right & MButton::F7
+			Return
+			
 	;#IfWinActive
-	
-}
-
-{ ; Mouse Wheel Layer 1
-	~WheelUp:: 
-	If GetKeyState("MButton") 
-		send {Home Down}
-	sleep 32
-	send {Home Up}
+			
+		}
+		
+		{ ; Mouse Wheel Layer 1
+			~WheelUp:: 
+			If GetKeyState("MButton") 
+				send {Home Down}
+			sleep 32
+			send {Home Up}
 		;Else
 		;	If (GetKeyState("6Joy1")==1)
 		;		send g
-	Return
-	
-	~WheelDown:: 
-	If GetKeyState("MButton") 
-		send {End Down}
-	sleep 32
-	send {End Up}
+			Return
+			
+			~WheelDown:: 
+			If GetKeyState("MButton") 
+				send {End Down}
+			sleep 32
+			send {End Up}
 		;Else 
 		;	If GetKeyState("Space") 
 		;		send {End}
-	Return
-}	
-
-{ ; All Layer 1 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
-	
-	$SC002:: ;[1, F1], [7, F7], [F13, F19]
-	KeyWait SC002, t0.200&
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		Send {F1 down}
-		KeyWait SC002
-		SendInput {F1 up}
+			Return
+		}	
+		
+		{ ; All Layer 1 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
+			
+			$SC002:: ;[1, F1], [7, F7], [F13, F19]
+			KeyWait SC002, t0.200&
+			t:= A_TimeSinceThisHotkey
+			If ErrorLevel
+			{
+				Send {F1 down}
+				KeyWait SC002
+				SendInput {F1 up}
+			}
+			else
+			{
+				SendInput {SC002 down}
+				sleep 32
+				KeyWait SC002
+				SendInput {SC002 up}
+			}
+			return
+			
+			
+			
+			$SC003:: ;[2, F2], [8, F8], [F14, F20]
+			KeyWait SC003, t0.200
+			t:= A_TimeSinceThisHotkey
+			If ErrorLevel
+			{
+				SendInput {F2 down}
+				KeyWait SC003
+				SendInput {F2 up}
+			}
+			else
+			{
+				SendInput {SC003 down}
+				sleep 32
+				KeyWait SC003
+				SendInput {SC003 up}
+			}
+			return
+			
+			$SC004:: ;[3, F3], [9, F9], [F15, F21]
+			KeyWait SC004, t0.200
+			t:= A_TimeSinceThisHotkey
+			If ErrorLevel
+			{
+				SendInput {F3 down}
+				KeyWait SC004
+				SendInput {F3 up}
+			}
+			else
+			{
+				SendInput {SC004 down}
+				sleep 32
+				KeyWait SC004
+				SendInput {SC004 up}
+			}
+			return
+			
+			$SC005:: ;[4, F4], [10, F10], [F16, F22]
+			KeyWait SC005, t0.200
+			t:= A_TimeSinceThisHotkey
+			If ErrorLevel
+			{
+				SendInput {F4 down}
+				KeyWait SC005
+				SendInput {F4 up}
+			}
+			else
+			{
+				SendInput {SC005 down}
+				sleep 32
+				KeyWait SC005
+				SendInput {SC005 up}
+			}
+			return
+			
+			$SC006:: ;[5, F5], [11, F11], [F17, F23]
+			KeyWait SC006, t0.200
+			t:= A_TimeSinceThisHotkey
+			If ErrorLevel
+			{
+				SendInput {F5 down}
+				KeyWait SC006
+				SendInput {F5 up}
+			}
+			else
+			{
+				SendInput {SC006 down}
+				sleep 32
+				KeyWait SC006
+				SendInput {SC006 up}
+			}
+			return
+			
+			$SC007:: ;[6, F6], [12, F12], [F18, F24]
+			KeyWait SC007, t0.200
+			t:= A_TimeSinceThisHotkey
+			If ErrorLevel
+			{
+				SendInput {F6 down}
+				KeyWait SC007
+				SendInput {F6 up}
+			}
+			else
+			{
+				SendInput {SC007 down}
+				sleep 32
+				KeyWait SC007
+				SendInput {SC007 up}
+			}
+			return
+		}
+		
+		#If ; End of "If Layer = 1".
+		
 	}
-	else
-	{
-		SendInput {SC002 down}
-		sleep 32
-		KeyWait SC002
-		SendInput {SC002 up}
-	}
-	return
-	
-	
-	
-	$SC003:: ;[2, F2], [8, F8], [F14, F20]
-	KeyWait SC003, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {F2 down}
-		KeyWait SC003
-		SendInput {F2 up}
-	}
-	else
-	{
-		SendInput {SC003 down}
-		sleep 32
-		KeyWait SC003
-		SendInput {SC003 up}
-	}
-	return
-	
-	$SC004:: ;[3, F3], [9, F9], [F15, F21]
-	KeyWait SC004, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {F3 down}
-		KeyWait SC004
-		SendInput {F3 up}
-	}
-	else
-	{
-		SendInput {SC004 down}
-		sleep 32
-		KeyWait SC004
-		SendInput {SC004 up}
-	}
-	return
-	
-	$SC005:: ;[4, F4], [10, F10], [F16, F22]
-	KeyWait SC005, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {F4 down}
-		KeyWait SC005
-		SendInput {F4 up}
-	}
-	else
-	{
-		SendInput {SC005 down}
-		sleep 32
-		KeyWait SC005
-		SendInput {SC005 up}
-	}
-	return
-	
-	$SC006:: ;[5, F5], [11, F11], [F17, F23]
-	KeyWait SC006, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {F5 down}
-		KeyWait SC006
-		SendInput {F5 up}
-	}
-	else
-	{
-		SendInput {SC006 down}
-		sleep 32
-		KeyWait SC006
-		SendInput {SC006 up}
-	}
-	return
-	
-	$SC007:: ;[6, F6], [12, F12], [F18, F24]
-	KeyWait SC007, t0.200
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {F6 down}
-		KeyWait SC007
-		SendInput {F6 up}
-	}
-	else
-	{
-		SendInput {SC007 down}
-		sleep 32
-		KeyWait SC007
-		SendInput {SC007 up}
-	}
-	return
-}
-
-#If ; End of "If Layer = 1".
-	
-}
 
 { #if Layer = 2 
 

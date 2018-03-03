@@ -4,9 +4,7 @@
 #HotkeyInterval 2000  ; This is  the default value (milliseconds).
 #MaxHotkeysPerInterval 200
 Layer := 1
-Count := 1
 x := 0
-y := 0
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
@@ -138,156 +136,69 @@ CoordMode, mouse, Screen
 
 { ;Global remapping
 	
-	#IfWinActive Wargame - DirectX 11
-	
-	/*
-		~a::
-		if (A_ThisHotkey = A_PriorHotkey and A_TimeSincePriorHotkey < 200)
-		{
-			Send {t}
-			keywait a
-		}
-		return
-	*/
-	
-	~a::
-	keywait, a, T0.100
-	if (ErrorLevel)
-	{
-		Send {t}
-		keywait, a
-	}
-	return
-	
-	b::
-	{	
-		KeyWait b, t0.200
-		SetkeyDelay 0, 32
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
-		{
-			Send {u}
-			keywait, b
-		}
-		else
-		{
-			Send {l}
-			keywait, b
-		}
-		return
-	}
-	
-	; Tank sequential fire 7-8-9-0
-	
-	Numpad2:: ;Set group 7-8-9-0
-	{
-		SetTimer, Reset, 3000		
-		x++
-		if x = 1
-			send {LControl Down}{è}{LControl Up}
-		else if x = 2
-			send {LControl Down}{_}{LControl Up}
-		else if x = 3
-			send {LControl Down}{ç}{LControl Up}
-		else if x = 4
-		{
-			send {LControl Down}{à}{LControl Up}
-			x := 0
-		}
-		
-		
-		return
-		
-		Reset:
-		x := 0
-		return
-	}
-	
-	Numpad3::
-	{
-		BlockInput, On
-		SetTimer, ResetNP3, 3000
-		y++
-		if y = 1
-		{
-			send {è}
-			MouseMove, 900, 1015, 1
-			sleep 3
-			Click
-			MouseMove, 1020, 1015, 1
-			sleep 3
-			Click
-		}
-		else if y = 2
-		{
-			send {_}
-			MouseMove, 900, 1015, 1
-			sleep 3
-			Click
-			MouseMove, 1020, 1015, 1
-			sleep 3
-			Click
-		}
-		else if y = 3
-		{
-			send {ç}
-			MouseMove, 900, 1015, 1
-			sleep 3
-			Click
-			MouseMove, 1020, 1015, 1
-			sleep 3
-			Click
-		}
-		else if y = 4
-		{
-			send {à}
-			MouseMove, 900, 1015, 1
-			sleep 3
-			Click
-			MouseMove, 1020, 1015, 1
-			sleep 3
-			Click	
-			y := 0
-		}
-	}
-	BlockInput, Off
-	return
-	
-	ResetNP3:
-	y := 0
-	return
-	
-	
-	XButton2::
-	
-	BlockInput, On	
-	MouseGetPos, xpos, ypos
-	MouseClick, left, 900, 1015, 1, 1
-	MouseMove, 1020, 1015, 1
-	sleep 3
-	Click
-	MouseMove, xpos, ypos
-	BlockInput, Off
-	Return
-	
-	XButton1::e
-	
 	NumpadDot::
 	{
-		BlockInput, On
-		MouseGetPos xpos, ypos
-		Click
-		sleep 3
-		MouseMove, 900, 1015, 1
-		sleep 3
-		Click
-		MouseMove, 1020, 1015, 1
-		sleep 3
-		Click
-		MouseMove xpos, ypos
-		BlockInput, Off
+		x := 1
+		If x = 1
+			Send {F1}
+		Else If x = 2
+			Send {F2}
+		Else If x = 3
+			Send {F3}
+		Else If x = 4
+			Send {F4}
+		Else If x = 5
+			Send {F5}
+		Else If x = 6
+			Send {F6}
+		Else If x = 7
+			Send {F7}
+		Else If x = 8
+			Send {F8}
+		Else If x = 9
+		{
+			Send {F9}
+			x := 0
+		}
+		x++
+		return
 	}
 	return
+	
+	; Tank sequential fire 7-8-9-0
+	Numpad1::
+	{
+		BlockInput, On
+		MouseGetPos, xpos, ypos
+		Send {è}
+		sleep, 10
+		MouseClick, left, 900, 1015, 1, 5
+		Send {_}
+		sleep, 333
+		MouseClick, left, 900, 1015, 1, 0
+		Send {ç}
+		sleep, 333
+		MouseClick, left, 900, 1015, 1, 0
+		Send {à}
+		sleep, 333
+		MouseClick, left, 900, 1015, 1, 0
+		;Clipboard = %xpos% %ypos%
+		BlockInput, Off		
+		return
+	}
+	
+	#IfWinActive Wargame - DirectX 11	
+	XButton2::m
+	#IfWinActive
+	
+	/*
+		XButton2::
+		SetKeyDelay 32, 32
+		send ^t
+		Return
+		
+		XButton1::t
+	*/
 	
 	Numpad0::
 	{
@@ -297,9 +208,6 @@ CoordMode, mouse, Screen
 		SendInput {y Up}
 		return
 	}
-	
-	#IfWinActive
-		
 	
 	;Numpad0 Up::SendInput {y Up}
 	
@@ -324,7 +232,23 @@ CoordMode, mouse, Screen
 		return
 	}
 	
-	SC056::m
+	SC056:: 
+	KeyWait SC056, t0.100
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
+	{
+		SendInput {m down}
+		KeyWait SC056
+		SendInput {m up}
+	}
+	else
+	{
+		SendInput {l down}
+		sleep 32
+		KeyWait SC056
+		SendInput {l up}
+	}
+	return
 	
 	~Right & LButton::F1
 	Return
@@ -491,7 +415,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 1".
-	
+
 }
 
 { #if Layer = 2 

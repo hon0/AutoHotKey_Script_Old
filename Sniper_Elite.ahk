@@ -3,6 +3,8 @@
 #Warn  ; Enable warnings to assist with detecting common errors.
 Layer := 1
 KeyDown = 0 ; For toggle Walk on {Left}
+#HotkeyInterval 2000  ; This is  the default value (milliseconds).
+#MaxHotkeysPerInterval 200
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
@@ -346,16 +348,20 @@ CoordMode, mouse, Screen
 
 { ;Global remapping
 	
-	;#IfWinActive Sniper4 or Zombie Army Trilogy
-	left::
-	KeyDown := !KeyDown
-	If KeyDown
-		SendInput {left down}
-	Else
-		SendInput {left up}
-	Return
-	;#IfWinActive
-	
+	#If WinActive("Zombie Army Trilogy") or WinActive("Sniper4")
+	{
+		left::
+		{
+			KeyDown := !KeyDown
+			If KeyDown
+				SendInput {left down}
+			Else
+				SendInput {left up}
+			Return
+		}
+	}
+	#IfWinActive
+		
 	/*
 		XButton2::
 		SetKeyDelay 32, 32
@@ -534,7 +540,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 1".
-
+	
 }
 
 { #if Layer = 2 
@@ -725,7 +731,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 2".
-
+	
 }
 
 { #if Layer = 3
@@ -929,7 +935,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 3".
-
+	
 }
 
 
@@ -963,12 +969,12 @@ return
 
 
 #IfWinActive Java Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
-$Mbutton::
+	$Mbutton::
 BlockInput, On
 	;SetKeyDelay 32, 32
 Send {RButton}{down}{down}{Enter}{LWin down}{Right}{LWin Up}
 #IfWinExist Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+	WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 sleep 32
 send {space}
@@ -977,8 +983,8 @@ Send {MButton Up}
 BlockInput, Off
 return
 #IfWinExist
-#IfWinActive
-
+	#IfWinActive
+		
 /*sleep 32
 	MouseClick, left, 1400, 600
 	sleep 32
@@ -995,5 +1001,5 @@ return
 	BlockInput, Off
 	return
 	#IfWinExist
-	#IfWinActive
+		#IfWinActive
 */

@@ -138,7 +138,8 @@ CoordMode, mouse, Screen
 
 { ;Global remapping
 	
-	#IfWinActive Wargame - DirectX 11
+	;#IfWinActive Wargame - DirectX 11
+	
 	
 	/*
 		~a::
@@ -150,6 +151,7 @@ CoordMode, mouse, Screen
 		return
 	*/
 	
+	
 	~a::
 	keywait, a, T0.100
 	if (ErrorLevel)
@@ -159,27 +161,30 @@ CoordMode, mouse, Screen
 	}
 	return
 	
-	b::
-	{	
-		KeyWait b, t0.200
-		SetkeyDelay 0, 32
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
+	#IfWinActive Wargame - DirectX 11
+	{
+		b::
 		{
-			Send {u}
-			keywait, b
+			KeyWait b, t0.200
+			SetkeyDelay 0, 32
+			t:= A_TimeSinceThisHotkey
+			If ErrorLevel
+			{
+				Send {u}
+				keywait, b
+			}
+			else
+			{
+				Send {l}
+				keywait, b
+			}
+			return
 		}
-		else
-		{
-			Send {l}
-			keywait, b
-		}
-		return
 	}
+	#IfWinActive
+		
 	
-	; Tank sequential fire 7-8-9-0
-	
-	Numpad2:: ;Set group 7-8-9-0
+	Numpad2::
 	{
 		SetTimer, Reset, 3000		
 		x++
@@ -203,6 +208,8 @@ CoordMode, mouse, Screen
 		return
 	}
 	
+	; Tank sequential fire 7-8-9-0
+		
 	Numpad3::
 	{
 		BlockInput, On
@@ -256,103 +263,103 @@ CoordMode, mouse, Screen
 	ResetNP3:
 	y := 0
 	return
-	
-	
-	XButton2::
-	
-	BlockInput, On	
-	MouseGetPos, xpos, ypos
-	MouseClick, left, 900, 1015, 1, 1
+
+
+XButton2::
+
+BlockInput, On	
+MouseGetPos, xpos, ypos
+MouseClick, left, 900, 1015, 1, 1
+MouseMove, 1020, 1015, 1
+sleep 3
+Click
+MouseMove, xpos, ypos
+BlockInput, Off
+Return
+
+XButton1::e
+
+NumpadDot::
+{
+	BlockInput, On
+	MouseGetPos xpos, ypos
+	Click
+	sleep 3
+	MouseMove, 900, 1015, 1
+	sleep 3
+	Click
 	MouseMove, 1020, 1015, 1
 	sleep 3
 	Click
-	MouseMove, xpos, ypos
+	MouseMove xpos, ypos
 	BlockInput, Off
-	Return
+}
+return
+
+Numpad0::
+{
+	SetKeyDelay 0, 0
+	Send {y Down}{WheelDown}{WheelDown}
+	KeyWait Numpad0
+	SendInput {y Up}
+	return
+}
+
+#IfWinActive
 	
-	XButton1::e
+
+	;Numpad0 Up::SendInput {y Up}
+
+²::
+{
 	
-	NumpadDot::
+	KeyWait ², t0.100
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
 	{
-		BlockInput, On
-		MouseGetPos xpos, ypos
-		Click
-		sleep 3
-		MouseMove, 900, 1015, 1
-		sleep 3
-		Click
-		MouseMove, 1020, 1015, 1
-		sleep 3
-		Click
-		MouseMove xpos, ypos
-		BlockInput, Off
+		SendInput {Enter down}
+		KeyWait ²
+		SendInput {Enter up}
+	}
+	else
+	{
+		SendInput {Backspace down}
+		sleep 32
+		KeyWait ²
+		SendInput {Backspace up}
 	}
 	return
-	
-	Numpad0::
-	{
-		SetKeyDelay 0, 0
-		Send {y Down}{WheelDown}{WheelDown}
-		KeyWait Numpad0
-		SendInput {y Up}
-		return
-	}
-	
-	#IfWinActive
-		
-	
-	;Numpad0 Up::SendInput {y Up}
-	
-	²::
-	{
-		
-		KeyWait ², t0.100
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
-		{
-			SendInput {Enter down}
-			KeyWait ²
-			SendInput {Enter up}
-		}
-		else
-		{
-			SendInput {Backspace down}
-			sleep 32
-			KeyWait ²
-			SendInput {Backspace up}
-		}
-		return
-	}
-	
-	SC056::m
-	
-	~Right & LButton::F1
-	Return
-	
-	~Right & RButton::F2
-	Return
-	
-	~Right & XButton1::F3
-	Return
-	
-	~Right & XButton2::F4
-	Return
-	
-	~Right & WheelUp::
-	send, {F5}
-	Sleep, 100
-	Return
-	
-	~Right & WheelDown::
-	send, {F6}
-	Sleep, 100
-	Return
-	
-	~Right & MButton::F7
-	Return
-	
+}
+
+SC056::m
+
+~Right & LButton::F1
+Return
+
+~Right & RButton::F2
+Return
+
+~Right & XButton1::F3
+Return
+
+~Right & XButton2::F4
+Return
+
+~Right & WheelUp::
+send, {F5}
+Sleep, 100
+Return
+
+~Right & WheelDown::
+send, {F6}
+Sleep, 100
+Return
+
+~Right & MButton::F7
+Return
+
 	;#IfWinActive
-	
+
 }
 
 { ; Mouse Wheel Layer 1

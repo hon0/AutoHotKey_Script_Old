@@ -142,7 +142,7 @@ CoordMode, mouse, Screen
 	
 	v::
 	{	
-		KeyWait v, t0.100
+		KeyWait b, t0.100
 		SetkeyDelay 0, 32
 		t:= A_TimeSinceThisHotkey
 		If ErrorLevel

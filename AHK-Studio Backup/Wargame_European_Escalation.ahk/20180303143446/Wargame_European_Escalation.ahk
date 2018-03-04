@@ -139,24 +139,16 @@ CoordMode, mouse, Screen
 { ;Global remapping
 	
 	#IfWinActive Wargame - DirectX 11
-	
-	v::
-	{	
-		KeyWait v, t0.100
-		SetkeyDelay 0, 32
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
+		
+	/*
+		~a::
+		if (A_ThisHotkey = A_PriorHotkey and A_TimeSincePriorHotkey < 200)
 		{
-			Send {i}
-			keywait, v
-		}
-		else
-		{
-			Send {v}
-			keywait, v
+			Send {t}
+			keywait a
 		}
 		return
-	}
+	*/
 	
 	~a::
 	keywait, a, T0.100
@@ -274,9 +266,6 @@ CoordMode, mouse, Screen
 		MouseMove, 1020, 1015, 1
 		sleep 3
 		Click
-		MouseMove, 1150, 1015, 1
-		sleep 3
-		Click
 		MouseMove, xpos, ypos
 		BlockInput, Off
 		Return
@@ -302,7 +291,7 @@ CoordMode, mouse, Screen
 	}
 	
 	#IfWinActive
-	
+		
 	
 	;Numpad0 Up::SendInput {y Up}
 	
@@ -390,7 +379,7 @@ CoordMode, mouse, Screen
 { ; All Layer 1 Digit remapping Layer 1 Short/Long, Layer 2 Short/Long, Layer 3 Short/Long
 	
 	$SC002:: ;[1, F1], [7, F7], [F13, F19]
-	KeyWait SC002, t0.200
+	KeyWait SC002, t0.200&
 	t:= A_TimeSinceThisHotkey
 	If ErrorLevel
 	{
@@ -501,7 +490,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 1".
-
+	
 }
 
 { #if Layer = 2 

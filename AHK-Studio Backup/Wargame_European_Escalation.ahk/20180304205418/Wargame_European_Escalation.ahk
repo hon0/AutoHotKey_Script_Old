@@ -139,24 +139,15 @@ CoordMode, mouse, Screen
 { ;Global remapping
 	
 	#IfWinActive Wargame - DirectX 11
-	
-	v::
-	{	
-		KeyWait v, t0.100
-		SetkeyDelay 0, 32
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
+		
+		~v::
+		if (A_ThisHotkey = A_PriorHotkey and A_TimeSincePriorHotkey < 200)
 		{
-			Send {i}
-			keywait, v
-		}
-		else
-		{
-			Send {v}
-			keywait, v
+			Send {t}
+			keywait v
 		}
 		return
-	}
+	
 	
 	~a::
 	keywait, a, T0.100

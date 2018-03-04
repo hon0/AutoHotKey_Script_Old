@@ -140,23 +140,15 @@ CoordMode, mouse, Screen
 	
 	#IfWinActive Wargame - DirectX 11
 	
-	v::
-	{	
-		KeyWait v, t0.100
-		SetkeyDelay 0, 32
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
+	/*
+		~a::
+		if (A_ThisHotkey = A_PriorHotkey and A_TimeSincePriorHotkey < 200)
 		{
-			Send {i}
-			keywait, v
-		}
-		else
-		{
-			Send {v}
-			keywait, v
+			Send {t}
+			keywait a
 		}
 		return
-	}
+	*/
 	
 	~a::
 	keywait, a, T0.100
@@ -366,6 +358,7 @@ CoordMode, mouse, Screen
 			sleep 32
 			send {Home Up}
 		}
+		keywait, WheelUp, D
 		;Else
 		;	If (GetKeyState("6Joy1")==1)
 		;		send g
@@ -380,6 +373,7 @@ CoordMode, mouse, Screen
 			sleep 32
 			send {End Up}
 		}
+		keywait, WheelDown, D
 		;Else 
 		;	If GetKeyState("Space") 
 		;		send {End}

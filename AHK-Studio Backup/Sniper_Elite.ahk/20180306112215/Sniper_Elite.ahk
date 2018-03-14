@@ -4,7 +4,7 @@
 Layer := 1
 KeyDown = 0 ; For toggle Walk on {Left}
 #HotkeyInterval 2000  ; This is  the default value (milliseconds).
-#MaxHotkeysPerInterval 500
+#MaxHotkeysPerInterval 200
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A

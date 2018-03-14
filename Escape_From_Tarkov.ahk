@@ -5,6 +5,8 @@ Layer := 1
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
+#HotkeyInterval 2000  ; This is  the default value (milliseconds).
+#MaxHotkeysPerInterval 500
 ;#InstallKeybdHook
 ;#InstallMouseHook
 

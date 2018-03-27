@@ -386,27 +386,11 @@ CoordMode, mouse, Screen
 	;#IfWinActive EscapeFromTarkov	
 	
 	
-	~MButton::
-	{
-		send {SC002}{MButton down}
-		KeyWait MButton
-		SendInput {MButton up}
-		return
-	}
+	XButton2::=
 	
-	~XButton2::
+	XButton1::
 	{
-		send {SC003}{MButton down}
-		KeyWait XButton2
-		SendInput {MButton up}
-		return
-	}
-	
-	~XButton1::
-	{
-		send {SC004}{MButton down}
-		KeyWait XButton1
-		SendInput {MButton up}
+		send {SC004}{}
 		return
 	}
 	
@@ -478,7 +462,10 @@ CoordMode, mouse, Screen
 	}
 	else
 	{
-		Send {SC002}{SC005}
+		SendInput {SC002 down}
+		sleep 32
+		KeyWait SC002
+		SendInput {SC002 up}
 	}
 	return
 	
@@ -495,7 +482,10 @@ CoordMode, mouse, Screen
 	}
 	else
 	{
-		Send {SC003}{SC005}
+		SendInput {SC003 down}
+		sleep 32
+		KeyWait SC003
+		SendInput {SC003 up}
 	}
 	return
 	
@@ -510,7 +500,10 @@ CoordMode, mouse, Screen
 	}
 	else
 	{
-		Send {SC004}{SC005}
+		SendInput {SC004 down}
+		sleep 32
+		KeyWait SC004
+		SendInput {SC004 up}
 	}
 	return
 	
@@ -554,7 +547,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 1".
-
+	
 }
 
 { #if Layer = 2 

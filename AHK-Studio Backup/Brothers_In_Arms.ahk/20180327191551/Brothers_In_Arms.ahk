@@ -478,7 +478,10 @@ CoordMode, mouse, Screen
 	}
 	else
 	{
-		Send {SC002}{SC005}
+		SendInput {SC002 down}
+		sleep 32
+		KeyWait SC002
+		SendInput {SC002 up}
 	}
 	return
 	
@@ -495,7 +498,10 @@ CoordMode, mouse, Screen
 	}
 	else
 	{
-		Send {SC003}{SC005}
+		SendInput {SC003 down}
+		sleep 32
+		KeyWait SC003
+		SendInput {SC003 up}
 	}
 	return
 	
@@ -510,7 +516,10 @@ CoordMode, mouse, Screen
 	}
 	else
 	{
-		Send {SC004}{SC005}
+		SendInput {SC004 down}
+		sleep 32
+		KeyWait SC004
+		SendInput {SC004 up}
 	}
 	return
 	

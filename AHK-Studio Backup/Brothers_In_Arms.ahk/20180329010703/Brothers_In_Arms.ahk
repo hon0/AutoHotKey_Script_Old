@@ -410,7 +410,7 @@ CoordMode, mouse, Screen
 		return
 	}
 	
-	$f::
+	~f::
 	{
 		send {SC004}{MButton down}
 		KeyWait f

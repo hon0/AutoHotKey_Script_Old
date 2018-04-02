@@ -410,14 +410,6 @@ CoordMode, mouse, Screen
 		return
 	}
 	
-	$f::
-	{
-		send {SC004}{MButton down}
-		KeyWait f
-		SendInput {MButton up}
-		return
-	}
-	
 	~Right & LButton::F1
 	Return
 	

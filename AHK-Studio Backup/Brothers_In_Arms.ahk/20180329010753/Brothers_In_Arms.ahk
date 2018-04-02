@@ -394,7 +394,7 @@ CoordMode, mouse, Screen
 		return
 	}
 	
-	~XButton2::
+	$XButton2::
 	{
 		send {SC003}{MButton down}
 		KeyWait XButton2
@@ -402,7 +402,7 @@ CoordMode, mouse, Screen
 		return
 	}
 	
-	~XButton1::
+	$XButton1::
 	{
 		send {SC004}{MButton down}
 		KeyWait XButton1

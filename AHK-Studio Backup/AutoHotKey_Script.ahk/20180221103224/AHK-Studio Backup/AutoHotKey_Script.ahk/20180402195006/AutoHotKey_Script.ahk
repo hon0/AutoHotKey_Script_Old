@@ -126,40 +126,40 @@ CoordMode, mouse, Screen
 	*/
 	
 	/* ; Pixel color as as condition
-		{
-			!#z::
-			MouseGetPos, xpos, ypos 	
+	{
+		!#z::
+		MouseGetPos, xpos, ypos 	
 		;PixelGetColor, color, xpos, xpos
-			PixelGetColor, color, 1889, 95
+		PixelGetColor, color, 1889, 95
 		;MsgBox The color at X%xpos% Y%ypos% is %color%.
-			MsgBox The color is %color%.
-			return
-			
-			{ ; Numpad1
-				Numpad1::
-				PixelGetColor, color, 1889, 95
-				if color = 0x213A70
-				{
-					MouseGetPos, xpos, ypos 
-					BlockInput, On
-					MouseClick, left, 1732, 171
-					MouseMove, xpos, ypos 
-					BlockInput, Off
-					return
-				}
-				Else
-				{
-					MouseGetPos, xpos, ypos 
-					BlockInput, On
-					SetKeyDelay 32, 32
-					Send {NumpadEnter}
-					MouseClick, left, 1732, 171
-					MouseMove, xpos, ypos 
-					BlockInput, Off
-				}
-				Return
+		MsgBox The color is %color%.
+		return
+		
+		{ ; Numpad1
+			Numpad1::
+			PixelGetColor, color, 1889, 95
+			if color = 0x213A70
+			{
+				MouseGetPos, xpos, ypos 
+				BlockInput, On
+				MouseClick, left, 1732, 171
+				MouseMove, xpos, ypos 
+				BlockInput, Off
+				return
 			}
+			Else
+			{
+				MouseGetPos, xpos, ypos 
+				BlockInput, On
+				SetKeyDelay 32, 32
+				Send {NumpadEnter}
+				MouseClick, left, 1732, 171
+				MouseMove, xpos, ypos 
+				BlockInput, Off
+			}
+			Return
 		}
+	}
 	*/
 	
 	/* ; On press != on double press != on long press.
@@ -342,7 +342,7 @@ CoordMode, mouse, Screen
 	~ScrollLock & Del::send {Lwin Down}{Left}{Lwin Up}
 	~ScrollLock & PgDn::send {Lwin Down}{Right}{Lwin Up}
 	~ScrollLock & Home::send {Lwin Down}{Up}{Lwin Up}
-	~ScrollLock & End::send {Lwin Down}{Down}{Lwin Up}éé""
+	~ScrollLock & End::send {Lwin Down}{Down}{Lwin Up}
 	
 	²::
 	{
@@ -385,70 +385,16 @@ CoordMode, mouse, Screen
 	
 	;#IfWinActive EscapeFromTarkov	
 	
+	/*
+		XButton2::
+		SetKeyDelay 32, 32
+		send ^t
+		Return
+		
+		XButton1::t
+	*/
 	
-	~MButton::
-	{
-		send {SC002}{MButton down}
-		KeyWait MButton
-		SendInput {MButton up}
-		return
-	}
-	
-	~XButton2::
-	{
-		send {SC003}{MButton down}
-		KeyWait XButton2
-		SendInput {MButton up}
-		return
-	}
-	
-	~XButton1::
-	{
-		send {SC004}{MButton down}
-		KeyWait XButton1
-		SendInput {MButton up}
-		return
-	}
-	
-	$f::
-	{
-		send {SC004}{MButton down}
-		KeyWait f
-		SendInput {MButton up}
-		return
-	}
-	
-	~Right & LButton::F1
-	Return
-	
-	~Right & RButton::F2
-	Return
-	
-	~Right & XButton1::F3
-	Return
-	
-	~Right & XButton2::F4
-	Return
-	
-	~Right & WheelUp::
-	send, {F5}
-	Sleep, 100
-	Return
-	
-	~Right & WheelDown::
-	send, {F6}
-	Sleep, 100
-	Return
-	
-	~Right & MButton::F7
-	Return
-	
-	~Right & F8::F9
-	Return
-	
-	~Right & F9::F10
-	Return
-	;#IfWinActive
+
 	
 }
 
@@ -486,7 +432,10 @@ CoordMode, mouse, Screen
 	}
 	else
 	{
-		Send {SC002}{SC005}
+		SendInput {SC002 down}
+		sleep 32
+		KeyWait SC002
+		SendInput {SC002 up}
 	}
 	return
 	
@@ -503,7 +452,10 @@ CoordMode, mouse, Screen
 	}
 	else
 	{
-		Send {SC003}{SC005}
+		SendInput {SC003 down}
+		sleep 32
+		KeyWait SC003
+		SendInput {SC003 up}
 	}
 	return
 	
@@ -518,11 +470,30 @@ CoordMode, mouse, Screen
 	}
 	else
 	{
-		Send {SC004}{SC005}
+		SendInput {SC004 down}
+		sleep 32
+		KeyWait SC004
+		SendInput {SC004 up}
 	}
 	return
 	
-	$SC005::SC005
+	$SC005:: ;[4, F4], [10, F10], [F16, F22]
+	KeyWait SC005, t0.200
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
+	{
+		SendInput {F4 down}
+		KeyWait SC005
+		SendInput {F4 up}
+	}
+	else
+	{
+		SendInput {SC005 down}
+		sleep 32
+		KeyWait SC005
+		SendInput {SC005 up}
+	}
+	return
 	
 	$SC006:: ;[5, F5], [11, F11], [F17, F23]
 	KeyWait SC006, t0.200
@@ -733,7 +704,22 @@ CoordMode, mouse, Screen
 }
 
 { ;Layer 2 "f" remapping
-	$f::g
+	$f::
+	KeyWait f, t0.200
+	t:= A_TimeSinceThisHotkey
+	If ErrorLevel
+	{
+		SendInput {h down}
+		KeyWait f
+		SendInput {h up}
+	}
+	else
+	{
+		SendInput {g down}
+		sleep 32
+		SendInput {g up}
+	}
+	return
 }
 
 { ;Layer 2 "r" remapping
@@ -756,7 +742,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 2".
-	
+
 }
 
 { #if Layer = 3
@@ -961,7 +947,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 3".
-	
+
 }
 
 
@@ -973,12 +959,12 @@ CoordMode, mouse, Screen
 
 /*
 	#IfWinActive Python 3 Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
-		$Mbutton::
+	$Mbutton::
 	BlockInput, On
 		;SetKeyDelay 32, 32
 	Send {RButton}{down}{down}{Enter}{LWin down}{Right}{LWin Up}
 	#IfWinExist Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-		WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+	WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 	WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
 	sleep 32
 	send {space}
@@ -987,11 +973,11 @@ CoordMode, mouse, Screen
 	BlockInput, Off
 	return
 	#IfWinExist
-		#IfWinActive
+	#IfWinActive
 */
 
 /*sleep 32
-			MouseClick, left, 1400, 600
+	MouseClick, left, 1400, 600
 	sleep 32
 	Send ^a
 	sleep 32
@@ -1006,5 +992,5 @@ CoordMode, mouse, Screen
 	BlockInput, Off
 	return
 	#IfWinExist
-		#IfWinActive
+	#IfWinActive
 */

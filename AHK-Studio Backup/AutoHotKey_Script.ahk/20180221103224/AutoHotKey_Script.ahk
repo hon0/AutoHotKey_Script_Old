@@ -394,37 +394,39 @@ CoordMode, mouse, Screen
 		XButton1::t
 	*/
 	
-	~Right & LButton::F1
-	Return
-	
-	~Right & RButton::F2
-	Return
-	
-	~Right & XButton1::F3
-	Return
-	
-	~Right & XButton2::F4
-	Return
-	
-	~Right & WheelUp::
-	send, {F5}
-	Sleep, 100
-	Return
-	
-	~Right & WheelDown::
-	send, {F6}
-	Sleep, 100
-	Return
-	
-	~Right & MButton::F7
-	Return
-	
-	~Right & F8::F9
-	Return
-	
-	~Right & F9::F10
-	Return
-	;#IfWinActive
+	/*
+		~Right & LButton::F1
+		Return
+		
+		~Right & RButton::F2
+		Return
+		
+		~Right & XButton1::F3
+		Return
+		
+		~Right & XButton2::F4
+		Return
+		
+		~Right & WheelUp::
+		send, {F5}
+		Sleep, 100
+		Return
+		
+		~Right & WheelDown::
+		send, {F6}
+		Sleep, 100
+		Return
+		
+		~Right & MButton::F7
+		Return
+		
+		~Right & F8::F9
+		Return
+		
+		~Right & F9::F10
+		Return
+		;#IfWinActive
+	*/
 	
 }
 

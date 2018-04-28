@@ -12,7 +12,7 @@ SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
 ;#InstallKeybdHook
-;#InstallMouseHook
+;#InstallMouseHookccccccccccccccccccccccccccccccccccccccccccc
 
 
 { ;Monitoring Windows

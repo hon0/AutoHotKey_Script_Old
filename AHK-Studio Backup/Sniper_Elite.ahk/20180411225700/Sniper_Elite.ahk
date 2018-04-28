@@ -2,14 +2,16 @@
 #Persistent  ; Keep this script running until the user explicitly exits it.
 #Warn  ; Enable warnings to assist with detecting common errors.
 Layer := 1
+KeyDown = 0 ; For toggle Walk on {Left}
+#HotkeyInterval 2000  ; This is  the default value (milliseconds).
+#MaxHotkeysPerInterval 500
 SetCapsLockState, AlwaysOff
 SetScrollLockState, AlwaysOff
 Process, Priority, , A
-#HotkeyInterval 2000  ; This is  the default value (milliseconds).
-#MaxHotkeysPerInterval 500
 ;#InstallKeybdHook
 ;#InstallMouseHook
 CoordMode, mouse, Screen
+
 
 { ;Monitoring Windows
 	
@@ -79,8 +81,17 @@ CoordMode, mouse, Screen
 { ;Before running a Game. Run and/or close Program.
 	
 	#F1::Suspend, Toggle
-	#F4::ExitApp
+	#F4::ExitApp	
 	^#!SPACE::  Winset, Alwaysontop, , A ; Toggle Active Windows Always on Top.
+	
+	; Reset game stats.
+	^!r::
+	{
+		FileRemoveDir, C:\Users\hon0_Corsair\AppData\Local\SniperElite4\PC_ProfileSaves\76561197993333907, 1
+		sleep 100
+		FileCopyDir, C:\Users\hon0_Corsair\AppData\Local\SniperElite4\76561197993333907, C:\Users\hon0_Corsair\AppData\Local\SniperElite4\PC_ProfileSaves\76561197993333907 , 1
+		return
+	}
 	
 	#t::
 	{
@@ -125,8 +136,8 @@ CoordMode, mouse, Screen
 		
 	*/
 	
-	/* ; Pixel color as as condition
-	{
+	 ; Pixel color as as condition
+	/*{ ; Pixel color as as condition
 		!#z::
 		MouseGetPos, xpos, ypos 	
 		;PixelGetColor, color, xpos, xpos
@@ -159,10 +170,9 @@ CoordMode, mouse, Screen
 			}
 			Return
 		}
-	}
-	*/
-	
-	/* ; On press != on double press != on long press.
+	}*/
+		
+		/* ; On press != on double press != on long press.
 		$a::
 		KeyWait, a, T0.1
 		
@@ -338,53 +348,20 @@ CoordMode, mouse, Screen
 
 { ;Global remapping
 	
-	~ScrollLock::LWin
-	~ScrollLock & Del::send {Lwin Down}{Left}{Lwin Up}
-	~ScrollLock & PgDn::send {Lwin Down}{Right}{Lwin Up}
-	~ScrollLock & Home::send {Lwin Down}{Up}{Lwin Up}
-	~ScrollLock & End::send {Lwin Down}{Down}{Lwin Up}
-	
-	²::
+	#If WinActive("Zombie Army Trilogy") or WinActive("Sniper4")
 	{
+		left::
+		{
+			KeyDown := !KeyDown
+			If KeyDown
+				SendInput {left down}
+			Else
+				SendInput {left up}
+			Return
+		}
+	}
+	#IfWinActive
 		
-		KeyWait ², t0.100
-		t:= A_TimeSinceThisHotkey
-		If ErrorLevel
-		{
-			SendInput {Enter down}
-			KeyWait ²
-			SendInput {Enter up}
-		}
-		else
-		{
-			SendInput {Backspace down}
-			sleep 32
-			KeyWait ²
-			SendInput {Backspace up}
-		}
-		return
-	}
-	
-	SC056:: 
-	KeyWait SC056, t0.100
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {m down}
-		KeyWait SC056
-		SendInput {m up}
-	}
-	else
-	{
-		SendInput {l down}
-		sleep 32
-		KeyWait SC056
-		SendInput {l up}
-	}
-	return
-	
-	;#IfWinActive EscapeFromTarkov	
-	
 	/*
 		XButton2::
 		SetKeyDelay 32, 32
@@ -394,39 +371,37 @@ CoordMode, mouse, Screen
 		XButton1::t
 	*/
 	
-	/*
-		~Right & LButton::F1
-		Return
-		
-		~Right & RButton::F2
-		Return
-		
-		~Right & XButton1::F3
-		Return
-		
-		~Right & XButton2::F4
-		Return
-		
-		~Right & WheelUp::
-		send, {F5}
-		Sleep, 100
-		Return
-		
-		~Right & WheelDown::
-		send, {F6}
-		Sleep, 100
-		Return
-		
-		~Right & MButton::F7
-		Return
-		
-		~Right & F8::F9
-		Return
-		
-		~Right & F9::F10
-		Return
-		;#IfWinActive
-	*/
+	~Right & LButton::F1
+	Return
+	
+	~Right & RButton::F2
+	Return
+	
+	~Right & XButton1::F3
+	Return
+	
+	~Right & XButton2::F4
+	Return
+	
+	~Right & WheelUp::
+	send, {F5}
+	Sleep, 100
+	Return
+	
+	~Right & WheelDown::
+	send, {F6}
+	Sleep, 100
+	Return
+	
+	~Right & MButton::F7
+	Return
+	
+	~Right & F8::F9
+	Return
+	
+	~Right & F9::F10
+	Return
+	;#IfWinActive
 	
 }
 
@@ -565,7 +540,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 1".
-
+	
 }
 
 { #if Layer = 2 
@@ -579,32 +554,14 @@ CoordMode, mouse, Screen
 	XButton1::F3
 	XButton2::F4
 	
-	SC056:: 
-	KeyWait SC056, t0.100
-	t:= A_TimeSinceThisHotkey
-	If ErrorLevel
-	{
-		SendInput {m down}
-		KeyWait SC056
-		SendInput {m up}
-	}
-	else
-	{
-		SendInput {l down}
-		sleep 32
-		KeyWait SC056
-		SendInput {l up}
-	}
-	return
-	
-	PGUP::Insert
-	PGDN::Del
-	
 	tab::esc
 	w::b
 	x::n
 	c::,
 	v::Del
+	
+	F8::F9
+	F9::F10
 	
 	;#IfWinActive
 }
@@ -774,7 +731,7 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 2".
-
+	
 }
 
 { #if Layer = 3
@@ -803,7 +760,6 @@ CoordMode, mouse, Screen
 }
 
 { ; Mouse Wheel Layer 3
-	~WheelUp:: 
 	SetkeyDelay, 0, 32
 	If GetKeyState("MButton") 
 		send {PGUP}
@@ -979,35 +935,56 @@ CoordMode, mouse, Screen
 }
 
 #If ; End of "If Layer = 3".
-
+	
 }
 
 
 { ;HotStrings
 	
 :*:ahk::AutoHotKey
+::viei@::vieillefont.antoine@gmail.com
 	
 }
 
-/*
-	#IfWinActive Python 3 Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
-	$Mbutton::
-	BlockInput, On
-		;SetKeyDelay 32, 32
-	Send {RButton}{down}{down}{Enter}{LWin down}{Right}{LWin Up}
-	#IfWinExist Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-	WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-	WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-	sleep 32
-	send {space}
-	WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
-	Send {MButton Up}
-	BlockInput, Off
-	return
-	#IfWinExist
-	#IfWinActive
-*/
+#g::
+MouseGetPos, xpos, ypos 
+MsgBox, The cursor is at X%xpos% Y%ypos%. 
+return
 
+#s::
+MouseClick, left, 36, 40
+MouseClick, left, 104, 62
+return
+
+#x::
+MouseMove, 50, -50 , 10, R ;moves the mouse in a box
+MouseMove, -100, 0 , 10, R ;around it's starting position
+MouseMove, 0, 100 , 10, R
+MouseMove, 100, 0 , 10, R
+MouseMove, 0, -100 , 10, R
+MouseMove, -50, 50 , 10, R
+return
+
+^!s::Suspend
+
+
+#IfWinActive Java Tutorial | SoloLearn: Learn to code for FREE! - Google Chrome
+	$Mbutton::
+BlockInput, On
+	;SetKeyDelay 32, 32
+Send {RButton}{down}{down}{Enter}{LWin down}{Right}{LWin Up}
+#IfWinExist Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+	WinClose Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+sleep 32
+send {space}
+WinWait Code Playground | SoloLearn: Learn to code for FREE! - Google Chrome
+Send {MButton Up}
+BlockInput, Off
+return
+#IfWinExist
+	#IfWinActive
+		
 /*sleep 32
 	MouseClick, left, 1400, 600
 	sleep 32
@@ -1024,5 +1001,5 @@ CoordMode, mouse, Screen
 	BlockInput, Off
 	return
 	#IfWinExist
-	#IfWinActive
+		#IfWinActive
 */

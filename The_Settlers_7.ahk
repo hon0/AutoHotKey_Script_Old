@@ -190,12 +190,12 @@ SetTitleMatchMode, 2
 	
 	XButton2::
 	SetKeyDelay 32, 32
-	send, ^(
+	send, ^'
 	return
 	
 	XButton1::
 	SetKeyDelay 32, 32
-	send, ^'
+	send, ^"
 	return
 	
 	{ ;Layer 1 "z" remapping

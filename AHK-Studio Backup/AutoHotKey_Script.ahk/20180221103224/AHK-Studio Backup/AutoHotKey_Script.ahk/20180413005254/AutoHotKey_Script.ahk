@@ -79,7 +79,7 @@ CoordMode, mouse, Screen
 { ;Before running a Game. Run and/or close Program.
 	
 	#F1::Suspend, Toggle
-	#F4::ExitApp
+	#F4::ExitApp	
 	^#!SPACE::  Winset, Alwaysontop, , A ; Toggle Active Windows Always on Top.
 	
 	#t::
